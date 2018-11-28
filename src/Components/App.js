@@ -9,10 +9,8 @@ import * as routes from './routes'
 const App = () => (
   <ErrorBoundary>
     <Switch>
-      <Route path="/login" component={routes.AsyncLogin} />
       <Redirect exact from="/" to="/dashboard" />
-      <PrivateRoute path="/dashboard" exact component={routes.AsyncHomepage} />
-
+      <Route path="/dashboard" exact component={routes.AsyncDashBoard} />
       <Route component={routes.AsyncNotFound} />
     </Switch>
   </ErrorBoundary>

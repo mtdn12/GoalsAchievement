@@ -2,12 +2,18 @@ import { applyMiddleware, compose, createStore } from 'redux'
 
 import createSagaMiddleware from 'redux-saga'
 import { routerMiddleware } from 'connected-react-router/immutable'
-import { persistReducer, persistStore } from 'redux-persist'
+import {
+  persistReducer,
+  persistStore,
+  persistCombineReducers,
+} from 'redux-persist'
 import immutableTransform from 'redux-persist-transform-immutable'
 import startupSaga from 'src/Stores/Startup/Sagas'
 import authSaga from 'src/Stores/Authentication/Sagas'
 import globalSaga from 'src/Stores/Global/Sagas'
-
+import createRootReducer from './index'
+import { getFirebase, reactReduxFirebase } from 'react-redux-firebase'
+import firebase from 'src/Services/Firebase'
 /**
  * This import defaults to localStorage for web and AsyncStorage for react-native.
  *
@@ -34,8 +40,11 @@ const persistConfig = {
    */
   blacklist: ['router', 'notification'],
 }
+const rrfConfig = {
+  userProfile: 'users',
+}
 
-export default (rootReducer, history) => {
+export default history => {
   const middleware = []
   const enhancers = []
 
@@ -45,6 +54,7 @@ export default (rootReducer, history) => {
   middleware.push(routerMiddleware(history))
 
   enhancers.push(applyMiddleware(...middleware))
+  enhancers.push(reactReduxFirebase(firebase, rrfConfig))
 
   let composeEnhancers = compose
 
@@ -56,20 +66,21 @@ export default (rootReducer, history) => {
   }
 
   // Redux persist
+  const rootReducer = createRootReducer(history)
   const persistedReducer = persistReducer(persistConfig, rootReducer)
   const store = createStore(persistedReducer, composeEnhancers(...enhancers))
-  const persistor = persistStore(store)
 
   // Kick off the root saga
   store.injectedSagas = []
-
   store.runSaga = sagaMiddleware.run
   store.injectedSagas.push('startup')
   store.runSaga(startupSaga)
   store.injectedSagas.push('global')
   store.runSaga(globalSaga)
-  store.injectedSagas.push('auth')
+  store.injectedSagas.push('auth', getFirebase)
   store.runSaga(authSaga)
+
+  const persistor = persistStore(store)
 
   return { store, persistor }
 }

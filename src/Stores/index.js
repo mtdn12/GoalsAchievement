@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux' //
 import { connectRouter } from 'connected-react-router'
 
-import configureStore from './CreateStore'
-
 import { reducer as ExampleReducer } from './Example/Reducers'
-import { reducer as AuthenticationReducer } from './Authentication/Reducers'
+
 import { reducer as GlobalReducer } from './Global/Reducers'
 import { reducer as NotificationReducer } from './Notification/Reducers'
+import { firebaseReducer } from 'react-redux-firebase'
+import modalReducer from './Modal/Reducers'
 
 function createRootReducer(history) {
   const rootReducer = combineReducers({
@@ -15,13 +15,14 @@ function createRootReducer(history) {
      * @see https://redux.js.org/api-reference/combinereducers
      */
     router: connectRouter(history),
-    auth: AuthenticationReducer,
     global: GlobalReducer,
     notification: NotificationReducer,
     // Start here
     example: ExampleReducer,
+    firebase: firebaseReducer,
+    modal: modalReducer,
   })
-  return configureStore(rootReducer, history)
+  return rootReducer
 }
 
 export default createRootReducer

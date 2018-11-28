@@ -12,7 +12,7 @@ import 'core-js/es6/map'
 import 'typeface-roboto'
 import 'src/assets/semantic.min.css'
 
-import createStore from 'src/Stores'
+import createStore from 'src/Stores/CreateStore'
 
 // import configureStore from './store/configureStore'
 import registerServiceWorker from './registerServiceWorker'

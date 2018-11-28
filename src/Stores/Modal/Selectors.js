@@ -6,6 +6,6 @@
  * Writing selectors is optional as it is not always necessary, we provide a simple example below.
  */
 
-/* export const isHot = (state) => {
-  return state.example.get('temperature') && state.example.get('temperature') > 25
-} */
+export const getModal = state => state.modal.get('modal')
+
+export const getLoadingAction = state => state.modal.get('isLoadingAction')
