@@ -3,8 +3,13 @@ import { connect } from 'react-redux'
 
 import { ModalActions } from 'src/Stores/Modal/Actions'
 import { getModal, getLoadingAction } from 'src/Stores/Modal/Selectors'
+import RegisterModal from './RegisterModal'
+import LoginModal from './LoginModal'
 
-const modalLookup = {}
+const modalLookup = {
+  RegisterModal,
+  LoginModal,
+}
 
 const Modal = props => {
   const { modal, isLoadingAction, handleClose } = props

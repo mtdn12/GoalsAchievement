@@ -6,32 +6,26 @@ import * as Yup from 'yup'
 import styles from './styles.module.scss'
 import InputField from '../../atoms/InputField'
 
-const RegisterModal = ({ handleClose, isLoadingAction }) => {
+const LoginModal = ({ handleClose, isLoadingAction }) => {
   return (
     <Modal onClose={handleClose} size="tiny" open id={styles.registerModal}>
       <Modal.Header>
         <Header as="h2" color="blue" inverted textAlign="center">
-          Register
+          Log In
         </Header>
       </Modal.Header>
       <Formik
         initialValues={{
           email: '',
-          name: '',
           password: '',
-          confirmPassword: '',
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string()
             .required('Please input your email')
             .email('Invalid email'),
-          name: Yup.string().required('Please input your name'),
           password: Yup.string()
             .required('Please input password')
             .min(6, 'Password must have atleast 6 character'),
-          confirmPassword: Yup.string()
-            .required('Please input confirm password')
-            .oneOf([Yup.ref('password')], 'Password must match'),
         })}
         onSubmit={values => console.log(values)}
         render={({
@@ -56,18 +50,7 @@ const RegisterModal = ({ handleClose, isLoadingAction }) => {
                 error={touched.email && Boolean(errors.email)}
                 message={errors.email}
               />
-              <InputField
-                name="name"
-                value={values.name}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                inputProps={{
-                  fluid: true,
-                }}
-                label="Name"
-                error={touched.name && Boolean(errors.name)}
-                message={errors.name}
-              />
+
               <InputField
                 name="password"
                 value={values.password}
@@ -81,21 +64,6 @@ const RegisterModal = ({ handleClose, isLoadingAction }) => {
                 error={touched.password && Boolean(errors.password)}
                 message={errors.password}
               />
-              <InputField
-                name="confirmPassword"
-                value={values.confirmPassword}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                inputProps={{
-                  fluid: true,
-                  type: 'password',
-                }}
-                label="Confirm Password"
-                error={
-                  touched.confirmPassword && Boolean(errors.confirmPassword)
-                }
-                message={errors.confirmPassword}
-              />
             </Modal.Content>
             <Modal.Actions className={styles.formAction}>
               <Button type="button" onClick={handleClose}>
@@ -106,7 +74,7 @@ const RegisterModal = ({ handleClose, isLoadingAction }) => {
                 primary
                 disabled={isLoadingAction}
                 loading={isLoadingAction}>
-                Register
+                Log In
               </Button>
             </Modal.Actions>
           </Form>
@@ -116,9 +84,9 @@ const RegisterModal = ({ handleClose, isLoadingAction }) => {
   )
 }
 
-RegisterModal.propTypes = {
+LoginModal.propTypes = {
   handleClose: func.isRequired,
   isLoadingAction: bool.isRequired,
 }
 
-export default RegisterModal
+export default LoginModal
