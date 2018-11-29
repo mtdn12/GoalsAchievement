@@ -1,0 +1,12 @@
+#AppbarAuth {
+  height: 64px;
+  padding: 1em;
+  .menuItem{
+    transition: all .5s ease;
+    cursor: pointer;
+    &:hover {
+      background: #fff;
+      color: rgb(91, 91, 235);
+    }
+  }
+}

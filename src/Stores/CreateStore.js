@@ -77,8 +77,8 @@ export default history => {
   store.runSaga(startupSaga)
   store.injectedSagas.push('global')
   store.runSaga(globalSaga)
-  store.injectedSagas.push('auth', getFirebase)
-  store.runSaga(authSaga)
+  store.injectedSagas.push('auth')
+  store.runSaga(authSaga, getFirebase)
 
   const persistor = persistStore(store)
 

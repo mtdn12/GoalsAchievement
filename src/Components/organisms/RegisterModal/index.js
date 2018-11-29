@@ -6,7 +6,7 @@ import * as Yup from 'yup'
 import styles from './styles.module.scss'
 import InputField from '../../atoms/InputField'
 
-const RegisterModal = ({ handleClose, isLoadingAction }) => {
+const RegisterModal = ({ handleClose, isLoadingAction, handleRegister }) => {
   return (
     <Modal onClose={handleClose} size="tiny" open id={styles.registerModal}>
       <Modal.Header>
@@ -33,7 +33,7 @@ const RegisterModal = ({ handleClose, isLoadingAction }) => {
             .required('Please input confirm password')
             .oneOf([Yup.ref('password')], 'Password must match'),
         })}
-        onSubmit={values => console.log(values)}
+        onSubmit={values => handleRegister(values)}
         render={({
           values,
           errors,
@@ -119,6 +119,7 @@ const RegisterModal = ({ handleClose, isLoadingAction }) => {
 RegisterModal.propTypes = {
   handleClose: func.isRequired,
   isLoadingAction: bool.isRequired,
+  handleRegister: func.isRequired,
 }
 
 export default RegisterModal

@@ -1,12 +1,19 @@
 import React from 'react'
-import { Modal, Form, Button, Header } from 'semantic-ui-react'
+import { Modal, Form, Button, Header, Divider } from 'semantic-ui-react'
 import { Formik } from 'formik'
-import { func, bool } from 'prop-types'
+import { func, bool, object } from 'prop-types'
 import * as Yup from 'yup'
 import styles from './styles.module.scss'
 import InputField from '../../atoms/InputField'
+import SocialLogin from '../../molecules/SocialLogin'
 
-const LoginModal = ({ handleClose, isLoadingAction }) => {
+const LoginModal = ({
+  handleClose,
+  isLoadingAction,
+  item,
+  handleLogin,
+  handleSocialLogin,
+}) => {
   return (
     <Modal onClose={handleClose} size="tiny" open id={styles.registerModal}>
       <Modal.Header>
@@ -15,10 +22,7 @@ const LoginModal = ({ handleClose, isLoadingAction }) => {
         </Header>
       </Modal.Header>
       <Formik
-        initialValues={{
-          email: '',
-          password: '',
-        }}
+        initialValues={item}
         validationSchema={Yup.object().shape({
           email: Yup.string()
             .required('Please input your email')
@@ -27,7 +31,7 @@ const LoginModal = ({ handleClose, isLoadingAction }) => {
             .required('Please input password')
             .min(6, 'Password must have atleast 6 character'),
         })}
-        onSubmit={values => console.log(values)}
+        onSubmit={values => handleLogin(values)}
         render={({
           values,
           errors,
@@ -50,7 +54,6 @@ const LoginModal = ({ handleClose, isLoadingAction }) => {
                 error={touched.email && Boolean(errors.email)}
                 message={errors.email}
               />
-
               <InputField
                 name="password"
                 value={values.password}
@@ -65,18 +68,16 @@ const LoginModal = ({ handleClose, isLoadingAction }) => {
                 message={errors.password}
               />
             </Modal.Content>
-            <Modal.Actions className={styles.formAction}>
-              <Button type="button" onClick={handleClose}>
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                primary
-                disabled={isLoadingAction}
-                loading={isLoadingAction}>
-                Log In
-              </Button>
-            </Modal.Actions>
+            <Button
+              fluid
+              type="submit"
+              primary
+              disabled={isLoadingAction}
+              loading={isLoadingAction}>
+              Log In
+            </Button>
+            <Divider horizontal>OR</Divider>
+            <SocialLogin handleSocialLogin={handleSocialLogin} />
           </Form>
         )}
       />
@@ -87,6 +88,9 @@ const LoginModal = ({ handleClose, isLoadingAction }) => {
 LoginModal.propTypes = {
   handleClose: func.isRequired,
   isLoadingAction: bool.isRequired,
+  item: object.isRequired,
+  handleLogin: func.isRequired,
+  handleSocialLogin: func.isRequired,
 }
 
 export default LoginModal

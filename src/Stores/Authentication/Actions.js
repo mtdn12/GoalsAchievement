@@ -19,14 +19,18 @@ import { createActions } from 'reduxsauce'
  * @see https://github.com/infinitered/reduxsauce#createactions
  */
 const { Types, Creators } = createActions({
-  // Fetch the current weather temperature
-  fetchAuthentication: ['response'],
-  // The operation has started and is loading
-  fetchAuthenticationLoading: null,
-  // The temperature was successfully fetched
-  fetchAuthenticationSuccess: ['userData'],
-  // An error occurred
-  fetchAuthenticationFailure: ['errorMessage'],
+  // Register Actions
+  registerRequest: ['values'],
+  registerSuccess: null,
+  registerFailure: null,
+  // Login Actions
+  loginRequest: ['values'],
+  loginSuccess: null,
+  loginFailure: null,
+  // Social Login
+  socialLoginRequest: ['provider'],
+  socialLoginSuccess: null,
+  socialLoginFailure: null,
 })
 
 export const AuthTypes = Types

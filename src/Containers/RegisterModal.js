@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import { AuthActions } from '../Stores/Authentication/Actions'
 import RegisterModal from 'src/Components/organisms/RegisterModal'
 
 class RegisterModalContainer extends Component {
@@ -11,7 +12,9 @@ class RegisterModalContainer extends Component {
 
 const mapStateToProps = state => ({})
 
-const mapDisPatchToProps = dispatch => ({})
+const mapDisPatchToProps = dispatch => ({
+  handleRegister: values => dispatch(AuthActions.registerRequest(values))
+})
 
 const withConnect = connect(
   mapStateToProps,

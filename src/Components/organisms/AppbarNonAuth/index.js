@@ -27,7 +27,14 @@ const AppbarNonAuth = ({ handleOpenModal }) => {
         </Menu.Item>
         <Menu.Item
           className={styles.menuItem}
-          onClick={() => handleOpenModal('LoginModal', {})}>
+          onClick={() =>
+            handleOpenModal('LoginModal', {
+              item: {
+                email: '',
+                password: '',
+              },
+            })
+          }>
           Log In
         </Menu.Item>
       </Menu.Menu>
