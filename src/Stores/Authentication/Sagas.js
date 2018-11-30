@@ -1,7 +1,8 @@
 import { put, call, takeLatest, all } from 'redux-saga/effects'
 import { push } from 'connected-react-router'
 import { AuthActions, AuthTypes } from 'src/Stores/Authentication/Actions'
-// import { push } from 'connected-react-router'
+import { registerUser } from '../../Services/AuthService'
+import { setToken } from '../../Utils/token'
 
 import { ModalActions } from '../Modal/Actions'
 
@@ -13,6 +14,16 @@ function* registerWorker(firebase, { values }) {
     let createUser = yield firebase
       .auth()
       .createUserWithEmailAndPassword(values.email, values.password)
+    let token = yield firebase.auth().currentUser.getIdToken(true)
+    setToken(token)
+    if (createUser.additionalUserInfo.isNewUser) {
+      let userSave = {
+        uid: createUser.user.uid,
+        email: values.email,
+        name: values.name,
+      }
+      yield call(registerUser, userSave)
+    }
     yield createUser.user.updateProfile({
       displayName: values.name,
     })
@@ -44,6 +55,8 @@ function* loginWorker(firebase, { values }) {
     yield firebase
       .auth()
       .signInWithEmailAndPassword(values.email, values.password)
+    let token = yield firebase.auth().currentUser.getIdToken(true)
+    setToken(token)
     yield put({
       type: AuthTypes.LOGIN_SUCCESS,
     })
@@ -64,7 +77,17 @@ function* socialLoginWorker(firebase, { provider }) {
       provider,
       type: 'popup',
     })
-    console.log(user)
+    let token = yield firebase.auth().currentUser.getIdToken(true)
+    // console.log(token)
+    setToken(token)
+    if (user.additionalUserInfo.isNewUser) {
+      let userSave = {
+        uid: user.user.uid,
+        email: user.user.email,
+        name: user.user.displayName,
+      }
+      yield call(registerUser, userSave)
+    }
     yield put({
       type: AuthTypes.SOCIAL_LOGIN_SUCCESS,
     })
