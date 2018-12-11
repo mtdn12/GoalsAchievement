@@ -1,12 +1,11 @@
 import { combineReducers } from 'redux' //
 import { connectRouter } from 'connected-react-router'
 
-import { reducer as ExampleReducer } from './Example/Reducers'
-
 import { reducer as GlobalReducer } from './Global/Reducers'
 import { reducer as NotificationReducer } from './Notification/Reducers'
 import { firebaseReducer } from 'react-redux-firebase'
 import modalReducer from './Modal/Reducers'
+import goalReducer from './Goal/Reducers'
 
 function createRootReducer(history) {
   const rootReducer = combineReducers({
@@ -18,9 +17,9 @@ function createRootReducer(history) {
     global: GlobalReducer,
     notification: NotificationReducer,
     // Start here
-    example: ExampleReducer,
     firebase: firebaseReducer,
     modal: modalReducer,
+    goal: goalReducer,
   })
   return rootReducer
 }

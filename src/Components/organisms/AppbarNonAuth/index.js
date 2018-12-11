@@ -12,13 +12,7 @@ const AppbarNonAuth = ({ handleOpenModal }) => {
       borderless
       color="blue"
       inverted>
-      <Menu.Item
-        as={NavLink}
-        to="/dashboard"
-        className={styles.menuItem}
-        activeClassName={styles.activeItem}>
-        Dashboard
-      </Menu.Item>
+      <Menu.Item>Goal Plan</Menu.Item>
       <Menu.Menu position="right">
         <Menu.Item
           className={styles.menuItem}

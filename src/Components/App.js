@@ -10,7 +10,9 @@ const App = () => (
   <ErrorBoundary>
     <Switch>
       <Redirect exact from="/" to="/dashboard" />
-      <Route path="/dashboard" exact component={routes.AsyncDashBoard} />
+      <PrivateRoute path="/dashboard" exact component={routes.AsyncDashBoard} />
+      <PrivateRoute path="/goal/:id" exact component={routes.AsyncGoalDetail} />
+      <Route path="/welcome" exact component={routes.AsyncWelcome} />
       <Route component={routes.AsyncNotFound} />
     </Switch>
   </ErrorBoundary>

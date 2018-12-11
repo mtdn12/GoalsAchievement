@@ -1,19 +1,22 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import { withFirebase } from 'react-redux-firebase'
+import { withFirebase, firebaseConnect } from 'react-redux-firebase'
 import { withRouter } from 'react-router-dom'
 import Template from 'src/Components/templates/Template'
 import { ModalActions } from '../Stores/Modal/Actions'
-import { 
+import {
   getAuthenticated,
   getProfile,
- } from '../Stores/Authentication/selectors'
+  getAuth,
+} from '../Stores/Authentication/selectors'
+import { removeToken } from '../Utils/token'
 
 class TemplateContainer extends Component {
   handleLogout = () => {
     this.props.firebase.logout()
     this.props.history.push('/')
+    removeToken()
   }
   render() {
     return <Template {...this.props} handleLogout={this.handleLogout} />
@@ -23,6 +26,7 @@ class TemplateContainer extends Component {
 const mapStateToProps = state => ({
   isAuthenticated: getAuthenticated(state),
   profile: getProfile(state),
+  auth: getAuth(state),
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -38,5 +42,6 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withFirebase,
-  withRouter
+  withRouter,
+  firebaseConnect()
 )(TemplateContainer)

@@ -1,0 +1,15 @@
+.infoWrap {
+  .generalInfo {
+    width: 20%;
+    margin: 0 auto;
+    text-align: center;
+    border: 1px dashed blue;
+    padding: 1em;
+  }
+  .objectivesWrap {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 2em;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,7 @@
+.listGoalWrap {
+  display: flex;
+  & > * {
+    width: 32%;
+  }
+  justify-content: space-between
+}

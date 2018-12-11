@@ -2,26 +2,38 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import { Redirect, Route } from 'react-router-dom'
-
-const PrivateRoute = ({ component: Component, userData, ...rest }) => {
+import {
+  getAuthenticated,
+  getLoadedAuthen,
+} from '../Stores/Authentication/selectors'
+import LoadingPage from '../Components/pages/LoadingPage'
+const PrivateRoute = ({
+  component: Component,
+  isAuthenticated,
+  isLoadedAuthen,
+  ...rest
+}) => {
   return (
     <Route
       {...rest}
       render={({ location, ...props }) => {
-        // Nếu có Login
-        if (userData) {
-          return <Component location={location} {...props} />
+        // Wait firebase check authenticated
+        if (isLoadedAuthen) {
+          if (isAuthenticated) {
+            return <Component location={location} {...props} />
+          }
+          // Nếu chưa login thì đưa về trang welcome
+          return (
+            <Redirect
+              to={{
+                pathname: '/welcome',
+                state: { from: location },
+              }}
+            />
+          )
+        } else {
+          return <LoadingPage />
         }
-
-        // Nếu chưa login thì đưa về trang Login
-        return (
-          <Redirect
-            to={{
-              pathname: '/login',
-              state: { from: location },
-            }}
-          />
-        )
       }}
     />
   )
@@ -34,7 +46,8 @@ PrivateRoute.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    userData: state.auth.get('userData'),
+    isAuthenticated: getAuthenticated(state),
+    isLoadedAuthen: getLoadedAuthen(state),
   }
 }
 

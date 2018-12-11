@@ -1,0 +1,17 @@
+.strategyItem {
+  min-width: 20%;
+  margin: 0 1em;
+ .strategyInfo {
+   padding: 1em;
+   margin: 0 auto;
+   text-align: center;
+   border: 1px dashed rgb(119, 151, 238);
+   max-width: 200px;
+ }
+ .taticsWrap {
+   display: flex;
+   align-items: flex-start;
+   margin-top: 2em;
+   justify-content: center;
+ }
+}

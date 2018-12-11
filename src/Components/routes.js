@@ -13,3 +13,15 @@ export const AsyncDashBoard = Loadable({
   loader: () => import('src/Containers/DashBoard'),
   loading: LoadingPage,
 })
+
+// Welcome page
+export const AsyncWelcome = Loadable({
+  loader: () => import('./pages/Welcome'),
+  loading: LoadingPage,
+})
+
+// Goal detail page
+export const AsyncGoalDetail = Loadable({
+  loader: () => import('src/Containers/GoalDetail'),
+  loading: LoadingPage,
+})

@@ -2,13 +2,8 @@ import { applyMiddleware, compose, createStore } from 'redux'
 
 import createSagaMiddleware from 'redux-saga'
 import { routerMiddleware } from 'connected-react-router/immutable'
-import {
-  persistReducer,
-  persistStore,
-  persistCombineReducers,
-} from 'redux-persist'
+import { persistReducer, persistStore } from 'redux-persist'
 import immutableTransform from 'redux-persist-transform-immutable'
-import startupSaga from 'src/Stores/Startup/Sagas'
 import authSaga from 'src/Stores/Authentication/Sagas'
 import globalSaga from 'src/Stores/Global/Sagas'
 import createRootReducer from './index'
@@ -42,6 +37,7 @@ const persistConfig = {
 }
 const rrfConfig = {
   userProfile: 'users',
+  attachAuthIsReady: true,
 }
 
 export default history => {
@@ -73,8 +69,6 @@ export default history => {
   // Kick off the root saga
   store.injectedSagas = []
   store.runSaga = sagaMiddleware.run
-  store.injectedSagas.push('startup')
-  store.runSaga(startupSaga)
   store.injectedSagas.push('global')
   store.runSaga(globalSaga)
   store.injectedSagas.push('auth')
