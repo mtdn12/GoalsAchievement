@@ -4,9 +4,34 @@ import { Progress, Button } from 'semantic-ui-react'
 import { object, func } from 'prop-types'
 import moment from 'moment'
 
-const GoalItem = ({ item, pushGoalDetail }) => {
+const GoalItem = ({
+  item,
+  pushGoalDetail,
+  handleOpenModalEditGoal,
+  handleDeleteGoalAction,
+}) => {
+  const itemEdit = {
+    name: item.get('name'),
+    timeEnd: moment(item.get('timeEnd')).format('YYYY-MM-DD'),
+    id: item.get('_id'),
+    description: item.get('description'),
+  }
   return (
     <div className={styles.itemWrap}>
+      <div className={styles.actionWrap}>
+        <Button
+          circular
+          icon="edit"
+          primary
+          onClick={handleOpenModalEditGoal(itemEdit)}
+        />
+        <Button
+          circular
+          icon="delete"
+          negative
+          onClick={handleDeleteGoalAction(item.get('_id'))}
+        />
+      </div>
       <p>
         <span className={styles.subtitle}>Name:</span> {item.get('name')}
       </p>
@@ -32,6 +57,8 @@ const GoalItem = ({ item, pushGoalDetail }) => {
 GoalItem.propTypes = {
   item: object.isRequired,
   pushGoalDetail: func.isRequired,
+  handleOpenModalEditGoal: func.isRequired,
+  handleDeleteGoalAction: func.isRequired,
 }
 
 export default GoalItem

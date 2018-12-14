@@ -1,12 +1,12 @@
 .objectiveItem {
-   min-width: 20%;
+   flex: 0 0 auto;
    margin: 0 1em;
   .generalInfo {
     padding: 1em;
     margin: 0 auto;
     text-align: center;
     border: 1px dashed purple;
-    max-width: 200px;
+    width: 200px;
     margin: 0 auto;
   }
   .strategiesWrap {
@@ -14,5 +14,7 @@
     align-items: flex-start;
     margin-top: 2em;
     justify-content: center;
+    flex: 1;
+    overflow: auto;
   }
 }

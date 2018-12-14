@@ -1,15 +1,26 @@
 .infoWrap {
+  display: flex;
+  justify-content: center;
+  min-height: calc(100vh - 100px);
   .generalInfo {
     width: 20%;
-    margin: 0 auto;
     text-align: center;
-    border: 1px dashed blue;
     padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 3px 0 0 rgba(66, 64, 64, 0.5);
+    background: #2185D0;
+    color: #fff;
   }
   .objectivesWrap {
-    display: flex;
-    align-items: flex-start;
+    flex: 1;
+    overflow: auto;
     margin-top: 2em;
-    justify-content: center;
+    padding: 2em;
+  }
+  .objectivesBox {
+    display: flex;
+    flex: 1;
   }
 }

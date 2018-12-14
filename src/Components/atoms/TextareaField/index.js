@@ -26,7 +26,7 @@ const TextareaField = ({
         error={error}
       />
       {error && (
-      <Label basic color="red" pointing>
+        <Label basic color="red" pointing>
           {message}
         </Label>
       )}

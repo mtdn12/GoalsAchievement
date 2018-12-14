@@ -12,6 +12,18 @@ const { Types, Creators } = createActions(
     getItemSuccess: ['item'],
     getItemFailure: null,
     clearItem: null,
+    // Create Goal
+    createItemRequest: ['values'],
+    createItemSuccess: null,
+    createItemFailure: null,
+    // Edit Goal
+    editItemRequest: ['values'],
+    editItemSuccess: null,
+    editItemFailure: null,
+    // Delete goal
+    deleteItemRequest: ['id'],
+    deleteItemSuccess: null,
+    deleteItemFailure: null,
   },
   {
     prefix: 'goal/',

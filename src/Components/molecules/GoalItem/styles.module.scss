@@ -2,10 +2,18 @@
   padding: 1em;
   background: #f0eaea;
   border-radius: 2em;
+  position: relative;
   p {
     margin: .5em 0;
   }
   .subtitle {
     font-weight: 700;
+  }
+  .actionWrap{
+    position: absolute;
+    display: inline-block;
+    top: 0;
+    right: 0;
+    transform: translateY(-50%)
   }
 }
