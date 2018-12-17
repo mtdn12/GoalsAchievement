@@ -1,13 +1,13 @@
-.infoWrap {
+#objectiveWrap {
   display: flex;
   justify-content: center;
   min-height: calc(100vh - 100px);
-  .generalInfo {
+  .InfoWrap {
     width: 20%;
     padding: 1em;
-    box-shadow: 3px 0 0 rgba(66, 64, 64, 0.5);
-    border: 2px solid rgba(0,0,0,0.3);
-    background-color: rgba(248, 240, 240, 0.1);
+    box-shadow: 3px 0 0 rgba(41, 1, 37, 0.5);
+    border: 2px solid rgba(44, 2, 38, 0.3);
+    background-color: rgba(243, 237, 241, 0.1);
     .actionWrap {
       display: flex;
       justify-content: space-between;
@@ -16,12 +16,12 @@
       margin-top: 5em;
     }
   }
-  .objectivesWrap {
+  .strategiesWrap {
     flex: 1;
     overflow: auto;
     padding: 1.5em;
   }
-  .objectivesBox {
+  .strategiesBox {
     display: flex;
     flex: 1;
   }

@@ -1,13 +1,31 @@
-.objectiveItem {
+#objectiveItem {
    flex: 0 0 auto;
-   margin: 0 1em;
+   margin:  1em;
   .generalInfo {
+    position: relative;
     padding: 1em;
     margin: 0 auto;
-    text-align: center;
-    border: 1px dashed purple;
-    width: 200px;
+    border: 2px dashed rgb(121, 22, 121);
+    width: 300px;
     margin: 0 auto;
+    h4 {
+      margin: .5em 0;
+    }
+    p {
+      margin-bottom: .2em;
+      text-align: center;
+    }
+    .label {
+      text-align: left;
+    }
+  }
+  .actionWrap {
+    position: absolute;
+    top: 0;
+    right: 50%;
+    transform: translate(50%,-50%);
+    z-index: 1;
+
   }
   .strategiesWrap {
     display: flex;

@@ -25,3 +25,9 @@ export const AsyncGoalDetail = Loadable({
   loader: () => import('src/Containers/GoalDetail'),
   loading: LoadingPage,
 })
+
+// Objective detail page
+export const AsyncObjectiveDetail = Loadable({
+  loader: () => import('src/Containers/ObjectiveDetail'),
+  loading: LoadingPage,
+})

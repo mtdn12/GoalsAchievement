@@ -7,12 +7,16 @@ import RegisterModal from './RegisterModal'
 import LoginModal from './LoginModal'
 import CreateEditGoalModal from '../Components/organisms/CreateEditGoalModal'
 import ConfirmationDialog from '../Components/molecules/ConfirmationDialog'
+import CreateEditObjectiveModal from '../Components/organisms/CreateEditObjectiveModal'
+import CreateEditStrategyModal from '../Components/organisms/CreateEditStrategyModal'
 
 const modalLookup = {
   RegisterModal,
   LoginModal,
   CreateEditGoalModal,
   ConfirmationDialog,
+  CreateEditObjectiveModal,
+  CreateEditStrategyModal,
 }
 
 const Modal = props => {

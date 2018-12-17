@@ -1,9 +1,9 @@
 import React from 'react'
 import moment from 'moment'
-import { object } from 'prop-types'
-import { Progress } from 'semantic-ui-react'
+import { object, func } from 'prop-types'
+import { Progress, Button, Header } from 'semantic-ui-react'
 import styles from './styles.module.scss'
-import ObjectiveInfo from '../ObjectiveInfo'
+import ObjectiveInfo from '../../../Containers/ObjectiveInfo'
 
 class GoalInfo extends React.Component {
   handleHorizontalWheel = e => {
@@ -16,29 +16,54 @@ class GoalInfo extends React.Component {
     }
   }
   render() {
-    const { item } = this.props
+    const {
+      item,
+      handleOpenModalEditGoal,
+      handleDeleteGoalAction,
+      handleOpenModalCreateObjective,
+    } = this.props
     return (
       <div className={styles.infoWrap}>
         <div className={styles.generalInfo}>
-          <p>
-            <span className={styles.subtitle}>Name:</span> {item.get('name')}
-          </p>
-          <p>
-            <span className={styles.subtitle}>Time End: </span>{' '}
-            {moment(item.get('timeEnd')).format('DD/MM/YYYY')}
-          </p>
-          <p>
-            <span className={styles.subtitle}>Owner:</span>{' '}
-            {item.getIn(['user', 'name'])}
-          </p>
-          <div>
-            <span className={styles.subtitle}>Completed:</span>
-            <Progress
-              progress
-              color="brown"
-              percent={item.get('percent')}
-            />{' '}
+          <div className={styles.actionWrap}>
+            <Button
+              icon="edit"
+              circular
+              primary
+              onClick={handleOpenModalEditGoal}
+            />
+            <Button
+              icon="delete"
+              circular
+              negative
+              onClick={handleDeleteGoalAction}
+            />
           </div>
+          <div className={styles.item}>
+            <Header as="h3" textAlign="center">
+              {item.get('name')}
+            </Header>
+            <p>
+              <b className={styles.subtitle}>Time End: </b>{' '}
+              {moment(item.get('timeEnd')).format('DD/MM/YYYY')}
+            </p>
+            <p>
+              <b>Description: </b>
+              <br />
+              {item.get('description')}
+            </p>
+            <div>
+              <b
+                className={styles.subtitle}
+                style={{ marginBottom: '.5em', display: 'inline-block' }}>
+                Completed:
+              </b>
+              <Progress progress color="blue" percent={item.get('percent')} />{' '}
+            </div>
+          </div>
+          <Button fluid primary onClick={handleOpenModalCreateObjective}>
+            Add Objective
+          </Button>
         </div>
         <div
           className={styles.objectivesWrap}
@@ -59,6 +84,9 @@ class GoalInfo extends React.Component {
 
 GoalInfo.propTypes = {
   item: object.isRequired,
+  handleOpenModalEditGoal: func.isRequired,
+  handleDeleteGoalAction: func.isRequired,
+  handleOpenModalCreateObjective: func.isRequired,
 }
 
 export default GoalInfo

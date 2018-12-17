@@ -8,23 +8,26 @@ import InputField from '../../atoms/InputField'
 import TextareaField from '../../atoms/TextareaField'
 import styles from './styles.module.scss'
 
-const CreateEditGoal = ({
+const CreateEditStrategy = ({
   handleClose,
   isLoadingAction,
   item,
   handleAction,
   action,
 }) => {
+  // console.log(handleAction)
   return (
     <Modal size="small" open onClose={handleClose} id={styles.modalWrap}>
       <Modal.Header className={styles.headerWrap}>
-        {action === 'create' ? 'Create Goal' : 'Edit goal'}
+        {action === 'create' ? 'Create Strategy' : 'Edit Strategy'}
       </Modal.Header>
       <Formik
         initialValues={item}
         onSubmit={values => handleAction(values)}
         validationSchema={Yup.object().shape({
           name: Yup.string().required('This field is required'),
+          goalId: Yup.string().required(),
+          objectiveId: Yup.string().required(),
           timeEnd: Yup.date()
             .min(
               moment().format('MM-DD-YYYY'),
@@ -44,6 +47,24 @@ const CreateEditGoal = ({
             <Form onSubmit={handleSubmit} className={styles.formContent}>
               <Modal.Content>
                 <InputField
+                  name="goalId"
+                  value={values.goalId}
+                  inputProps={{
+                    fluid: true,
+                    disabled: true,
+                  }}
+                  label="Goal ID"
+                />
+                <InputField
+                  name="objectiveId"
+                  value={values.objectiveId}
+                  inputProps={{
+                    fluid: true,
+                    disabled: true,
+                  }}
+                  label="Objective ID"
+                />
+                <InputField
                   name="name"
                   value={values.name}
                   handleChange={handleChange}
@@ -58,7 +79,6 @@ const CreateEditGoal = ({
                 <InputField
                   name="timeEnd"
                   value={values.timeEnd}
-                  // value="12/12/2018"
                   handleChange={handleChange}
                   handleBlur={handleBlur}
                   inputProps={{
@@ -98,7 +118,7 @@ const CreateEditGoal = ({
   )
 }
 
-CreateEditGoal.propTypes = {
+CreateEditStrategy.propTypes = {
   handleClose: func.isRequired,
   isLoadingAction: bool.isRequired,
   item: object.isRequired,
@@ -106,4 +126,4 @@ CreateEditGoal.propTypes = {
   action: string.isRequired,
 }
 
-export default CreateEditGoal
+export default CreateEditStrategy

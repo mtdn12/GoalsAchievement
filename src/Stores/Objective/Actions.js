@@ -2,33 +2,28 @@ import { createActions } from 'reduxsauce'
 
 const { Types, Creators } = createActions(
   {
-    // Get list goal
-    getItemsRequest: null,
-    getItemsSuccess: ['items'],
-    getItemsFailure: null,
-    clearItems: null,
-    // Get goal detail
+    // Get Objective detail
     getItemRequest: ['id'],
-    getItemSuccess: ['item'],
+    getItemSuccess: null,
     getItemFailure: null,
     clearItem: null,
-    // Create Goal
+    // Create new objective
     createItemRequest: ['values'],
     createItemSuccess: null,
     createItemFailure: null,
-    // Edit Goal
+    // Edit Objective
     editItemRequest: ['values', 'match'],
     editItemSuccess: null,
     editItemFailure: null,
-    // Delete goal
-    deleteItemRequest: ['id', 'match'],
+    // Delete Objective
+    deleteItemRequest: ['id', 'goalId', 'match'],
     deleteItemSuccess: null,
     deleteItemFailure: null,
   },
   {
-    prefix: 'goal/',
+    prefix: 'objective/',
   }
 )
 
-export const GoalTypes = Types
-export const GoalActions = Creators
+export const ObjectiveTypes = Types
+export const ObjectiveActions = Creators

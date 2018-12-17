@@ -1,75 +1,57 @@
 import { put, call, all, takeLatest, select } from 'redux-saga/effects'
-import { GoalActions, GoalTypes } from 'src/Stores/Goal/Actions'
+import { StrategyTypes } from './Actions'
+import { GoalActions } from '../Goal/Actions'
+import { ObjectiveActions } from '../Objective/Actions'
 import { push } from 'connected-react-router'
 import { ModalActions } from '../Modal/Actions'
 import { NotificationActions } from '../Notification/Actions'
 import {
-  getListGoals,
-  getGoalDetail,
-  createGoal,
-  editGoal,
-  deleteGoal,
-} from 'src/Services/GoalService'
+  getStrategyDetail,
+  createStrategy,
+  editStrategy,
+  deleteStrategy,
+} from 'src/Services/StrategyService.js'
 import { getToken } from '../Authentication/selectors'
 
-// Get list goal worker
-function* getListGoalWorker() {
-  try {
-    const token = yield select(getToken)
-    const response = yield call(getListGoals, token)
-    if (response.data.result === 'fail') {
-      throw new Error(response.error)
-    }
-    yield put({
-      type: GoalTypes.GET_ITEMS_SUCCESS,
-      items: response.data.items,
-    })
-  } catch (error) {
-    yield put({
-      type: GoalTypes.GET_ITEMS_FAILURE,
-    })
-  }
-}
-
 // Get goal detail worker
-function* getGoalDetailWorker({ id }) {
+function* getObjectiveDetailWorker({ id }) {
   try {
     const token = yield select(getToken)
-    const response = yield call(getGoalDetail, token, id)
+    const response = yield call(getStrategyDetail, token, id)
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
     yield put({
-      type: GoalTypes.GET_ITEM_SUCCESS,
+      type: StrategyTypes.GET_ITEM_SUCCESS,
       item: response.data.item,
     })
   } catch (error) {
     yield put({
-      type: GoalTypes.GET_ITEM_FAILURE,
+      type: StrategyTypes.GET_ITEM_FAILURE,
     })
   }
 }
 // Create Goal worker
-function* createGoalWorker({ values }) {
+function* createStrategyWorker({ values }) {
   try {
     // Show loading action
     yield put(ModalActions.showLoadingAction())
     // call api to create goal
     const token = yield select(getToken)
-    const response = yield call(createGoal, token, values)
+    const response = yield call(createStrategy, token, values)
     // check result from api
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
     // dispatch success action
     yield put({
-      type: GoalTypes.CREATE_ITEM_SUCCESS,
+      type: StrategyTypes.CREATE_ITEM_SUCCESS,
     })
     // show notification
     yield put(
       NotificationActions.showNotification(
-        'Create Goal',
-        'Create Goal success',
+        'Create Strategy',
+        'Create Strategy success',
         'blue'
       )
     )
@@ -77,64 +59,68 @@ function* createGoalWorker({ values }) {
     yield put(ModalActions.hideLoadingAction())
     // clear modal
     yield put(ModalActions.clearModal())
-    // push to goal detail
-    yield put(push(`/goal/${response.data.item._id}`))
+    // reload goal detail
+    yield put(ObjectiveActions.getItemRequest(values.objectiveId))
   } catch (error) {
     yield put({
-      type: GoalTypes.CREATE_ITEM_FAILURE,
+      type: StrategyTypes.CREATE_ITEM_FAILURE,
     })
     // show notification
     yield put(
-      NotificationActions.showNotification('Create Goal', error.message, 'red')
+      NotificationActions.showNotification(
+        'Create Strategy',
+        error.message,
+        'red'
+      )
     )
     // Hide loading action
     yield put(ModalActions.hideLoadingAction())
   }
 }
 // edit goal worker
-function* editGoalWorker({ values, match }) {
+function* editObjectiveWorker({ values }) {
   try {
+    console.log(values)
     // Show loading action
     yield put(ModalActions.showLoadingAction())
     // Call api
     const token = yield select(getToken)
     const { id, ...data } = values
-    const response = yield call(editGoal, token, id, data)
+    const response = yield call(editStrategy, token, id, data)
     // check response error
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
     // dispatch success action
     yield put({
-      type: GoalTypes.EDIT_ITEM_SUCCESS,
+      type: StrategyTypes.EDIT_ITEM_SUCCESS,
     })
-
+    // show notification
+    yield put(
+      NotificationActions.showNotification(
+        'Edit Objective',
+        'Edit Objective success',
+        'blue'
+      )
+    )
     // hide loading action
     yield put(ModalActions.hideLoadingAction())
     // clear modal
     yield put(ModalActions.clearModal())
-    // push to detail page if in dashboard
-    if (match.path === '/dashboard') {
-      yield put(push(`/goal/${response.data.item._id}`))
-    } else {
-      yield put(GoalActions.getItemRequest(response.data.item._id))
-    }
-    // show notification
-    yield put(
-      NotificationActions.showNotification(
-        'Edit Goal',
-        'Edit Goal success',
-        'blue'
-      )
-    )
+    // reload goal detail
+    yield put(GoalActions.getItemRequest(values.goalId))
   } catch (error) {
     // dispatch edit fail action
     yield put({
-      type: GoalTypes.EDIT_ITEM_FAILURE,
+      type: StrategyTypes.EDIT_ITEM_FAILURE,
     })
     // show notification
     yield put(
-      NotificationActions.showNotification('Edit Goal', error.message, 'red')
+      NotificationActions.showNotification(
+        'Edit Objective',
+        error.message,
+        'red'
+      )
     )
     // hide loading action
     yield put(ModalActions.hideLoadingAction())
@@ -142,26 +128,26 @@ function* editGoalWorker({ values, match }) {
 }
 
 // delete goal worker
-function* deleteGoalWorker({ id, match }) {
+function* deleteStrategyWorker({ values, match }) {
   try {
     // Show loading action
     yield put(ModalActions.showLoadingAction())
     // Call api
     const token = yield select(getToken)
-    const response = yield call(deleteGoal, token, id)
+    const response = yield call(deleteStrategy, token, values.get('_id'))
     // check response error
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
     // dispatch success action
     yield put({
-      type: GoalTypes.DELETE_ITEM_SUCCESS,
+      type: StrategyTypes.DELETE_ITEM_SUCCESS,
     })
     // show notification
     yield put(
       NotificationActions.showNotification(
-        'Delete Goal',
-        'Delete Goal success',
+        'Delete Strategy',
+        'Delete Strategy success',
         'blue'
       )
     )
@@ -169,23 +155,28 @@ function* deleteGoalWorker({ id, match }) {
     yield put(ModalActions.hideLoadingAction())
     // clear modal
     yield put(ModalActions.clearModal())
-    // push to detail page
+    // check match do to another action
     switch (match.path) {
-      case '/dashboard':
-        yield put(GoalActions.getItemsRequest())
+      case '/objective/:id':
+        yield put(ObjectiveActions.getItemRequest(values.get('objective')))
+        break
+      case '/goal/:id':
+        yield put(GoalActions.getItemRequest(values.get('goal')))
         break
       default:
-        yield put(push('/dashboard'))
-        break
     }
   } catch (error) {
     // dispatch delete fail action
     yield put({
-      type: GoalTypes.DELETE_ITEM_FAILURE,
+      type: StrategyTypes.DELETE_ITEM_FAILURE,
     })
     // show notification
     yield put(
-      NotificationActions.showNotification('Delete Goal', error.message, 'red')
+      NotificationActions.showNotification(
+        'Delete Objective',
+        error.message,
+        'red'
+      )
     )
     // hide loading action
     yield put(ModalActions.hideLoadingAction())
@@ -194,14 +185,13 @@ function* deleteGoalWorker({ id, match }) {
 
 function* watcher() {
   yield all([
-    takeLatest(GoalTypes.GET_ITEMS_REQUEST, getListGoalWorker),
-    takeLatest(GoalTypes.GET_ITEM_REQUEST, getGoalDetailWorker),
+    takeLatest(StrategyTypes.GET_ITEM_REQUEST, getObjectiveDetailWorker),
     // Create goal
-    takeLatest(GoalTypes.CREATE_ITEM_REQUEST, createGoalWorker),
+    takeLatest(StrategyTypes.CREATE_ITEM_REQUEST, createStrategyWorker),
     // Edit goal
-    takeLatest(GoalTypes.EDIT_ITEM_REQUEST, editGoalWorker),
+    takeLatest(StrategyTypes.EDIT_ITEM_REQUEST, editObjectiveWorker),
     // Delete goal
-    takeLatest(GoalTypes.DELETE_ITEM_REQUEST, deleteGoalWorker),
+    takeLatest(StrategyTypes.DELETE_ITEM_REQUEST, deleteStrategyWorker),
   ])
 }
 

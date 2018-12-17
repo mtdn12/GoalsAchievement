@@ -1,22 +1,53 @@
 import React from 'react'
 import { object } from 'prop-types'
 import moment from 'moment'
-import { Progress } from 'semantic-ui-react'
+import { Link, withRouter } from 'react-router-dom'
+import { Progress, Label, Button, Header } from 'semantic-ui-react'
 import styles from './styles.module.scss'
-const TaticInfo = ({ item }) => {
+const TaticInfo = ({ item, history }) => {
   return (
     <div className={styles.taticItem}>
       <div className={styles.taticInfo}>
-        <p>
-          <span className={styles.subtitle}>Name:</span> {item.get('name')}
-        </p>
-        <p>
-          <span className={styles.subtitle}>Time End: </span>{' '}
-          {moment(item.get('timeEnd')).format('DD/MM/YYYY')}
-        </p>
+        <Label
+          className={styles.label}
+          as={Link}
+          to={{
+            pathname: `/objective/${item.get('_id')}`,
+            state: { from: history.location.pathname },
+          }}
+          color="brown"
+          ribbon>
+          See Detail
+        </Label>
+        <div className={styles.actionWrap}>
+          <Button
+            icon="edit"
+            circular
+            color="brown"
+            // onClick={handleOpenModalEditObjective(editItem)}
+          />
+          <Button
+            icon="delete"
+            circular
+            negative
+            // onClick={handleDeleteObjectiveAction(
+            //   item.get('_id'),
+            //   item.get('goal')
+            // )}
+          />
+        </div>
+        <Header as="h4" textAlign="center" color="brown">
+          {item.get('name')}
+        </Header>
+        <p>{moment(item.get('timeEnd')).format('DD/MM/YYYY')}</p>
+        <p>{item.get('description')}</p>
         <div>
-          <span className={styles.subtitle}>Completed:</span>
-          <Progress progress color="blue" percent={item.get('percent')} />{' '}
+          <Progress
+            style={{ margin: 0 }}
+            progress
+            color="brown"
+            percent={item.get('percent')}
+          />{' '}
         </div>
       </div>
     </div>
@@ -25,6 +56,7 @@ const TaticInfo = ({ item }) => {
 
 TaticInfo.propTypes = {
   item: object.isRequired,
+  history: object.isRequired,
 }
 
-export default TaticInfo
+export default withRouter(TaticInfo)

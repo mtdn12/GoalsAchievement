@@ -1,24 +1,57 @@
 import React from 'react'
 import styles from './styles.module.scss'
 import moment from 'moment'
-import { object } from 'prop-types'
-import { Progress } from 'semantic-ui-react'
-import StrategyInfo from '../StrategyInfo'
+import { object, func } from 'prop-types'
+import { Progress, Header, Button, Label } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
+import StrategyInfo from 'src/Containers/StrategyInfo'
 
-const ObjectiveInfo = ({ item }) => {
+const ObjectiveInfo = ({
+  item,
+  handleOpenModalEditObjective,
+  handleDeleteObjectiveAction,
+  history,
+}) => {
   return (
-    <div className={styles.objectiveItem}>
+    <div id={styles.objectiveItem}>
       <div className={styles.generalInfo}>
-        <p>
-          <span className={styles.subtitle}>Name:</span> {item.get('name')}
-        </p>
-        <p>
-          <span className={styles.subtitle}>Time End: </span>{' '}
-          {moment(item.get('timeEnd')).format('DD/MM/YYYY')}
-        </p>
+        <Label
+          className={styles.label}
+          as={Link}
+          to={{
+            pathname: `/objective/${item.get('_id')}`,
+            state: { from: history.location.pathname },
+          }}
+          color="purple"
+          ribbon>
+          See Detail
+        </Label>
+        <div className={styles.actionWrap}>
+          <Button
+            icon="edit"
+            circular
+            primary
+            onClick={handleOpenModalEditObjective}
+          />
+          <Button
+            icon="delete"
+            circular
+            negative
+            onClick={handleDeleteObjectiveAction}
+          />
+        </div>
+        <Header as="h4" textAlign="center" color="purple">
+          {item.get('name')}
+        </Header>
+        <p>{moment(item.get('timeEnd')).format('DD/MM/YYYY')}</p>
+        <p>{item.get('description')}</p>
         <div>
-          <span className={styles.subtitle}>Completed:</span>
-          <Progress progress color="blue" percent={item.get('percent')} />{' '}
+          <Progress
+            style={{ margin: 0 }}
+            progress
+            color="purple"
+            percent={item.get('percent')}
+          />{' '}
         </div>
       </div>
       <div className={styles.strategiesWrap}>
@@ -34,6 +67,9 @@ const ObjectiveInfo = ({ item }) => {
 
 ObjectiveInfo.propTypes = {
   item: object.isRequired,
+  handleOpenModalEditObjective: func.isRequired,
+  handleDeleteObjectiveAction: func.isRequired,
+  history: object.isRequired,
 }
 
 export default ObjectiveInfo

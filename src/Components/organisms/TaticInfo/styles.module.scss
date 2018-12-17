@@ -1,12 +1,30 @@
 .taticItem {
-  margin: .5em .5em;
+  margin: 1.5em 1em;
   // flex: 1;
  .taticInfo {
-   margin: 0 auto;
-   padding: 1em;
-   text-align: center;
-   width: 200px;
-   border: 1px dashed rgb(43, 158, 120);
- }
+    position: relative;
+    padding: 1em;
+    margin: 0 auto;
+    border: 2px dashed brown;
+    width: 300px;
+    margin: 0 auto;
+    h4 {
+      margin: .5em 0;
+    }
+    p {
+      margin-bottom: .2em;
+      text-align: center;
+    }
+    .label {
+      text-align: left;
+    }
+  }
+ .actionWrap {
+  position: absolute;
+  top: 0;
+  right: 50%;
+  transform: translate(50%,-50%);
+  z-index: 1;
+  }
 
 }

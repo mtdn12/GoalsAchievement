@@ -1,13 +1,31 @@
 .strategyItem {
-  margin: 0 1em;
+  margin: 1.2em 1em;
   flex: 1;
  .strategyInfo {
-   padding: 1em;
-   margin: 0 auto;
-   text-align: center;
-   border: 1px dashed rgb(119, 151, 238);
-   width: 200px;
+  position: relative;
+  padding: 1em;
+  margin: 0 auto;
+  border: 2px dashed teal;
+  width: 300px;
+  margin: 0 auto;
+  h4 {
+    margin: .5em 0;
+  }
+  p {
+    margin-bottom: .2em;
+    text-align: center;
+  }
+  .label {
+    text-align: left;
+  }
  }
+ .actionWrap {
+  position: absolute;
+  top: 0;
+  right: 50%;
+  transform: translate(50%,-50%);
+  z-index: 1;
+  }
  .taticsWrap {
    display: flex;
    margin-top: 2em;

@@ -1,24 +1,57 @@
 import React from 'react'
-import { object } from 'prop-types'
+import { object, func } from 'prop-types'
 import moment from 'moment'
-import { Progress } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
+import { Progress, Label, Button, Header } from 'semantic-ui-react'
 import styles from './styles.module.scss'
 import TaticInfo from '../TaticInfo'
 
-const StrategyInfo = ({ item }) => {
+const StrategyInfo = ({
+  item,
+  history,
+  handleOpenModalEditStrategy,
+  handleDeleteStrategyAction,
+}) => {
   return (
     <div className={styles.strategyItem}>
       <div className={styles.strategyInfo}>
-        <p>
-          <span className={styles.subtitle}>Name:</span> {item.get('name')}
-        </p>
-        <p>
-          <span className={styles.subtitle}>Time End: </span>{' '}
-          {moment(item.get('timeEnd')).format('DD/MM/YYYY')}
-        </p>
+        <Label
+          className={styles.label}
+          as={Link}
+          to={{
+            pathname: `/objective/${item.get('_id')}`,
+            state: { from: history.location.pathname },
+          }}
+          color="teal"
+          ribbon>
+          See Detail
+        </Label>
+        <div className={styles.actionWrap}>
+          <Button
+            icon="edit"
+            circular
+            color="teal"
+            onClick={handleOpenModalEditStrategy}
+          />
+          <Button
+            icon="delete"
+            circular
+            negative
+            onClick={handleDeleteStrategyAction}
+          />
+        </div>
+        <Header as="h4" textAlign="center" color="teal">
+          {item.get('name')}
+        </Header>
+        <p>{moment(item.get('timeEnd')).format('DD/MM/YYYY')}</p>
+        <p>{item.get('description')}</p>
         <div>
-          <span className={styles.subtitle}>Completed:</span>
-          <Progress progress color="blue" percent={item.get('percent')} />{' '}
+          <Progress
+            style={{ margin: 0 }}
+            progress
+            color="teal"
+            percent={item.get('percent')}
+          />{' '}
         </div>
       </div>
       <div className={styles.taticsWrap}>
@@ -34,6 +67,9 @@ const StrategyInfo = ({ item }) => {
 
 StrategyInfo.propTypes = {
   item: object.isRequired,
+  history: object.isRequired,
+  handleOpenModalEditStrategy: func.isRequired,
+  handleDeleteStrategyAction: func.isRequired,
 }
 
 export default StrategyInfo
