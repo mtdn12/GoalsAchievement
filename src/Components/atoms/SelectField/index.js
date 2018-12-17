@@ -1,5 +1,6 @@
 import React from 'react'
 import { Form, Label } from 'semantic-ui-react'
+import styles from './styles.module.scss'
 
 const SelectField = React.memo(
   ({
@@ -26,7 +27,7 @@ const SelectField = React.memo(
           {...inputProps}
         />
         {error && (
-          <Label basic color="red" pointing>
+          <Label basic color="red" pointing className={styles.helperText}>
             {message}
           </Label>
         )}

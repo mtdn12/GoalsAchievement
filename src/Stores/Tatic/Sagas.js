@@ -1,75 +1,58 @@
 import { put, call, all, takeLatest, select } from 'redux-saga/effects'
-import { GoalActions, GoalTypes } from 'src/Stores/Goal/Actions'
+import { TaticTypes, TaticActions } from './Actions'
+import { GoalActions } from '../Goal/Actions'
+import { ObjectiveActions } from '../Objective/Actions'
+import { StrategyActions } from '../Strategy/Actions'
 import { push } from 'connected-react-router'
 import { ModalActions } from '../Modal/Actions'
 import { NotificationActions } from '../Notification/Actions'
 import {
-  getListGoals,
-  getGoalDetail,
-  createGoal,
-  editGoal,
-  deleteGoal,
-} from 'src/Services/GoalService'
+  getTaticDetail,
+  createTatic,
+  editTatic,
+  deleteTatic,
+} from 'src/Services/TaticService.js'
 import { getToken } from '../Authentication/selectors'
 
-// Get list goal worker
-function* getListGoalWorker() {
-  try {
-    const token = yield select(getToken)
-    const response = yield call(getListGoals, token)
-    if (response.data.result === 'fail') {
-      throw new Error(response.error)
-    }
-    yield put({
-      type: GoalTypes.GET_ITEMS_SUCCESS,
-      items: response.data.items,
-    })
-  } catch (error) {
-    yield put({
-      type: GoalTypes.GET_ITEMS_FAILURE,
-    })
-  }
-}
-
 // Get goal detail worker
-function* getGoalDetailWorker({ id }) {
+function* getStrategyDetailWorker({ id }) {
   try {
     const token = yield select(getToken)
-    const response = yield call(getGoalDetail, token, id)
+    const response = yield call(getTaticDetail, token, id)
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
     yield put({
-      type: GoalTypes.GET_ITEM_SUCCESS,
+      type: TaticTypes.GET_ITEM_SUCCESS,
       item: response.data.item,
     })
   } catch (error) {
     yield put({
-      type: GoalTypes.GET_ITEM_FAILURE,
+      type: TaticTypes.GET_ITEM_FAILURE,
     })
   }
 }
 // Create Goal worker
-function* createGoalWorker({ values }) {
+function* createTaticWorker({ values }) {
   try {
     // Show loading action
     yield put(ModalActions.showLoadingAction())
     // call api to create goal
     const token = yield select(getToken)
-    const response = yield call(createGoal, token, values)
+    const response = yield call(createTatic, token, values)
     // check result from api
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
     // dispatch success action
     yield put({
-      type: GoalTypes.CREATE_ITEM_SUCCESS,
+      type: TaticTypes.CREATE_ITEM_SUCCESS,
     })
     // show notification
     yield put(
       NotificationActions.showNotification(
-        'Create Goal',
-        'Create Goal success',
+        'Create Tatic',
+        'Create Tatic success',
         'blue'
       )
     )
@@ -77,92 +60,100 @@ function* createGoalWorker({ values }) {
     yield put(ModalActions.hideLoadingAction())
     // clear modal
     yield put(ModalActions.clearModal())
-    // push to goal detail
-    yield put(push(`/goal/${response.data.item._id}`))
+    // reload strategy detail
+    yield put(StrategyActions.getItemRequest(values.strategyId))
   } catch (error) {
     yield put({
-      type: GoalTypes.CREATE_ITEM_FAILURE,
+      type: TaticTypes.CREATE_ITEM_FAILURE,
     })
     // show notification
     yield put(
-      NotificationActions.showNotification('Create Goal', error.message, 'red')
+      NotificationActions.showNotification('Create Tatic', error.message, 'red')
     )
     // Hide loading action
     yield put(ModalActions.hideLoadingAction())
   }
 }
-// edit goal worker
-function* editGoalWorker({ values, match }) {
+// edit Strategy worker
+function* editStrategyWorker({ values, match }) {
   try {
     // Show loading action
     yield put(ModalActions.showLoadingAction())
     // Call api
     const token = yield select(getToken)
     const { id, ...data } = values
-    const response = yield call(editGoal, token, id, data)
+    const response = yield call(editTatic, token, id, data)
     // check response error
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
     // dispatch success action
     yield put({
-      type: GoalTypes.EDIT_ITEM_SUCCESS,
+      type: TaticTypes.EDIT_ITEM_SUCCESS,
     })
-
+    // show notification
+    yield put(
+      NotificationActions.showNotification(
+        'Edit Strategy',
+        'Edit Strategy success',
+        'blue'
+      )
+    )
     // hide loading action
     yield put(ModalActions.hideLoadingAction())
     // clear modal
     yield put(ModalActions.clearModal())
-    // push to detail page if in dashboard
-    if (match.path === '/dashboard') {
-      yield put(push(`/goal/${response.data.item._id}`))
-    } else {
-      yield put(GoalActions.getItemRequest(response.data.item._id))
+    // check match and do relevant action
+    switch (match.path) {
+      case '/goal/:id':
+        yield put(GoalActions.getItemRequest(values.goalId))
+        break
+      case '/objective/:id':
+        yield put(ObjectiveActions.getItemRequest(values.objectiveId))
+        break
+      default:
+        yield put(TaticTypes.getItemRequest(id))
+        break
     }
-    // show notification
-    yield put(
-      NotificationActions.showNotification(
-        'Edit Goal',
-        'Edit Goal success',
-        'blue'
-      )
-    )
   } catch (error) {
     // dispatch edit fail action
     yield put({
-      type: GoalTypes.EDIT_ITEM_FAILURE,
+      type: TaticTypes.EDIT_ITEM_FAILURE,
     })
     // show notification
     yield put(
-      NotificationActions.showNotification('Edit Goal', error.message, 'red')
+      NotificationActions.showNotification(
+        'Edit Objective',
+        error.message,
+        'red'
+      )
     )
     // hide loading action
     yield put(ModalActions.hideLoadingAction())
   }
 }
 
-// delete goal worker
-function* deleteGoalWorker({ values, match }) {
+// delete strategy worker
+function* deleteStrategyWorker({ values, match }) {
   try {
-    console.log(values)
     // Show loading action
     yield put(ModalActions.showLoadingAction())
     // Call api
     const token = yield select(getToken)
-    const response = yield call(deleteGoal, token, values._id)
+    const response = yield call(deleteTatic, token, values.get('_id'))
     // check response error
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
     // dispatch success action
     yield put({
-      type: GoalTypes.DELETE_ITEM_SUCCESS,
+      type: TaticTypes.DELETE_ITEM_SUCCESS,
     })
     // show notification
     yield put(
       NotificationActions.showNotification(
-        'Delete Goal',
-        'Delete Goal success',
+        'Delete Strategy',
+        'Delete Strategy success',
         'blue'
       )
     )
@@ -170,23 +161,30 @@ function* deleteGoalWorker({ values, match }) {
     yield put(ModalActions.hideLoadingAction())
     // clear modal
     yield put(ModalActions.clearModal())
-    // push to detail page
+    // check match do to another action
     switch (match.path) {
-      case '/dashboard':
-        yield put(GoalActions.getItemsRequest())
+      case '/objective/:id':
+        yield put(ObjectiveActions.getItemRequest(values.get('objective')))
+        break
+      case '/goal/:id':
+        yield put(GoalActions.getItemRequest(values.get('goal')))
         break
       default:
-        yield put(push('/dashboard'))
+        yield put(push(`/goal/${values.get('goal')}`))
         break
     }
   } catch (error) {
     // dispatch delete fail action
     yield put({
-      type: GoalTypes.DELETE_ITEM_FAILURE,
+      type: TaticTypes.DELETE_ITEM_FAILURE,
     })
     // show notification
     yield put(
-      NotificationActions.showNotification('Delete Goal', error.message, 'red')
+      NotificationActions.showNotification(
+        'Delete Objective',
+        error.message,
+        'red'
+      )
     )
     // hide loading action
     yield put(ModalActions.hideLoadingAction())
@@ -195,14 +193,13 @@ function* deleteGoalWorker({ values, match }) {
 
 function* watcher() {
   yield all([
-    takeLatest(GoalTypes.GET_ITEMS_REQUEST, getListGoalWorker),
-    takeLatest(GoalTypes.GET_ITEM_REQUEST, getGoalDetailWorker),
+    takeLatest(TaticTypes.GET_ITEM_REQUEST, getStrategyDetailWorker),
     // Create goal
-    takeLatest(GoalTypes.CREATE_ITEM_REQUEST, createGoalWorker),
+    takeLatest(TaticTypes.CREATE_ITEM_REQUEST, createTaticWorker),
     // Edit goal
-    takeLatest(GoalTypes.EDIT_ITEM_REQUEST, editGoalWorker),
+    takeLatest(TaticTypes.EDIT_ITEM_REQUEST, editStrategyWorker),
     // Delete goal
-    takeLatest(GoalTypes.DELETE_ITEM_REQUEST, deleteGoalWorker),
+    takeLatest(TaticTypes.DELETE_ITEM_REQUEST, deleteStrategyWorker),
   ])
 }
 

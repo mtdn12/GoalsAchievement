@@ -5,10 +5,11 @@ import { ModalActions } from 'src/Stores/Modal/Actions'
 import { getModal, getLoadingAction } from 'src/Stores/Modal/Selectors'
 import RegisterModal from './RegisterModal'
 import LoginModal from './LoginModal'
-import CreateEditGoalModal from '../Components/organisms/CreateEditGoalModal'
-import ConfirmationDialog from '../Components/molecules/ConfirmationDialog'
-import CreateEditObjectiveModal from '../Components/organisms/CreateEditObjectiveModal'
-import CreateEditStrategyModal from '../Components/organisms/CreateEditStrategyModal'
+import CreateEditGoalModal from './CreateEditGoalModal'
+import ConfirmationDialog from './ConfirmationDialog'
+import CreateEditObjectiveModal from './CreateEditObjectiveModal'
+import CreateEditStrategyModal from './CreateEditStrategyModal'
+import CreateEditTaticModal from './CreateEditTaticModal'
 
 const modalLookup = {
   RegisterModal,
@@ -17,6 +18,7 @@ const modalLookup = {
   ConfirmationDialog,
   CreateEditObjectiveModal,
   CreateEditStrategyModal,
+  CreateEditTaticModal,
 }
 
 const Modal = props => {

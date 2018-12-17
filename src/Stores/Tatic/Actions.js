@@ -21,9 +21,9 @@ const { Types, Creators } = createActions(
     deleteItemFailure: null,
   },
   {
-    prefix: 'objective/',
+    prefix: 'tatic/',
   }
 )
 
-export const ObjectiveTypes = Types
-export const ObjectiveActions = Creators
+export const TaticTypes = Types
+export const TaticActions = Creators

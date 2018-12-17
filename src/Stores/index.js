@@ -7,6 +7,7 @@ import { firebaseReducer } from 'react-redux-firebase'
 import modalReducer from './Modal/Reducers'
 import goalReducer from './Goal/Reducers'
 import objectiveReducer from './Objective/Reducers'
+import strategyReducer from './Strategy/Reducers'
 
 function createRootReducer(history) {
   const rootReducer = combineReducers({
@@ -22,6 +23,7 @@ function createRootReducer(history) {
     modal: modalReducer,
     goal: goalReducer,
     objective: objectiveReducer,
+    strategy: strategyReducer,
   })
   return rootReducer
 }

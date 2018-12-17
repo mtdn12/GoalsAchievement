@@ -24,22 +24,22 @@ class DashBoardContainer extends Component {
     this.props.handleOpenModal('CreateEditGoalModal', {
       item,
       action: 'create',
-      handleAction: values => this.props.handleCreateGoal(values),
     })
   }
   handleOpenModalEditGoal = item => () => {
     this.props.handleOpenModal('CreateEditGoalModal', {
       item,
       action: 'edit',
-      handleAction: values =>
-        this.props.handleEditGoal(values, this.props.match),
+      match: this.props.match,
     })
   }
-  handleDeleteGoalAction = id => () => {
+  handleDeleteGoalAction = values => () => {
     this.props.handleOpenModal('ConfirmationDialog', {
       title: 'Confirm Delete Goal',
       content: 'Do you want to delete this goal',
-      onConfirm: () => this.props.handleDeleteGoal(id, this.props.match),
+      type: 'goal',
+      match: this.props.match,
+      values,
     })
   }
   pushGoalDetail = id => () => {
@@ -70,14 +70,6 @@ const mapDispatchToProps = dispatch => ({
   // Open modal
   handleOpenModal: (type, props) =>
     dispatch(ModalActions.setModal(type, props)),
-  // handle Create goal
-  handleCreateGoal: values => dispatch(GoalActions.createItemRequest(values)),
-  // handle Edit goal
-  handleEditGoal: (values, match) =>
-    dispatch(GoalActions.editItemRequest(values, match)),
-  // delete goal
-  handleDeleteGoal: (id, match) =>
-    dispatch(GoalActions.deleteItemRequest(id, match)),
 })
 
 const withConnect = connect(

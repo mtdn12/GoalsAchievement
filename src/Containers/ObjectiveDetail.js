@@ -33,8 +33,7 @@ class ObjectiveDetailContainer extends Component {
     this.props.handleOpenModal('CreateEditObjectiveModal', {
       item: editItem,
       action: 'edit',
-      handleAction: values =>
-        this.props.handleEditObjective(values, this.props.match),
+      match: this.props.match,
     })
   }
   handleDeleteObjectiveAction = () => {
@@ -42,12 +41,9 @@ class ObjectiveDetailContainer extends Component {
     this.props.handleOpenModal('ConfirmationDialog', {
       title: 'Confirm Delete Objective',
       content: 'Do you want to delete this Objective',
-      onConfirm: () =>
-        this.props.handleDeleteObjective(
-          item.get('_id'),
-          item.get('goal'),
-          this.props.match
-        ),
+      type: 'objective',
+      values: item,
+      match: this.props.match,
     })
   }
   handleOpenModalCreateStrategy = () => {
@@ -61,7 +57,6 @@ class ObjectiveDetailContainer extends Component {
     this.props.handleOpenModal('CreateEditStrategyModal', {
       item,
       action: 'create',
-      handleAction: values => this.props.handleCreateStrategy(values),
     })
   }
   handleGoBack = () => {
@@ -94,15 +89,6 @@ const mapDispatchToProps = dispatch => ({
   // Open modal
   handleOpenModal: (type, props) =>
     dispatch(ModalActions.setModal(type, props)),
-  // Edit Objective
-  handleEditObjective: (values, match) =>
-    dispatch(ObjectiveActions.editItemRequest(values, match)),
-  // Delete Objective
-  handleDeleteObjective: (id, goalId, match) =>
-    dispatch(ObjectiveActions.deleteItemRequest(id, goalId, match)),
-  // Create strategy
-  handleCreateStrategy: values =>
-    dispatch(StrategyActions.createItemRequest(values)),
 })
 
 const withConnect = connect(

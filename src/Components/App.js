@@ -17,6 +17,11 @@ const App = () => (
         exact
         component={routes.AsyncObjectiveDetail}
       />
+      <PrivateRoute
+        path="/strategy/:id"
+        exact
+        component={routes.AsyncStrategyDetail}
+      />
       <Route path="/welcome" exact component={routes.AsyncWelcome} />
       <Route component={routes.AsyncNotFound} />
     </Switch>

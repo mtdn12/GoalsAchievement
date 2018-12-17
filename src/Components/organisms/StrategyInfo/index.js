@@ -19,7 +19,7 @@ const StrategyInfo = ({
           className={styles.label}
           as={Link}
           to={{
-            pathname: `/objective/${item.get('_id')}`,
+            pathname: `/strategy/${item.get('_id')}`,
             state: { from: history.location.pathname },
           }}
           color="teal"

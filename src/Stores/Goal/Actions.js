@@ -21,7 +21,7 @@ const { Types, Creators } = createActions(
     editItemSuccess: null,
     editItemFailure: null,
     // Delete goal
-    deleteItemRequest: ['id', 'match'],
+    deleteItemRequest: ['values', 'match'],
     deleteItemSuccess: null,
     deleteItemFailure: null,
   },

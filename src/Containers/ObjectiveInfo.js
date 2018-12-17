@@ -31,12 +31,9 @@ class ObjectiveInfoContainer extends Component {
     this.props.handleOpenModal('ConfirmationDialog', {
       title: 'Confirm Delete Objective',
       content: 'Do you want to delete this Objective',
-      onConfirm: () =>
-        this.props.handleDeleteObjective(
-          item.get('_id'),
-          item.get('goal'),
-          this.props.match
-        ),
+      values: item,
+      match: this.props.match,
+      type: 'objective',
     })
   }
   render() {
@@ -58,9 +55,6 @@ const mapDispatchToProps = dispatch => ({
   // Edit Objective
   handleEditObjective: (values, match) =>
     dispatch(ObjectiveActions.editItemRequest(values, match)),
-  // Delete Objective
-  handleDeleteObjective: (id, goalId, match) =>
-    dispatch(ObjectiveActions.deleteItemRequest(id, goalId, match)),
 })
 
 const withConnect = connect(

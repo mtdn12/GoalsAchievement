@@ -133,13 +133,13 @@ function* editObjectiveWorker({ values, match }) {
 }
 
 // delete goal worker
-function* deleteObjectiveWorker({ id, goalId, match }) {
+function* deleteObjectiveWorker({ values, match }) {
   try {
     // Show loading action
     yield put(ModalActions.showLoadingAction())
     // Call api
     const token = yield select(getToken)
-    const response = yield call(deleteObjective, token, id)
+    const response = yield call(deleteObjective, token, values._id)
     // check response error
     if (response.data.result === 'fail') {
       throw new Error(response.error)
@@ -163,10 +163,10 @@ function* deleteObjectiveWorker({ id, goalId, match }) {
     // Check path and do action
     switch (match.path) {
       case '/goal/:id':
-        yield put(GoalActions.getItemRequest(goalId))
+        yield put(GoalActions.getItemRequest(values.goal))
         break
       default:
-        yield put(push(`/goal/${goalId}`))
+        yield put(push(`/goal/${values.goalId}`))
         break
     }
   } catch (error) {

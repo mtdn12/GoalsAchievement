@@ -1,5 +1,5 @@
 import { put, call, all, takeLatest, select } from 'redux-saga/effects'
-import { StrategyTypes } from './Actions'
+import { StrategyTypes, StrategyActions } from './Actions'
 import { GoalActions } from '../Goal/Actions'
 import { ObjectiveActions } from '../Objective/Actions'
 import { push } from 'connected-react-router'
@@ -14,7 +14,7 @@ import {
 import { getToken } from '../Authentication/selectors'
 
 // Get goal detail worker
-function* getObjectiveDetailWorker({ id }) {
+function* getStrategyDetailWorker({ id }) {
   try {
     const token = yield select(getToken)
     const response = yield call(getStrategyDetail, token, id)
@@ -77,10 +77,9 @@ function* createStrategyWorker({ values }) {
     yield put(ModalActions.hideLoadingAction())
   }
 }
-// edit goal worker
-function* editObjectiveWorker({ values }) {
+// edit Strategy worker
+function* editStrategyWorker({ values, match }) {
   try {
-    console.log(values)
     // Show loading action
     yield put(ModalActions.showLoadingAction())
     // Call api
@@ -98,8 +97,8 @@ function* editObjectiveWorker({ values }) {
     // show notification
     yield put(
       NotificationActions.showNotification(
-        'Edit Objective',
-        'Edit Objective success',
+        'Edit Strategy',
+        'Edit Strategy success',
         'blue'
       )
     )
@@ -107,8 +106,18 @@ function* editObjectiveWorker({ values }) {
     yield put(ModalActions.hideLoadingAction())
     // clear modal
     yield put(ModalActions.clearModal())
-    // reload goal detail
-    yield put(GoalActions.getItemRequest(values.goalId))
+    // check match and do relevant action
+    switch (match.path) {
+      case '/goal/:id':
+        yield put(GoalActions.getItemRequest(values.goalId))
+        break
+      case '/objective/:id':
+        yield put(ObjectiveActions.getItemRequest(values.objectiveId))
+        break
+      default:
+        yield put(StrategyActions.getItemRequest(id))
+        break
+    }
   } catch (error) {
     // dispatch edit fail action
     yield put({
@@ -127,14 +136,14 @@ function* editObjectiveWorker({ values }) {
   }
 }
 
-// delete goal worker
+// delete strategy worker
 function* deleteStrategyWorker({ values, match }) {
   try {
     // Show loading action
     yield put(ModalActions.showLoadingAction())
     // Call api
     const token = yield select(getToken)
-    const response = yield call(deleteStrategy, token, values.get('_id'))
+    const response = yield call(deleteStrategy, token, values._id)
     // check response error
     if (response.data.result === 'fail') {
       throw new Error(response.error)
@@ -156,14 +165,17 @@ function* deleteStrategyWorker({ values, match }) {
     // clear modal
     yield put(ModalActions.clearModal())
     // check match do to another action
+    console.log(match.path)
     switch (match.path) {
       case '/objective/:id':
-        yield put(ObjectiveActions.getItemRequest(values.get('objective')))
+        yield put(ObjectiveActions.getItemRequest(values.objective))
         break
       case '/goal/:id':
-        yield put(GoalActions.getItemRequest(values.get('goal')))
+        yield put(GoalActions.getItemRequest(values.goal))
         break
       default:
+        yield put(push(`/goal/${values.goal}`))
+        break
     }
   } catch (error) {
     // dispatch delete fail action
@@ -185,11 +197,11 @@ function* deleteStrategyWorker({ values, match }) {
 
 function* watcher() {
   yield all([
-    takeLatest(StrategyTypes.GET_ITEM_REQUEST, getObjectiveDetailWorker),
+    takeLatest(StrategyTypes.GET_ITEM_REQUEST, getStrategyDetailWorker),
     // Create goal
     takeLatest(StrategyTypes.CREATE_ITEM_REQUEST, createStrategyWorker),
     // Edit goal
-    takeLatest(StrategyTypes.EDIT_ITEM_REQUEST, editObjectiveWorker),
+    takeLatest(StrategyTypes.EDIT_ITEM_REQUEST, editStrategyWorker),
     // Delete goal
     takeLatest(StrategyTypes.DELETE_ITEM_REQUEST, deleteStrategyWorker),
   ])

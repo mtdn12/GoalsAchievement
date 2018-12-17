@@ -29,7 +29,7 @@ const GoalItem = ({
           circular
           icon="delete"
           negative
-          onClick={handleDeleteGoalAction(item.get('_id'))}
+          onClick={handleDeleteGoalAction(item)}
         />
       </div>
       <p>

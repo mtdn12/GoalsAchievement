@@ -30,8 +30,7 @@ class GoalDetailContainer extends Component {
     this.props.handleOpenModal('CreateEditGoalModal', {
       item: itemEdit,
       action: 'edit',
-      handleAction: values =>
-        this.props.handleEditGoal(values, this.props.match),
+      match: this.props.match,
     })
   }
   handleDeleteGoalAction = () => {
@@ -39,8 +38,9 @@ class GoalDetailContainer extends Component {
     this.props.handleOpenModal('ConfirmationDialog', {
       title: 'Confirm Delete Goal',
       content: 'Do you want to delete this goal',
-      onConfirm: () =>
-        this.props.handleDeleteGoal(item.get('_id'), this.props.match),
+      type: 'goal',
+      match: this.props.match,
+      values: item,
     })
   }
   handleOpenModalCreateObjective = () => {
@@ -53,7 +53,6 @@ class GoalDetailContainer extends Component {
     this.props.handleOpenModal('CreateEditObjectiveModal', {
       item,
       action: 'create',
-      handleAction: values => this.props.handleCreateObjective(values),
     })
   }
   render() {
@@ -79,12 +78,6 @@ const mapDispatchToProps = dispatch => ({
   // Open modal
   handleOpenModal: (type, props) =>
     dispatch(ModalActions.setModal(type, props)),
-  // handle Edit goal
-  handleEditGoal: (values, match) =>
-    dispatch(GoalActions.editItemRequest(values, match)),
-  // delete goal
-  handleDeleteGoal: (id, match) =>
-    dispatch(GoalActions.deleteItemRequest(id, match)),
   // Create Objective
   handleCreateObjective: values =>
     dispatch(ObjectiveActions.createItemRequest(values)),

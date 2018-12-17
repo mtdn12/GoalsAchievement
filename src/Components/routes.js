@@ -31,3 +31,9 @@ export const AsyncObjectiveDetail = Loadable({
   loader: () => import('src/Containers/ObjectiveDetail'),
   loading: LoadingPage,
 })
+
+// Strategy page detail
+export const AsyncStrategyDetail = Loadable({
+  loader: () => import('src/Containers/StrategyDetail'),
+  loading: LoadingPage,
+})
