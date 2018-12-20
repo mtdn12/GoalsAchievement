@@ -6,26 +6,26 @@
 import { fromJS } from 'immutable'
 import { INITIAL_STATE } from './InitialState'
 import { createReducer } from 'reduxsauce'
-import { TaticTypes } from './Actions'
+import { ActionTypes } from './Actions'
 
 // Show and hide loading when request Strategy detail
-const showLoadingItem = state => state.set('isLoadingItem', true)
-const hideLoadingItem = state => state.set('isLoadingItem', false)
+const showLoadingItems = state => state.set('isLoadingItems', true)
+const hideLoadingItems = state => state.set('isLoadingItems', false)
 
 // Set item and hide loading when get tatic detail success
-const setItem = (state, { item }) =>
-  state.set('item', fromJS(item)).set('isLoadingItem', false)
+const setItems = (state, { items }) =>
+  state.set('items', fromJS(items)).set('isLoadingItems', false)
 // Clear tatic item when component unmopunt
-const clearItem = state => state.set('item', fromJS({}))
+const clearItems = state => state.set('items', fromJS({}))
 
 /**
  * @see https://github.com/infinitered/reduxsauce#createreducer
  */
 const reducer = createReducer(INITIAL_STATE, {
-  [TaticTypes.GET_ITEM_REQUEST]: showLoadingItem,
-  [TaticTypes.GET_ITEM_FAILURE]: hideLoadingItem,
-  [TaticTypes.GET_ITEM_SUCCESS]: setItem,
-  [TaticTypes.CLEAR_ITEM]: clearItem,
+  [ActionTypes.GET_ITEMS_REQUEST]: showLoadingItems,
+  [ActionTypes.GET_ITEMS_FAILURE]: hideLoadingItems,
+  [ActionTypes.GET_ITEMS_SUCCESS]: setItems,
+  [ActionTypes.CLEAR_ITEMS]: clearItems,
 })
 
 export default reducer

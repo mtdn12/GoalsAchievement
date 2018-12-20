@@ -8,6 +8,8 @@ import modalReducer from './Modal/Reducers'
 import goalReducer from './Goal/Reducers'
 import objectiveReducer from './Objective/Reducers'
 import strategyReducer from './Strategy/Reducers'
+import taticReducer from './Tatic/Reducers'
+import actionReducer from './Action/Reducers'
 
 function createRootReducer(history) {
   const rootReducer = combineReducers({
@@ -24,6 +26,8 @@ function createRootReducer(history) {
     goal: goalReducer,
     objective: objectiveReducer,
     strategy: strategyReducer,
+    tatic: taticReducer,
+    action: actionReducer,
   })
   return rootReducer
 }

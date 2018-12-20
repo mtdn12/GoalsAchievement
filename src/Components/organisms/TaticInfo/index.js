@@ -1,10 +1,15 @@
 import React from 'react'
-import { object } from 'prop-types'
+import { object, func } from 'prop-types'
 import moment from 'moment'
 import { Link, withRouter } from 'react-router-dom'
 import { Progress, Label, Button, Header } from 'semantic-ui-react'
 import styles from './styles.module.scss'
-const TaticInfo = ({ item, history }) => {
+const TaticInfo = ({
+  item,
+  history,
+  handleOpenModalEditTatic,
+  handleDeleteTaticAction,
+}) => {
   return (
     <div className={styles.taticItem}>
       <div className={styles.taticInfo}>
@@ -12,7 +17,7 @@ const TaticInfo = ({ item, history }) => {
           className={styles.label}
           as={Link}
           to={{
-            pathname: `/objective/${item.get('_id')}`,
+            pathname: `/tatic/${item.get('_id')}`,
             state: { from: history.location.pathname },
           }}
           color="brown"
@@ -24,16 +29,13 @@ const TaticInfo = ({ item, history }) => {
             icon="edit"
             circular
             color="brown"
-            // onClick={handleOpenModalEditObjective(editItem)}
+            onClick={handleOpenModalEditTatic}
           />
           <Button
             icon="delete"
             circular
             negative
-            // onClick={handleDeleteObjectiveAction(
-            //   item.get('_id'),
-            //   item.get('goal')
-            // )}
+            onClick={handleDeleteTaticAction}
           />
         </div>
         <Header as="h4" textAlign="center" color="brown">
@@ -57,6 +59,8 @@ const TaticInfo = ({ item, history }) => {
 TaticInfo.propTypes = {
   item: object.isRequired,
   history: object.isRequired,
+  handleOpenModalEditTatic: func.isRequired,
+  handleDeleteTaticAction: func.isRequired,
 }
 
 export default withRouter(TaticInfo)

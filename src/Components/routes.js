@@ -37,3 +37,9 @@ export const AsyncStrategyDetail = Loadable({
   loader: () => import('src/Containers/StrategyDetail'),
   loading: LoadingPage,
 })
+
+// Tatic page detail
+export const AsyncTaticDetail = Loadable({
+  loader: () => import('src/Containers/TaticDetail'),
+  loading: LoadingPage,
+})

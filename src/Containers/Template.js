@@ -9,7 +9,7 @@ import {
   getAuthenticated,
   getProfile,
   getAuth,
-} from '../Stores/Authentication/selectors'
+} from '../Stores/Authentication/Selectors'
 import { removeToken } from '../Utils/token'
 
 class TemplateContainer extends Component {

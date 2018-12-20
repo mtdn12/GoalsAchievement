@@ -10,7 +10,7 @@ import {
   editGoal,
   deleteGoal,
 } from 'src/Services/GoalService'
-import { getToken } from '../Authentication/selectors'
+import { getToken } from '../Authentication/Selectors'
 
 // Get list goal worker
 function* getListGoalWorker() {

@@ -1,57 +1,56 @@
 import { put, call, all, takeLatest, select } from 'redux-saga/effects'
-import { StrategyTypes, StrategyActions } from './Actions'
-import { GoalActions } from '../Goal/Actions'
-import { ObjectiveActions } from '../Objective/Actions'
+import { ActionTypes, ActionActions } from './Actions'
+import { TaticActions } from '../Tatic/Actions'
 import { push } from 'connected-react-router'
 import { ModalActions } from '../Modal/Actions'
 import { NotificationActions } from '../Notification/Actions'
 import {
-  getStrategyDetail,
-  createStrategy,
-  editStrategy,
-  deleteStrategy,
-} from 'src/Services/StrategyService.js'
+  getListAction,
+  createAction,
+  editAction,
+  deleteAction,
+} from 'src/Services/ActionService.js'
 import { getToken } from '../Authentication/Selectors'
 
-// Get goal detail worker
-function* getStrategyDetailWorker({ id }) {
+// Get List action worker
+function* getListActionWorker({ id }) {
   try {
     const token = yield select(getToken)
-    const response = yield call(getStrategyDetail, token, id)
+    const response = yield call(getListAction, token, id)
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
     yield put({
-      type: StrategyTypes.GET_ITEM_SUCCESS,
-      item: response.data.item,
+      type: ActionTypes.GET_ITEMS_SUCCESS,
+      items: response.data.items,
     })
   } catch (error) {
     yield put({
-      type: StrategyTypes.GET_ITEM_FAILURE,
+      type: ActionTypes.GET_ITEMS_FAILURE,
     })
   }
 }
-// Create Goal worker
-function* createStrategyWorker({ values }) {
+// Create Action worker
+function* createActionWorker({ values }) {
   try {
     // Show loading action
     yield put(ModalActions.showLoadingAction())
     // call api to create goal
     const token = yield select(getToken)
-    const response = yield call(createStrategy, token, values)
+    const response = yield call(createAction, token, values)
     // check result from api
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
     // dispatch success action
     yield put({
-      type: StrategyTypes.CREATE_ITEM_SUCCESS,
+      type: ActionTypes.CREATE_ITEM_SUCCESS,
     })
     // show notification
     yield put(
       NotificationActions.showNotification(
-        'Create Strategy',
-        'Create Strategy success',
+        'Create Action',
+        'Create Action success',
         'blue'
       )
     )
@@ -59,16 +58,16 @@ function* createStrategyWorker({ values }) {
     yield put(ModalActions.hideLoadingAction())
     // clear modal
     yield put(ModalActions.clearModal())
-    // reload goal detail
-    yield put(ObjectiveActions.getItemRequest(values.objectiveId))
+    // Reload list action
+    yield put(ActionActions.getItemsRequest(values.taticId))
   } catch (error) {
     yield put({
-      type: StrategyTypes.CREATE_ITEM_FAILURE,
+      type: ActionTypes.CREATE_ITEM_FAILURE,
     })
     // show notification
     yield put(
       NotificationActions.showNotification(
-        'Create Strategy',
+        'Create Action',
         error.message,
         'red'
       )
@@ -77,28 +76,28 @@ function* createStrategyWorker({ values }) {
     yield put(ModalActions.hideLoadingAction())
   }
 }
-// edit Strategy worker
-function* editStrategyWorker({ values, match }) {
+// edit Tatic worker
+function* editActionWorker({ values }) {
   try {
     // Show loading action
     yield put(ModalActions.showLoadingAction())
     // Call api
     const token = yield select(getToken)
     const { id, ...data } = values
-    const response = yield call(editStrategy, token, id, data)
+    const response = yield call(editAction, token, id, data)
     // check response error
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
     // dispatch success action
     yield put({
-      type: StrategyTypes.EDIT_ITEM_SUCCESS,
+      type: ActionTypes.EDIT_ITEM_SUCCESS,
     })
     // show notification
     yield put(
       NotificationActions.showNotification(
-        'Edit Strategy',
-        'Edit Strategy success',
+        'Edit Action',
+        'Edit Action success',
         'blue'
       )
     )
@@ -106,30 +105,16 @@ function* editStrategyWorker({ values, match }) {
     yield put(ModalActions.hideLoadingAction())
     // clear modal
     yield put(ModalActions.clearModal())
-    // check match and do relevant action
-    switch (match.path) {
-      case '/goal/:id':
-        yield put(GoalActions.getItemRequest(values.goalId))
-        break
-      case '/objective/:id':
-        yield put(ObjectiveActions.getItemRequest(values.objectiveId))
-        break
-      default:
-        yield put(StrategyActions.getItemRequest(id))
-        break
-    }
+    // Reload actions list
+    yield put(ActionActions.getItemsRequest(values.taticId))
   } catch (error) {
     // dispatch edit fail action
     yield put({
-      type: StrategyTypes.EDIT_ITEM_FAILURE,
+      type: ActionTypes.EDIT_ITEM_FAILURE,
     })
     // show notification
     yield put(
-      NotificationActions.showNotification(
-        'Edit Objective',
-        error.message,
-        'red'
-      )
+      NotificationActions.showNotification('Edit Tatic', error.message, 'red')
     )
     // hide loading action
     yield put(ModalActions.hideLoadingAction())
@@ -137,26 +122,26 @@ function* editStrategyWorker({ values, match }) {
 }
 
 // delete strategy worker
-function* deleteStrategyWorker({ values, match }) {
+function* deleteActionWorker({ values }) {
   try {
     // Show loading action
     yield put(ModalActions.showLoadingAction())
     // Call api
     const token = yield select(getToken)
-    const response = yield call(deleteStrategy, token, values._id)
+    const response = yield call(deleteAction, token, values._id)
     // check response error
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
     // dispatch success action
     yield put({
-      type: StrategyTypes.DELETE_ITEM_SUCCESS,
+      type: ActionTypes.DELETE_ITEM_SUCCESS,
     })
     // show notification
     yield put(
       NotificationActions.showNotification(
-        'Delete Strategy',
-        'Delete Strategy success',
+        'Delete Action',
+        'Delete Action success',
         'blue'
       )
     )
@@ -164,31 +149,16 @@ function* deleteStrategyWorker({ values, match }) {
     yield put(ModalActions.hideLoadingAction())
     // clear modal
     yield put(ModalActions.clearModal())
-    // check match do to another action
-    console.log(match.path)
-    switch (match.path) {
-      case '/objective/:id':
-        yield put(ObjectiveActions.getItemRequest(values.objective))
-        break
-      case '/goal/:id':
-        yield put(GoalActions.getItemRequest(values.goal))
-        break
-      default:
-        yield put(push(`/goal/${values.goal}`))
-        break
-    }
+    // reload list action
+    yield put(ActionActions.getItemsRequest(values.tatic))
   } catch (error) {
     // dispatch delete fail action
     yield put({
-      type: StrategyTypes.DELETE_ITEM_FAILURE,
+      type: ActionTypes.DELETE_ITEM_FAILURE,
     })
     // show notification
     yield put(
-      NotificationActions.showNotification(
-        'Delete Objective',
-        error.message,
-        'red'
-      )
+      NotificationActions.showNotification('Delete Tatic', error.message, 'red')
     )
     // hide loading action
     yield put(ModalActions.hideLoadingAction())
@@ -197,13 +167,13 @@ function* deleteStrategyWorker({ values, match }) {
 
 function* watcher() {
   yield all([
-    takeLatest(StrategyTypes.GET_ITEM_REQUEST, getStrategyDetailWorker),
+    takeLatest(ActionTypes.GET_ITEMS_REQUEST, getListActionWorker),
     // Create goal
-    takeLatest(StrategyTypes.CREATE_ITEM_REQUEST, createStrategyWorker),
+    takeLatest(ActionTypes.CREATE_ITEM_REQUEST, createActionWorker),
     // Edit goal
-    takeLatest(StrategyTypes.EDIT_ITEM_REQUEST, editStrategyWorker),
+    takeLatest(ActionTypes.EDIT_ITEM_REQUEST, editActionWorker),
     // Delete goal
-    takeLatest(StrategyTypes.DELETE_ITEM_REQUEST, deleteStrategyWorker),
+    takeLatest(ActionTypes.DELETE_ITEM_REQUEST, deleteActionWorker),
   ])
 }
 

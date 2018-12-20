@@ -7,6 +7,9 @@ import taticSaga from '../Stores/Tatic/Sagas'
 import CreateEditTaticModal from '../Components/organisms/CreateEditTaticModal'
 
 class CreateEditTaticModalContainer extends Component {
+  componentDidMount() {
+    console.log(this.props)
+  }
   handleAction = values => {
     const { action, match, handleCreateTatic, handleEditTatic } = this.props
     switch (action) {

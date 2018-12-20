@@ -12,10 +12,10 @@ import {
   editTatic,
   deleteTatic,
 } from 'src/Services/TaticService.js'
-import { getToken } from '../Authentication/selectors'
+import { getToken } from '../Authentication/Selectors'
 
-// Get goal detail worker
-function* getStrategyDetailWorker({ id }) {
+// Get tatic detail worker
+function* getTaticDetailWorker({ id }) {
   try {
     const token = yield select(getToken)
     const response = yield call(getTaticDetail, token, id)
@@ -74,8 +74,8 @@ function* createTaticWorker({ values }) {
     yield put(ModalActions.hideLoadingAction())
   }
 }
-// edit Strategy worker
-function* editStrategyWorker({ values, match }) {
+// edit Tatic worker
+function* editTaticWorker({ values, match }) {
   try {
     // Show loading action
     yield put(ModalActions.showLoadingAction())
@@ -94,8 +94,8 @@ function* editStrategyWorker({ values, match }) {
     // show notification
     yield put(
       NotificationActions.showNotification(
-        'Edit Strategy',
-        'Edit Strategy success',
+        'Edit Tatic',
+        'Edit Tatic success',
         'blue'
       )
     )
@@ -109,10 +109,13 @@ function* editStrategyWorker({ values, match }) {
         yield put(GoalActions.getItemRequest(values.goalId))
         break
       case '/objective/:id':
-        yield put(ObjectiveActions.getItemRequest(values.objectiveId))
+        yield put(ObjectiveActions.getItemRequest(match.params.id))
+        break
+      case '/strategy/:id':
+        yield put(StrategyActions.getItemRequest(values.strategyId))
         break
       default:
-        yield put(TaticTypes.getItemRequest(id))
+        yield put(TaticActions.getItemRequest(id))
         break
     }
   } catch (error) {
@@ -122,11 +125,7 @@ function* editStrategyWorker({ values, match }) {
     })
     // show notification
     yield put(
-      NotificationActions.showNotification(
-        'Edit Objective',
-        error.message,
-        'red'
-      )
+      NotificationActions.showNotification('Edit Tatic', error.message, 'red')
     )
     // hide loading action
     yield put(ModalActions.hideLoadingAction())
@@ -134,13 +133,13 @@ function* editStrategyWorker({ values, match }) {
 }
 
 // delete strategy worker
-function* deleteStrategyWorker({ values, match }) {
+function* deleteTaticWorker({ values, match }) {
   try {
     // Show loading action
     yield put(ModalActions.showLoadingAction())
     // Call api
     const token = yield select(getToken)
-    const response = yield call(deleteTatic, token, values.get('_id'))
+    const response = yield call(deleteTatic, token, values._id)
     // check response error
     if (response.data.result === 'fail') {
       throw new Error(response.error)
@@ -152,8 +151,8 @@ function* deleteStrategyWorker({ values, match }) {
     // show notification
     yield put(
       NotificationActions.showNotification(
-        'Delete Strategy',
-        'Delete Strategy success',
+        'Delete Tatic',
+        'Delete Tatic success',
         'blue'
       )
     )
@@ -164,13 +163,16 @@ function* deleteStrategyWorker({ values, match }) {
     // check match do to another action
     switch (match.path) {
       case '/objective/:id':
-        yield put(ObjectiveActions.getItemRequest(values.get('objective')))
+        yield put(ObjectiveActions.getItemRequest(match.params.id))
         break
       case '/goal/:id':
-        yield put(GoalActions.getItemRequest(values.get('goal')))
+        yield put(GoalActions.getItemRequest(match.params.id))
+        break
+      case '/strategy/:id':
+        yield put(StrategyActions.getItemRequest(match.params.id))
         break
       default:
-        yield put(push(`/goal/${values.get('goal')}`))
+        yield put(push(`/goal/${values.goal}`))
         break
     }
   } catch (error) {
@@ -180,11 +182,7 @@ function* deleteStrategyWorker({ values, match }) {
     })
     // show notification
     yield put(
-      NotificationActions.showNotification(
-        'Delete Objective',
-        error.message,
-        'red'
-      )
+      NotificationActions.showNotification('Delete Tatic', error.message, 'red')
     )
     // hide loading action
     yield put(ModalActions.hideLoadingAction())
@@ -193,13 +191,13 @@ function* deleteStrategyWorker({ values, match }) {
 
 function* watcher() {
   yield all([
-    takeLatest(TaticTypes.GET_ITEM_REQUEST, getStrategyDetailWorker),
+    takeLatest(TaticTypes.GET_ITEM_REQUEST, getTaticDetailWorker),
     // Create goal
     takeLatest(TaticTypes.CREATE_ITEM_REQUEST, createTaticWorker),
     // Edit goal
-    takeLatest(TaticTypes.EDIT_ITEM_REQUEST, editStrategyWorker),
+    takeLatest(TaticTypes.EDIT_ITEM_REQUEST, editTaticWorker),
     // Delete goal
-    takeLatest(TaticTypes.DELETE_ITEM_REQUEST, deleteStrategyWorker),
+    takeLatest(TaticTypes.DELETE_ITEM_REQUEST, deleteTaticWorker),
   ])
 }
 

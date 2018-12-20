@@ -10,6 +10,7 @@ import ConfirmationDialog from './ConfirmationDialog'
 import CreateEditObjectiveModal from './CreateEditObjectiveModal'
 import CreateEditStrategyModal from './CreateEditStrategyModal'
 import CreateEditTaticModal from './CreateEditTaticModal'
+import CreateEditActionModal from './CreateEditActionModal'
 
 const modalLookup = {
   RegisterModal,
@@ -19,6 +20,7 @@ const modalLookup = {
   CreateEditObjectiveModal,
   CreateEditStrategyModal,
   CreateEditTaticModal,
+  CreateEditActionModal,
 }
 
 const Modal = props => {

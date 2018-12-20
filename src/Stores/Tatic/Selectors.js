@@ -1,5 +1,5 @@
 // Get objective detail
-export const getItem = state => state.strategy.get('item')
+export const getItem = state => state.tatic.get('item')
 
 // get loading objective detail
-export const getLoadingItem = state => state.strategy.get('isLoadingItem')
+export const getLoadingItem = state => state.tatic.get('isLoadingItem')

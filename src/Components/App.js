@@ -22,6 +22,11 @@ const App = () => (
         exact
         component={routes.AsyncStrategyDetail}
       />
+      <PrivateRoute
+        path="/tatic/:id"
+        exact
+        component={routes.AsyncTaticDetail}
+      />
       <Route path="/welcome" exact component={routes.AsyncWelcome} />
       <Route component={routes.AsyncNotFound} />
     </Switch>

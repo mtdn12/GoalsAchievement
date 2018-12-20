@@ -4,7 +4,7 @@ import { Loader, Button, Header, Progress } from 'semantic-ui-react'
 import moment from 'moment'
 import styles from './styles.module.scss'
 import ModalPageTemplate from '../../templates/ModalPageTemplate'
-import TaticInfo from '../../organisms/TaticInfo'
+import TaticInfo from 'src/Containers/TaticInfo'
 
 const StrategyDetail = ({
   item,

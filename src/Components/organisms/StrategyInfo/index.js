@@ -4,7 +4,7 @@ import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { Progress, Label, Button, Header } from 'semantic-ui-react'
 import styles from './styles.module.scss'
-import TaticInfo from '../TaticInfo'
+import TaticInfo from 'src/Containers/TaticInfo'
 
 const StrategyInfo = ({
   item,

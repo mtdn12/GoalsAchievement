@@ -5,7 +5,7 @@ import { Redirect, Route } from 'react-router-dom'
 import {
   getAuthenticated,
   getLoadedAuthen,
-} from '../Stores/Authentication/selectors'
+} from '../Stores/Authentication/Selectors'
 import LoadingPage from '../Components/pages/LoadingPage'
 const PrivateRoute = ({
   component: Component,

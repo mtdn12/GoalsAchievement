@@ -10,7 +10,7 @@ import {
   editObjective,
   deleteObjective,
 } from 'src/Services/ObjectiveService'
-import { getToken } from '../Authentication/selectors'
+import { getToken } from '../Authentication/Selectors'
 
 // Get goal detail worker
 function* getObjectiveDetailWorker({ id }) {
