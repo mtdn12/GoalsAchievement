@@ -11,6 +11,7 @@ const App = () => (
     <Switch>
       <Redirect exact from="/" to="/dashboard" />
       <PrivateRoute path="/dashboard" exact component={routes.AsyncDashBoard} />
+      <PrivateRoute path="/dailytask" exact component={routes.AsyncDailyTask} />
       <PrivateRoute path="/goal/:id" exact component={routes.AsyncGoalDetail} />
       <PrivateRoute
         path="/objective/:id"
@@ -28,6 +29,7 @@ const App = () => (
         component={routes.AsyncTaticDetail}
       />
       <Route path="/welcome" exact component={routes.AsyncWelcome} />
+
       <Route component={routes.AsyncNotFound} />
     </Switch>
   </ErrorBoundary>

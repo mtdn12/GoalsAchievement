@@ -26,7 +26,6 @@ const CreateEditStrategy = ({
         onSubmit={values => handleAction(values)}
         validationSchema={Yup.object().shape({
           name: Yup.string().required('This field is required'),
-          goalId: Yup.string().required(),
           objectiveId: Yup.string().required(),
           timeEnd: Yup.date()
             .min(
@@ -46,15 +45,6 @@ const CreateEditStrategy = ({
           return (
             <Form onSubmit={handleSubmit} className={styles.formContent}>
               <Modal.Content>
-                <InputField
-                  name="goalId"
-                  value={values.goalId}
-                  inputProps={{
-                    fluid: true,
-                    disabled: true,
-                  }}
-                  label="Goal ID"
-                />
                 <InputField
                   name="objectiveId"
                   value={values.objectiveId}

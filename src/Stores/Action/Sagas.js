@@ -1,7 +1,5 @@
 import { put, call, all, takeLatest, select } from 'redux-saga/effects'
 import { ActionTypes, ActionActions } from './Actions'
-import { TaticActions } from '../Tatic/Actions'
-import { push } from 'connected-react-router'
 import { ModalActions } from '../Modal/Actions'
 import { NotificationActions } from '../Notification/Actions'
 import {

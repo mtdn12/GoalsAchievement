@@ -43,3 +43,9 @@ export const AsyncTaticDetail = Loadable({
   loader: () => import('src/Containers/TaticDetail'),
   loading: LoadingPage,
 })
+
+// Daily task page
+export const AsyncDailyTask = Loadable({
+  loader: () => import('src/Containers/DailyTask'),
+  loading: LoadingPage,
+})

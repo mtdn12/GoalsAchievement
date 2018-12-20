@@ -16,7 +16,6 @@ class StrategyInfoContainer extends Component {
       timeEnd: moment(item.get('timeEnd')).format('YYYY-MM-DD'),
       description: item.get('description'),
       id: item.get('_id'),
-      goalId: item.get('goal'),
       objectiveId: item.get('objective'),
     }
     this.props.handleOpenModal('CreateEditStrategyModal', {

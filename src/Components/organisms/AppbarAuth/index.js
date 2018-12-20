@@ -14,6 +14,13 @@ const AppbarAuth = ({ handleLogout }) => {
         activeClassName={styles.activeItem}>
         Dashboard
       </Menu.Item>
+      <Menu.Item
+        as={NavLink}
+        to="/dailytask"
+        className={styles.menuItem}
+        activeClassName={styles.activeItem}>
+        Daily Task
+      </Menu.Item>
       <Menu.Menu position="right">
         <Menu.Item className={styles.menuItem} onClick={handleLogout}>
           Log Out

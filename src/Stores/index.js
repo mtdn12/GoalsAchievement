@@ -10,6 +10,7 @@ import objectiveReducer from './Objective/Reducers'
 import strategyReducer from './Strategy/Reducers'
 import taticReducer from './Tatic/Reducers'
 import actionReducer from './Action/Reducers'
+import dailyTaskReducer from './DailyTask/Reducers'
 
 function createRootReducer(history) {
   const rootReducer = combineReducers({
@@ -28,6 +29,7 @@ function createRootReducer(history) {
     strategy: strategyReducer,
     tatic: taticReducer,
     action: actionReducer,
+    dailyTask: dailyTaskReducer,
   })
   return rootReducer
 }

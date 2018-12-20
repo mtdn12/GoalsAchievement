@@ -25,7 +25,6 @@ class StrategyDetailContainer extends Component {
       timeEnd: moment(item.get('timeEnd')).format('YYYY-MM-DD'),
       description: item.get('description'),
       id: item.get('_id'),
-      goalId: item.get('goal'),
       objectiveId: item.get('objective'),
     }
     this.props.handleOpenModal('CreateEditStrategyModal', {
@@ -54,7 +53,6 @@ class StrategyDetailContainer extends Component {
   handleOpenModalCreateTatic = () => {
     const { item, handleOpenModal } = this.props
     const itemCreate = {
-      goalId: item.get('goal'),
       strategyId: item.get('_id'),
       timeEnd: '',
       name: '',

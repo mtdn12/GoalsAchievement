@@ -109,10 +109,10 @@ function* editStrategyWorker({ values, match }) {
     // check match and do relevant action
     switch (match.path) {
       case '/goal/:id':
-        yield put(GoalActions.getItemRequest(values.goalId))
+        yield put(GoalActions.getItemRequest(match.params.id))
         break
       case '/objective/:id':
-        yield put(ObjectiveActions.getItemRequest(values.objectiveId))
+        yield put(ObjectiveActions.getItemRequest(match.params.id))
         break
       default:
         yield put(StrategyActions.getItemRequest(id))
@@ -165,16 +165,15 @@ function* deleteStrategyWorker({ values, match }) {
     // clear modal
     yield put(ModalActions.clearModal())
     // check match do to another action
-    console.log(match.path)
     switch (match.path) {
       case '/objective/:id':
-        yield put(ObjectiveActions.getItemRequest(values.objective))
+        yield put(ObjectiveActions.getItemRequest(match.params.id))
         break
       case '/goal/:id':
-        yield put(GoalActions.getItemRequest(values.goal))
+        yield put(GoalActions.getItemRequest(match.params.id))
         break
       default:
-        yield put(push(`/goal/${values.goal}`))
+        yield put(push(`/objective/${values.objectiveId}`))
         break
     }
   } catch (error) {

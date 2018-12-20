@@ -106,13 +106,13 @@ function* editTaticWorker({ values, match }) {
     // check match and do relevant action
     switch (match.path) {
       case '/goal/:id':
-        yield put(GoalActions.getItemRequest(values.goalId))
+        yield put(GoalActions.getItemRequest(match.params.id))
         break
       case '/objective/:id':
         yield put(ObjectiveActions.getItemRequest(match.params.id))
         break
       case '/strategy/:id':
-        yield put(StrategyActions.getItemRequest(values.strategyId))
+        yield put(StrategyActions.getItemRequest(match.params.id))
         break
       default:
         yield put(TaticActions.getItemRequest(id))
@@ -172,7 +172,7 @@ function* deleteTaticWorker({ values, match }) {
         yield put(StrategyActions.getItemRequest(match.params.id))
         break
       default:
-        yield put(push(`/goal/${values.goal}`))
+        yield put(push(`/strategy/${values.strategyId}`))
         break
     }
   } catch (error) {

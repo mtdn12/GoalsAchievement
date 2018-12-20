@@ -50,7 +50,6 @@ class ObjectiveDetailContainer extends Component {
     const item = {
       name: '',
       objectiveId: this.props.match.params.id,
-      goalId: this.props.item.get('goal'),
       timeEnd: '',
       description: '',
     }

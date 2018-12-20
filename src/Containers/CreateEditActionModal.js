@@ -12,7 +12,6 @@ class CreateEditActionModalContainer extends Component {
     switch (action) {
       case 'create':
         handleCreateAction(values)
-        console.log('how many time create na')
         break
       case 'edit':
         handleEditAction(values)
