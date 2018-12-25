@@ -3,6 +3,7 @@ import { object, bool, func } from 'prop-types'
 import { Loader, Button, Progress, Header } from 'semantic-ui-react'
 import moment from 'moment'
 import styles from './styles.module.scss'
+import { Link } from 'react-router-dom'
 import ModalPageTemplate from '../../templates/ModalPageTemplate'
 
 const TaticDetail = ({
@@ -43,7 +44,13 @@ const TaticDetail = ({
                 <Progress
                   progress
                   color="brown"
-                  percent={item.get('percent')}
+                  percent={
+                    item.get('completedAction') &&
+                    (
+                      (item.get('completedAction') / item.get('totalAction')) *
+                      100
+                    ).toFixed(0)
+                  }
                 />{' '}
               </div>
             </div>
@@ -86,7 +93,11 @@ const TaticDetail = ({
                 ))}
             </div>
           </div>
-          <Button color="brown" fluid>
+          <Button
+            color="brown"
+            fluid
+            as={Link}
+            to={`/tatic/history/${item.get('_id')}`}>
             Show History
           </Button>
         </div>

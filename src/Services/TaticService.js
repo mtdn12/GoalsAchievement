@@ -22,3 +22,12 @@ export const deleteTatic = (token, id) =>
     {},
     { headers: { Authorization: token } }
   )
+// Get list History
+export const getListHistory = (token, id) =>
+  apiClient.get(
+    `/api/histories/${id}`,
+    {},
+    {
+      headers: { Authorization: token },
+    }
+  )

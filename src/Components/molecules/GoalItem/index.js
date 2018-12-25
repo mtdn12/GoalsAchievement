@@ -45,7 +45,11 @@ const GoalItem = ({
       </p>
       <div>
         <span className={styles.subtitle}>Completed:</span>
-        <Progress progress color="blue" percent={item.get('percent')} />{' '}
+        <Progress
+          progress
+          color="blue"
+          percent={item.get('perCent') && item.get('perCent').toFixed(0)}
+        />{' '}
       </div>
       <Button primary fluid onClick={pushGoalDetail(item.get('_id'))}>
         Detail

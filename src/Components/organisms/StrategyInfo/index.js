@@ -50,7 +50,7 @@ const StrategyInfo = ({
             style={{ margin: 0 }}
             progress
             color="teal"
-            percent={item.get('percent')}
+            percent={item.get('perCent') && item.get('perCent').toFixed(0)}
           />{' '}
         </div>
       </div>

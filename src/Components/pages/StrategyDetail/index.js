@@ -57,7 +57,9 @@ const StrategyDetail = ({
                   <Progress
                     progress
                     color="teal"
-                    percent={item.get('percent')}
+                    percent={
+                      item.get('perCent') && item.get('perCent').toFixed(0)
+                    }
                   />{' '}
                 </div>
               </div>

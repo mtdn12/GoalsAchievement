@@ -58,7 +58,11 @@ class GoalInfo extends React.Component {
                 style={{ marginBottom: '.5em', display: 'inline-block' }}>
                 Completed:
               </b>
-              <Progress progress color="blue" percent={item.get('percent')} />{' '}
+              <Progress
+                progress
+                color="blue"
+                percent={item.get('perCent') && item.get('perCent').toFixed(0)}
+              />{' '}
             </div>
           </div>
           <Button fluid primary onClick={handleOpenModalCreateObjective}>

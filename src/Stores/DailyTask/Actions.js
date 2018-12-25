@@ -4,17 +4,17 @@ const { Types, Creators } = createActions(
   {
     // Get list daily task
     getItemsRequest: ['id'],
-    getItemsSuccess: null,
+    getItemsSuccess: ['items'],
     getItemsFailure: null,
     clearItems: null,
     // Check task done
     checkItemRequest: ['id'],
-    checkItemSuccess: null,
-    checkItemFailure: null,
+    checkItemSuccess: ['item'],
+    checkItemFailure: ['id'],
     // unCheck task
     uncheckItemRequest: ['id'],
-    uncheckItemSuccess: null,
-    uncheckItemFailure: null,
+    uncheckItemSuccess: ['item'],
+    uncheckItemFailure: ['id'],
   },
   {
     prefix: '@@dailyTask/',

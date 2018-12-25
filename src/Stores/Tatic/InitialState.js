@@ -6,4 +6,6 @@ import { fromJS } from 'immutable'
 export const INITIAL_STATE = fromJS({
   item: {},
   isLoadingItem: false,
+  histories: [],
+  isLoadingHistories: false,
 })

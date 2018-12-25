@@ -1,4 +1,11 @@
-import { put, call, all, takeLatest, select } from 'redux-saga/effects'
+import {
+  put,
+  call,
+  all,
+  takeLatest,
+  select,
+  takeEvery,
+} from 'redux-saga/effects'
 import { DailyTaskTypes, DailyTaskActions } from './Actions'
 import { NotificationActions } from '../Notification/Actions'
 import {
@@ -52,6 +59,7 @@ function* checkTaskWorker({ id }) {
   } catch (error) {
     yield put({
       type: DailyTaskTypes.CHECK_ITEM_FAILURE,
+      id,
     })
     yield put(
       NotificationActions.showNotification('Check Task', error.message, 'red')
@@ -83,6 +91,7 @@ function* uncheckTaskWorker({ id }) {
   } catch (error) {
     yield put({
       type: DailyTaskTypes.UNCHECK_ITEM_FAILURE,
+      id,
     })
     yield put(
       NotificationActions.showNotification('unCheck Task', error.message, 'red')
@@ -93,8 +102,8 @@ function* uncheckTaskWorker({ id }) {
 function* watcher() {
   yield all([
     takeLatest(DailyTaskTypes.GET_ITEMS_REQUEST, getListTaskWorker),
-    takeLatest(DailyTaskTypes.CHECK_ITEM_REQUEST, checkTaskWorker),
-    takeLatest(DailyTaskTypes.UNCHECK_ITEM_REQUEST, uncheckTaskWorker),
+    takeEvery(DailyTaskTypes.CHECK_ITEM_REQUEST, checkTaskWorker),
+    takeEvery(DailyTaskTypes.UNCHECK_ITEM_REQUEST, uncheckTaskWorker),
   ])
 }
 

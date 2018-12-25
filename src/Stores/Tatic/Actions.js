@@ -19,6 +19,11 @@ const { Types, Creators } = createActions(
     deleteItemRequest: ['values', 'match'],
     deleteItemSuccess: null,
     deleteItemFailure: null,
+    // Get list history
+    getHistoriesRequest: ['id'],
+    getHistoriesSuccess: ['items'],
+    getHistoriesFailure: null,
+    clearHistories: null,
   },
   {
     prefix: 'tatic/',

@@ -49,3 +49,9 @@ export const AsyncDailyTask = Loadable({
   loader: () => import('src/Containers/DailyTask'),
   loading: LoadingPage,
 })
+
+// Action History page
+export const AsyncActionHistory = Loadable({
+  loader: () => import('src/Containers/ActionHistory'),
+  loading: LoadingPage,
+})

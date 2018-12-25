@@ -28,6 +28,11 @@ const App = () => (
         exact
         component={routes.AsyncTaticDetail}
       />
+      <PrivateRoute
+        path="/tatic/history/:taticId"
+        exact
+        component={routes.AsyncActionHistory}
+      />
       <Route path="/welcome" exact component={routes.AsyncWelcome} />
 
       <Route component={routes.AsyncNotFound} />

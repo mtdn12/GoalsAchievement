@@ -11,6 +11,7 @@ import {
   createTatic,
   editTatic,
   deleteTatic,
+  getListHistory,
 } from 'src/Services/TaticService.js'
 import { getToken } from '../Authentication/Selectors'
 
@@ -189,6 +190,25 @@ function* deleteTaticWorker({ values, match }) {
   }
 }
 
+// Get list history action
+function* getListHistoryWorker({ id }) {
+  try {
+    const token = yield select(getToken)
+    const response = yield call(getListHistory, token, id)
+    if (response.data.result === 'fail') {
+      throw new Error(response.error)
+    }
+    yield put({
+      type: TaticTypes.GET_HISTORIES_SUCCESS,
+      items: response.data.items,
+    })
+  } catch (error) {
+    yield put({
+      type: TaticTypes.GET_HISTORIES_FAILURE,
+    })
+  }
+}
+
 function* watcher() {
   yield all([
     takeLatest(TaticTypes.GET_ITEM_REQUEST, getTaticDetailWorker),
@@ -198,6 +218,8 @@ function* watcher() {
     takeLatest(TaticTypes.EDIT_ITEM_REQUEST, editTaticWorker),
     // Delete goal
     takeLatest(TaticTypes.DELETE_ITEM_REQUEST, deleteTaticWorker),
+    // Get list history
+    takeLatest(TaticTypes.GET_HISTORIES_REQUEST, getListHistoryWorker),
   ])
 }
 

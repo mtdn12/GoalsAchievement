@@ -1,0 +1,15 @@
+.historyList {
+  width: 60%;
+  margin: 0 auto;
+  text-align: center;
+  .historyItem {
+    padding: 1em;
+    border-radius: 1em;
+    background: rgb(216, 65, 65);
+    margin: 1em 0;
+    color: #fff;
+    &.isDone {
+      background: rgb(68, 68, 202);
+    }
+  }
+}

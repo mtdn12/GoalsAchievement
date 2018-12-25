@@ -48,7 +48,13 @@ const TaticInfo = ({
             style={{ margin: 0 }}
             progress
             color="brown"
-            percent={item.get('percent')}
+            percent={
+              item.get('completedAction') &&
+              (
+                (item.get('completedAction') / item.get('totalAction')) *
+                100
+              ).toFixed(0)
+            }
           />{' '}
         </div>
       </div>

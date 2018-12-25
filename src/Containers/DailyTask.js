@@ -4,19 +4,32 @@ import { compose } from 'redux'
 import withSaga from '../Utils/withSaga'
 import { DailyTaskActions } from '../Stores/DailyTask/Actions'
 import dailyTaskSaga from '../Stores/DailyTask/Sagas'
-import { getLoadingTasks, getTasks } from '../Stores/DailyTask/Selectors'
+import {
+  getLoadingTasks,
+  getTasks,
+  getLoadingCheck,
+} from '../Stores/DailyTask/Selectors'
 import DailyTask from '../Components/pages/DailyTask'
 
 class DailyTaskContainer extends Component {
+  componentDidMount() {
+    console.log(this.props)
+    this.props.handleGetTasks()
+  }
+  componentWillUnmount() {
+    this.props.handleClearTasks()
+  }
   render() {
     return <DailyTask {...this.props} />
   }
 }
-
-const mapStateToProps = state => ({
-  items: getTasks(state),
-  isLoadingItem: getLoadingTasks(state),
-})
+const mapStateToProps = state => {
+  return {
+    items: getTasks(state),
+    isLoadingItems: getLoadingTasks(state),
+    isLoadingCheck: getLoadingCheck(state),
+  }
+}
 
 const mapDispatchToProps = dispatch => ({
   // get list task
@@ -24,9 +37,10 @@ const mapDispatchToProps = dispatch => ({
   // clear list task
   handleClearTasks: () => dispatch(DailyTaskActions.clearItems()),
   // check task
-  handleCheckTask: id => dispatch(DailyTaskActions.checkItemRequest(id)),
+  handleCheckTask: id => () => dispatch(DailyTaskActions.checkItemRequest(id)),
   // uncheck task
-  handleUncheckTask: id => dispatch(DailyTaskActions.uncheckItemRequest(id)),
+  handleUncheckTask: id => () =>
+    dispatch(DailyTaskActions.uncheckItemRequest(id)),
 })
 
 const withConnect = connect(
