@@ -5,7 +5,6 @@ import { routerMiddleware } from 'connected-react-router/immutable'
 import { persistReducer, persistStore } from 'redux-persist'
 import immutableTransform from 'redux-persist-transform-immutable'
 import authSaga from 'src/Stores/Authentication/Sagas'
-import globalSaga from 'src/Stores/Global/Sagas'
 import createRootReducer from './index'
 import { getFirebase, reactReduxFirebase } from 'react-redux-firebase'
 import firebase from 'src/Services/Firebase'
@@ -48,7 +47,6 @@ export default history => {
   const sagaMiddleware = createSagaMiddleware()
   middleware.push(sagaMiddleware)
   middleware.push(routerMiddleware(history))
-
   enhancers.push(applyMiddleware(...middleware))
   enhancers.push(reactReduxFirebase(firebase, rrfConfig))
 
@@ -69,8 +67,6 @@ export default history => {
   // Kick off the root saga
   store.injectedSagas = []
   store.runSaga = sagaMiddleware.run
-  store.injectedSagas.push('global')
-  store.runSaga(globalSaga)
   store.injectedSagas.push('auth')
   store.runSaga(authSaga, getFirebase)
 
