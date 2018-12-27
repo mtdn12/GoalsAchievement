@@ -55,3 +55,15 @@ export const AsyncActionHistory = Loadable({
   loader: () => import('src/Containers/ActionHistory'),
   loading: LoadingPage,
 })
+
+// Book control page
+export const AsyncBook = Loadable({
+  loader: () => import('src/Containers/Book'),
+  loading: LoadingPage,
+})
+
+// Book detail page
+export const AsyncBookDetail = Loadable({
+  loader: () => import('src/Containers/BookDetail'),
+  loading: LoadingPage,
+})

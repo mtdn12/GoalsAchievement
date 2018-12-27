@@ -1,0 +1,82 @@
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
+import { is } from 'immutable'
+import withSaga from '../Utils/withSaga'
+import { BookActions } from '../Stores/Book/Actions'
+import { ModalActions } from '../Stores/Modal/Actions'
+import bookSaga from '../Stores/Book/Sagas'
+import {
+  getBook,
+  getFilter,
+  getBooks,
+  getLoadingBook,
+  getLoadingBooks,
+} from '../Stores/Book/Selectors'
+
+import Book from '../Components/pages/Book'
+
+class BookContainer extends Component {
+  componentDidMount() {
+    const { filter, getListBook } = this.props
+    getListBook(filter.toJS())
+  }
+  componentWillUnmount() {
+    this.props.clearListBook()
+  }
+  componentDidUpdate(prevProps) {
+    const { filter, getListBook } = this.props
+    if (!is(prevProps.filter, filter)) {
+      getListBook(filter.toJS())
+    }
+  }
+  openModalCreateBook = () => {
+    const { openModal } = this.props
+    const item = {
+      title: '',
+      author: '',
+      status: 'reading',
+    }
+    openModal('CreateEditBookModal', {
+      item,
+      action: 'create',
+    })
+  }
+  render() {
+    return (
+      <Book openModalCreateBook={this.openModalCreateBook} {...this.props} />
+    )
+  }
+}
+
+const mapStateToProps = state => ({
+  books: getBooks(state),
+  book: getBook(state),
+  isLoadingBooks: getLoadingBooks(state),
+  isLoadingBook: getLoadingBook(state),
+  filter: getFilter(state),
+})
+
+const mapDispatchToProps = dispatch => ({
+  getListBook: filter => dispatch(BookActions.getItemsRequest(filter)),
+  clearListBook: () => dispatch(BookActions.clearItems()),
+  // Open modal
+  openModal: (type, props) => dispatch(ModalActions.setModal(type, props)),
+  // Change filter
+  setFilter: (name, value) => dispatch(BookActions.setFilter(name, value)),
+})
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)
+
+const withBookSaga = withSaga({
+  key: 'book',
+  saga: bookSaga,
+})
+
+export default compose(
+  withConnect,
+  withBookSaga
+)(BookContainer)

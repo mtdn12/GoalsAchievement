@@ -1,7 +1,6 @@
 import React from 'react'
-
 import { Form, Label } from 'semantic-ui-react'
-
+import styles from './styles.module.scss'
 const TextareaField = ({
   label,
   placeholder,
@@ -26,7 +25,7 @@ const TextareaField = ({
         error={error}
       />
       {error && (
-        <Label basic color="red" pointing>
+        <Label basic color="red" pointing className={styles.helperText}>
           {message}
         </Label>
       )}

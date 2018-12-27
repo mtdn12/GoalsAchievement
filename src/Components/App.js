@@ -33,6 +33,8 @@ const App = () => (
         exact
         component={routes.AsyncActionHistory}
       />
+      <PrivateRoute path="/book" exact component={routes.AsyncBook} />
+      <PrivateRoute path="/book/:id" exact component={routes.AsyncBookDetail} />
       <Route path="/welcome" exact component={routes.AsyncWelcome} />
 
       <Route component={routes.AsyncNotFound} />

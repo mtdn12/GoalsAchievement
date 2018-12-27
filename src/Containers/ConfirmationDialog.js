@@ -1,16 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-// import withSaga from '../Utils/withSaga'
-// import goalSaga from '../Stores/Goal/Sagas'
-// import objectiveSaga from '../Stores/Objective/Sagas'
-// import strategySaga from '../Stores/Strategy/Sagas'
-// import taticSaga from '../Stores/Tatic/Sagas'
 import { GoalActions } from '../Stores/Goal/Actions'
 import { ObjectiveActions } from '../Stores/Objective/Actions'
 import { StrategyActions } from '../Stores/Strategy/Actions'
 import { TaticActions } from '../Stores/Tatic/Actions'
 import { ActionActions } from '../Stores/Action/Actions'
+import { BookActions } from '../Stores/Book/Actions'
 import ConfirmationDialog from '../Components/molecules/ConfirmationDialog'
 
 class ConfirmationDialogContainer extends Component {
@@ -24,6 +20,7 @@ class ConfirmationDialogContainer extends Component {
       handleDeleteStrategy,
       handleDeleteTatic,
       handleDeleteAction,
+      deleteBook,
     } = this.props
     switch (type) {
       case 'goal':
@@ -41,6 +38,9 @@ class ConfirmationDialogContainer extends Component {
         break
       case 'action':
         handleDeleteAction(values)
+        break
+      case 'book':
+        deleteBook(values)
         break
       default:
     }
@@ -63,18 +63,12 @@ const mapDispatchToProps = dispatch => ({
     dispatch(TaticActions.deleteItemRequest(values, match)),
   handleDeleteAction: values =>
     dispatch(ActionActions.deleteItemRequest(values)),
+  deleteBook: values => dispatch(BookActions.deleteItemRequest(values)),
 })
 
 const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps
 )
-// const withGoalSaga = withSaga({
-//   key: 'goal',
-//   saga: goalSaga,
-// })
 
-export default compose(
-  // withGoalSaga,
-  withConnect
-)(ConfirmationDialogContainer)
+export default compose(withConnect)(ConfirmationDialogContainer)

@@ -1,0 +1,28 @@
+.itemWrap {
+  padding: 1em;
+  margin: 1.5em 0;
+  position: relative;
+  border: 1px dashed #686868;
+  transition: all .5s ease;
+  cursor: pointer;
+  p {
+    margin: 0;
+    text-align: left;
+    font-style: italic;
+    font-weight: 1.1em;
+    &:first-child {
+      font-weight: bold;
+      font-size: 1.3em;
+    }
+  }
+  .actionWrap {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translateY(-50%)
+  }
+  &:hover {
+    background: #2185D0;
+    color: #fff;
+  }
+}
