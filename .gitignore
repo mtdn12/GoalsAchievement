@@ -7,8 +7,9 @@
 /coverage
 
 # production
-/build
-
+public/*
+build/static/css/*.map
+build/static/js/*.map
 # Semantic UI build
 /semantic/dist
 
