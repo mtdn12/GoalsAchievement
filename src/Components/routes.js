@@ -67,3 +67,15 @@ export const AsyncBookDetail = Loadable({
   loader: () => import('src/Containers/BookDetail'),
   loading: LoadingPage,
 })
+
+// Word control page
+export const AsyncWord = Loadable({
+  loader: () => import('src/Containers/Word'),
+  loading: LoadingPage,
+})
+
+// Word detail page
+export const AsyncWordDetail = Loadable({
+  loader: () => import('src/Containers/WordDetail'),
+  loading: LoadingPage,
+})

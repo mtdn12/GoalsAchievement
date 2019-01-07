@@ -6,13 +6,13 @@ import CreateEditBookModal from '../Components/organisms/CreateEditBookModal'
 
 class CreateEditBookModalContainer extends Component {
   handleAction = values => {
-    const { action, match, editBook, createBook } = this.props
+    const { action, editBook, createBook } = this.props
     switch (action) {
       case 'create':
         createBook(values)
         break
       case 'edit':
-        editBook(values, match)
+        editBook(values)
         break
       default:
     }
@@ -28,7 +28,7 @@ const mapStateToProps = state => ({})
 
 const mapDispatchToProps = dispatch => ({
   // handle Edit book
-  editBook: (values, match) => dispatch(BookActions.editItemRequest(values)),
+  editBook: values => dispatch(BookActions.editItemRequest(values)),
   // handle Create book
   createBook: values => dispatch(BookActions.createItemRequest(values)),
 })

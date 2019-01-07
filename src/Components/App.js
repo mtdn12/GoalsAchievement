@@ -35,8 +35,9 @@ const App = () => (
       />
       <PrivateRoute path="/book" exact component={routes.AsyncBook} />
       <PrivateRoute path="/book/:id" exact component={routes.AsyncBookDetail} />
+      <PrivateRoute path="/word" exact component={routes.AsyncWord} />
+      <PrivateRoute path="/word/:id" exact component={routes.AsyncWordDetail} />
       <Route path="/welcome" exact component={routes.AsyncWelcome} />
-
       <Route component={routes.AsyncNotFound} />
     </Switch>
   </ErrorBoundary>

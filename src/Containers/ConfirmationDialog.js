@@ -7,6 +7,7 @@ import { StrategyActions } from '../Stores/Strategy/Actions'
 import { TaticActions } from '../Stores/Tatic/Actions'
 import { ActionActions } from '../Stores/Action/Actions'
 import { BookActions } from '../Stores/Book/Actions'
+import { WordActions } from '../Stores/Word/Actions'
 import ConfirmationDialog from '../Components/molecules/ConfirmationDialog'
 
 class ConfirmationDialogContainer extends Component {
@@ -21,6 +22,7 @@ class ConfirmationDialogContainer extends Component {
       handleDeleteTatic,
       handleDeleteAction,
       deleteBook,
+      deleteWord,
     } = this.props
     switch (type) {
       case 'goal':
@@ -41,6 +43,9 @@ class ConfirmationDialogContainer extends Component {
         break
       case 'book':
         deleteBook(values)
+        break
+      case 'word':
+        deleteWord(values)
         break
       default:
     }
@@ -64,6 +69,8 @@ const mapDispatchToProps = dispatch => ({
   handleDeleteAction: values =>
     dispatch(ActionActions.deleteItemRequest(values)),
   deleteBook: values => dispatch(BookActions.deleteItemRequest(values)),
+  // Delete word
+  deleteWord: values => dispatch(WordActions.deleteItemRequest(values)),
 })
 
 const withConnect = connect(

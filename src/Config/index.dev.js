@@ -1,3 +1,3 @@
 export const Config = {
-  API_URL: 'https://goal-achivement-server.herokuapp.com/',
+  API_URL: 'http://localhost:5000',
 }

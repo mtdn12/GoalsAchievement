@@ -24,3 +24,8 @@ export const rateOption = [
   { text: 4, value: 4 },
   { text: 5, value: 5 },
 ]
+
+export const wordOption = [
+  { text: 'Recall Word', value: true },
+  { text: 'All word', value: false },
+]

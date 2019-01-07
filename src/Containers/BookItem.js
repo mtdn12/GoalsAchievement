@@ -4,13 +4,6 @@ import { compose } from 'redux'
 import { BookActions } from '../Stores/Book/Actions'
 import { ModalActions } from '../Stores/Modal/Actions'
 import { withRouter } from 'react-router-dom'
-import {
-  getBook,
-  getFilter,
-  getBooks,
-  getLoadingBook,
-  getLoadingBooks,
-} from '../Stores/Book/Selectors'
 
 import BookItem from '../Components/molecules/BookItem'
 

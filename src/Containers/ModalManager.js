@@ -13,6 +13,7 @@ import CreateEditTaticModal from './CreateEditTaticModal'
 import CreateEditActionModal from './CreateEditActionModal'
 import CreateEditBookModal from './CreateEditBookModal'
 import AddEditReviewModal from './AddEditReviewModal'
+import CreateEditWordModal from './CreateEditWordModal'
 
 const modalLookup = {
   RegisterModal,
@@ -25,6 +26,7 @@ const modalLookup = {
   CreateEditActionModal,
   CreateEditBookModal,
   AddEditReviewModal,
+  CreateEditWordModal,
 }
 
 const Modal = props => {
