@@ -79,3 +79,22 @@ export const AsyncWordDetail = Loadable({
   loader: () => import('src/Containers/WordDetail'),
   loading: LoadingPage,
 })
+
+// Todo page
+
+export const AsyncTodo = Loadable({
+  loader: () => import('src/Containers/Todo'),
+  loading: LoadingPage,
+})
+
+// Daily todo page
+export const AsyncDailyTodo = Loadable({
+  loader: () => import('src/Containers/DailyTodo'),
+  loading: LoadingPage,
+})
+
+// Todo history page
+export const AsyncTodoHistory = Loadable({
+  loader: () => import('src/Containers/TodoHistory'),
+  loading: LoadingPage,
+})

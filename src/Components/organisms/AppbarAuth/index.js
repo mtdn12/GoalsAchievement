@@ -35,6 +35,13 @@ const AppbarAuth = ({ handleLogout }) => {
         activeClassName={styles.activeItem}>
         Word
       </Menu.Item>
+      <Menu.Item
+        as={NavLink}
+        to="/todo"
+        className={styles.menuItem}
+        activeClassName={styles.activeItem}>
+        Todo
+      </Menu.Item>
       <Menu.Menu position="right">
         <Menu.Item className={styles.menuItem} onClick={handleLogout}>
           Log Out

@@ -8,6 +8,7 @@ import { TaticActions } from '../Stores/Tatic/Actions'
 import { ActionActions } from '../Stores/Action/Actions'
 import { BookActions } from '../Stores/Book/Actions'
 import { WordActions } from '../Stores/Word/Actions'
+import { TodoActions } from '../Stores/Todo/Actions'
 import ConfirmationDialog from '../Components/molecules/ConfirmationDialog'
 
 class ConfirmationDialogContainer extends Component {
@@ -23,6 +24,8 @@ class ConfirmationDialogContainer extends Component {
       handleDeleteAction,
       deleteBook,
       deleteWord,
+      deleteTodo,
+      deleteDailyTodo,
     } = this.props
     switch (type) {
       case 'goal':
@@ -46,6 +49,12 @@ class ConfirmationDialogContainer extends Component {
         break
       case 'word':
         deleteWord(values)
+        break
+      case 'todo':
+        deleteTodo(values)
+        break
+      case 'dailyTodo':
+        deleteDailyTodo(values)
         break
       default:
     }
@@ -71,6 +80,11 @@ const mapDispatchToProps = dispatch => ({
   deleteBook: values => dispatch(BookActions.deleteItemRequest(values)),
   // Delete word
   deleteWord: values => dispatch(WordActions.deleteItemRequest(values)),
+  // Delete Todo
+  deleteTodo: values => dispatch(TodoActions.deleteTodoRequest(values)),
+  // Delete daily Todo
+  deleteDailyTodo: values =>
+    dispatch(TodoActions.deleteDailyTodoRequest(values)),
 })
 
 const withConnect = connect(

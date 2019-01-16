@@ -1,0 +1,14 @@
+#todoWrap {
+  padding: 1em;
+  min-height: calc(100vh - 64px);
+  .contentWrap {
+    width: 60%;
+    margin: 5em auto 0;
+  }
+  .controlInput {
+    display: flex;
+  }
+  .input {
+    width: 90%;
+  }
+}
