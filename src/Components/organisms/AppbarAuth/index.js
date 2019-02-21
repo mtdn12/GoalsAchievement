@@ -7,7 +7,7 @@ import styles from './styles.module.scss'
 const AppbarAuth = ({ handleLogout }) => {
   return (
     <Menu id={styles.AppbarAuth} fixed="top" borderless color="blue" inverted>
-      <Menu.Item
+      {/* <Menu.Item
         as={NavLink}
         to="/dashboard"
         className={styles.menuItem}
@@ -20,7 +20,7 @@ const AppbarAuth = ({ handleLogout }) => {
         className={styles.menuItem}
         activeClassName={styles.activeItem}>
         Daily Task
-      </Menu.Item>
+      </Menu.Item> */}
       <Menu.Item
         as={NavLink}
         to="/book"
@@ -42,6 +42,13 @@ const AppbarAuth = ({ handleLogout }) => {
         activeClassName={styles.activeItem}>
         Todo
       </Menu.Item>
+      {/* <Menu.Item
+        as={NavLink}
+        to="/diary"
+        className={styles.menuItem}
+        activeClassName={styles.activeItem}>
+        Diary
+      </Menu.Item> */}
       <Menu.Menu position="right">
         <Menu.Item className={styles.menuItem} onClick={handleLogout}>
           Log Out

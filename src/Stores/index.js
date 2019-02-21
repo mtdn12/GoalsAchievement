@@ -13,6 +13,7 @@ import dailyTaskReducer from './DailyTask/Reducers'
 import bookReducer from './Book/Reducers'
 import wordReducer from './Word/Reducers'
 import todoReducer from './Todo/Reducers'
+import diaryReducer from './Diary/Reducers'
 
 function createRootReducer(history) {
   const rootReducer = combineReducers({
@@ -34,6 +35,7 @@ function createRootReducer(history) {
     book: bookReducer,
     word: wordReducer,
     todo: todoReducer,
+    diary: diaryReducer,
   })
   return rootReducer
 }

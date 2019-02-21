@@ -98,3 +98,16 @@ export const AsyncTodoHistory = Loadable({
   loader: () => import('src/Containers/TodoHistory'),
   loading: LoadingPage,
 })
+
+// Diary page
+export const AsyncDiary = Loadable({
+  loader: () => import('src/Containers/Diary'),
+  loading: LoadingPage,
+})
+
+// Diary detail page
+
+export const AsyncDiaryDetail = Loadable({
+  loader: () => import('src/Containers/DiaryDetail'),
+  loading: LoadingPage,
+})

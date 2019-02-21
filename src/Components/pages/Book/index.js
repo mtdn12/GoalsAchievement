@@ -37,20 +37,19 @@ const Book = ({
             </div>
           </div>
         )}
-        {!isLoadingBooks &&
-          books && (
-            <div className={styles.bookListWrap}>
-              {books.size > 0 ? (
-                <div>
-                  {books.map(book => (
-                    <BookItem key={book.get('_id')} item={book} />
-                  ))}
-                </div>
-              ) : (
-                <p>No books exist</p>
-              )}
-            </div>
-          )}
+        {!isLoadingBooks && books && (
+          <div className={styles.bookListWrap}>
+            {books.size > 0 ? (
+              <div>
+                {books.map(book => (
+                  <BookItem key={book.get('_id')} item={book} />
+                ))}
+              </div>
+            ) : (
+              <p>No books exist</p>
+            )}
+          </div>
+        )}
         <div className={styles.btnWrap}>
           <Button
             icon="add"

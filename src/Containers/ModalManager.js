@@ -15,6 +15,7 @@ import CreateEditBookModal from './CreateEditBookModal'
 import AddEditReviewModal from './AddEditReviewModal'
 import CreateEditWordModal from './CreateEditWordModal'
 import TodoHistoryDetailModal from '../Components/organisms/TodoHistoryDetailModal'
+import CreateEditDiaryModal from './CreateEditDiaryModal'
 
 const modalLookup = {
   RegisterModal,
@@ -29,6 +30,7 @@ const modalLookup = {
   AddEditReviewModal,
   CreateEditWordModal,
   TodoHistoryDetailModal,
+  CreateEditDiaryModal,
 }
 
 const Modal = props => {

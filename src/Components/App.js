@@ -9,7 +9,7 @@ import * as routes from './routes'
 const App = () => (
   <ErrorBoundary>
     <Switch>
-      <Redirect exact from="/" to="/dashboard" />
+      <Redirect exact from="/" to="/book" />
       <PrivateRoute path="/dashboard" exact component={routes.AsyncDashBoard} />
       <PrivateRoute path="/dailytask" exact component={routes.AsyncDailyTask} />
       <PrivateRoute path="/goal/:id" exact component={routes.AsyncGoalDetail} />
@@ -46,6 +46,12 @@ const App = () => (
         path="/todo/history"
         exact
         component={routes.AsyncTodoHistory}
+      />
+      <PrivateRoute path="/diary" exact component={routes.AsyncDiary} />
+      <PrivateRoute
+        path="/diary/:id"
+        exact
+        component={routes.AsyncDiaryDetail}
       />
       <PrivateRoute path="/word/:id" exact component={routes.AsyncWordDetail} />
       <Route path="/welcome" exact component={routes.AsyncWelcome} />

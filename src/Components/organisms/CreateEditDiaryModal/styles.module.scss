@@ -1,0 +1,18 @@
+#modalWrap {
+  padding: 1em;
+  .headerWrap {
+    text-align: center;
+    color: #1678C2;
+    text-transform: uppercase;
+  }
+  .formContent {
+    padding: 1em 0;
+  }
+  .actionsWrap {
+    margin-top: 1em;
+    text-align: right;
+  }
+  .editor {
+    min-height: 50vh;
+  }
+}

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { is } from 'immutable'
@@ -65,7 +65,6 @@ class BookDetailContainer extends Component {
     )
   }
 }
-
 const mapStateToProps = state => ({
   item: getBook(state),
   isLoadingItem: getLoadingBook(state),

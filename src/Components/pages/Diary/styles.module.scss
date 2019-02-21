@@ -1,0 +1,10 @@
+#diaryWrap {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2em;
+  .btnWrap {
+    position: fixed;
+    bottom: 1em;
+    right: 1em;
+  }
+}
