@@ -3,11 +3,14 @@ import app from 'firebase/app'
 import { setToken } from '../../Utils/token'
 import apiClient from '../../Services'
 import 'firebase/auth'
+import 'firebase/storage'
 
 class Firebase {
   constructor() {
     app.initializeApp(config)
     this.auth = app.auth()
+    this.storageRef = app.storage().ref()
+
     this.googleProvider = new app.auth.GoogleAuthProvider()
     this.facebookProvider = new app.auth.FacebookAuthProvider()
     this.emailAuthProvider = app.auth.EmailAuthProvider
@@ -22,6 +25,16 @@ class Firebase {
   dosSignInWithFaceBook = () => this.auth.signInWithPopup(this.facebookProvider)
 
   doSignOut = () => this.auth.signOut()
+  // Upload image
+  doUploadImage = (file, path) => {
+    let childRef = this.storageRef.child(path)
+    return childRef.put(file)
+  }
+  // Delete file
+  doDeleteFile = path => {
+    let deleteRef = this.storageRef.child(path)
+    return deleteRef.delete()
+  }
 
   onIdTokenListener = () =>
     this.auth.onIdTokenChanged(async auth => {

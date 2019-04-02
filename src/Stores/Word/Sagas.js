@@ -13,6 +13,7 @@ import {
 import { getFilter } from './Selectors'
 import sagaRegistry from '../Sagas/SagaRegistry'
 import { MODULE_NAME } from './InitialState'
+import firebase from '../Firebase/Firebase'
 
 // Get List word worker
 function* getListWordWorker({ filter }) {
@@ -55,29 +56,20 @@ function* createWordWorker({ values }) {
   try {
     yield put(ModalActions.showLoadingAction())
     // Upload image
-    // const user = firebase.auth().currentUser
-    // const path = `${user.uid}/words`
-    // let name = Date.now()
-    // const options = {
-    //   name,
-    // }
-    // let uploadedFile = yield firebase.uploadFile(
-    //   path,
-    //   values.image,
-    //   null,
-    //   options
-    // )
-    // // Get the url of image
-    // let downLoadURL = yield uploadedFile.uploadTaskSnapshot.ref.getDownloadURL()
-    // // Update link to value
-    // const { image, ...wordCreate } = values
-    // wordCreate.linkMap = downLoadURL
-    // wordCreate.filePath = path + '/' + name
-    // const token = yield select(getToken)
-    // const response = yield call(createWord, token, wordCreate)
-    // if (response.data.result === 'fail') {
-    //   throw new Error(response.data.error)
-    // }
+    const user = firebase.getCurrentUser()
+    let name = Date.now()
+    const path = `${user.uid}/words/${name}`
+    let uploadedFile = yield firebase.doUploadImage(values.image, path)
+    // Get the url of image
+    let downLoadURL = yield uploadedFile.ref.getDownloadURL()
+    // Update link to value
+    const { image, ...wordCreate } = values
+    wordCreate.linkMap = downLoadURL
+    wordCreate.filePath = path
+    const response = yield call(createWord, wordCreate)
+    if (response.data.result === 'fail') {
+      throw new Error(response.data.error)
+    }
     yield put({
       type: WordTypes.CREATE_ITEM_SUCCESS,
     })
@@ -114,36 +106,27 @@ function* editWordWorker({ values }) {
 
     let response
     // Check if image has or not
-    // if (values.image) {
-    //   const firebase = getFirebase()
-    //   const user = firebase.auth().currentUser
-    //   // Delete old image
-    //   yield firebase.deleteFile(values.filePath)
-    //   // Upload new image
-    //   const path = `${user.uid}/words`
-    //   let name = Date.now()
-    //   const options = {
-    //     name,
-    //   }
-    //   let uploadedFile = yield firebase.uploadFile(
-    //     path,
-    //     values.image,
-    //     null,
-    //     options
-    //   )
-    //   // Get the url of image
-    //   let downLoadURL = yield uploadedFile.uploadTaskSnapshot.ref.getDownloadURL()
-    //   // Update link to value
-    //   // update value filePath and linkMap
-    //   const { image, id, ...wordEdit } = values
-    //   wordEdit.linkMap = downLoadURL
-    //   wordEdit.filePath = path + '/' + name
-    //   // continue
-    //   response = yield call(editWord, token, id, wordEdit)
-    // } else {
-    //   const { id, ...data } = values
-    //   response = yield call(editWord, token, id, data)
-    // }
+    if (values.image) {
+      const user = firebase.getCurrentUser()
+      // Delete old image
+      yield firebase.doDeleteFile(values.filePath)
+      // Upload new image
+      let name = Date.now()
+      const path = `${user.uid}/words/${name}`
+      let uploadedFile = firebase.doUploadImage(values.image, path)
+      // Get the url of image
+      let downLoadURL = yield uploadedFile.ref.getDownloadURL()
+      // Update link to value
+      // update value filePath and linkMap
+      const { image, id, ...wordEdit } = values
+      wordEdit.linkMap = downLoadURL
+      wordEdit.filePath = path
+      // continue
+      response = yield call(editWord, id, wordEdit)
+    } else {
+      const { id, ...data } = values
+      response = yield call(editWord, id, data)
+    }
     if (response.data.result === 'fail') {
       throw new Error(response.data.error)
     }
@@ -186,21 +169,20 @@ function* deleteWordWorker({ values }) {
       throw new Error(response.data.error)
     }
     // Delete image in firebase storage
-    // const firebase = getFirebase()
-    // // Delete old image
-    // yield firebase.deleteFile(values.filePath)
-    // yield put({
-    //   type: WordTypes.DELETE_ITEM_SUCCESS,
-    // })
-    // const filter = yield select(getFilter)
-    // yield put(WordActions.getItemsRequest(filter.toJS()))
-    // yield put(
-    //   NotificationActions.showNotification(
-    //     'Delete word',
-    //     'Delete word success',
-    //     'blue'
-    //   )
-    // )
+    // Delete old image
+    yield firebase.doDeleteFile(values.filePath)
+    yield put({
+      type: WordTypes.DELETE_ITEM_SUCCESS,
+    })
+    const filter = yield select(getFilter)
+    yield put(WordActions.getItemsRequest(filter.toJS()))
+    yield put(
+      NotificationActions.showNotification(
+        'Delete word',
+        'Delete word success',
+        'blue'
+      )
+    )
     // hide lodaing action
     yield put(ModalActions.hideLoadingAction())
     // clear modal
