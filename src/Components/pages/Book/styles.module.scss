@@ -16,8 +16,11 @@
     width: 30%;
   }
   .bookListWrap {
-    width: 60%;
+    width: 80%;
     margin: 3em auto 0;
     text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
 }

@@ -22,7 +22,7 @@ const BookItem = ({
           icon="arrow circle down"
           button
           labeled
-          floating
+          // floating
           className="icon"
           onChange={handleChangeStatus}
         />

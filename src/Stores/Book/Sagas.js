@@ -42,6 +42,7 @@ function* getListBookWorker({ filter }) {
 // Create book worker
 function* createBookWorker({ values }) {
   try {
+    console.log(values)
     yield put(ModalActions.showLoadingAction())
     const response = yield call(createBook, values)
     if (response.data.result === 'fail') {

@@ -5,8 +5,7 @@ export const getListBook = filter => apiClient.get(`/api/books/`, filter)
 // get book detail
 export const getBookDetail = id => apiClient.get(`/api/books/${id}`)
 // Create new book
-export const createBook = (token, values) =>
-  apiClient.post(`/api/books/`, values)
+export const createBook = values => apiClient.post(`/api/books/`, values)
 // Edit  book
 export const editBook = (id, values) =>
   apiClient.put(`/api/books/${id}`, values)

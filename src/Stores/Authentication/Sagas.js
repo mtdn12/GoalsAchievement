@@ -3,6 +3,7 @@ import { AuthTypes } from 'src/Stores/Authentication/Actions'
 import { registerUser } from '../../Services/AuthService'
 import { ModalActions } from '../Modal/Actions'
 import firebase from '../Firebase/Firebase'
+import apiClient from '../../Services'
 
 // Register worker
 
@@ -55,8 +56,8 @@ function* loginWorker({ values }) {
       values.email,
       values.password
     )
-    // let token = yield firebase.getCurrentUser().getIdToken(true)
-    // setToken(token)
+    let token = yield firebase.getCurrentUser().getIdToken(true)
+    apiClient.headers.Authorization = token
     yield put({
       type: AuthTypes.LOGIN_SUCCESS,
       user,
@@ -78,8 +79,8 @@ function* socialLoginWorker({ provider }) {
     if (provider === 'google') {
       user = yield firebase.doSignInWithGoogle()
     }
-    // let token = yield firebase.getCurrentUser().getIdToken(true)
-    // setToken(token)
+    let token = yield firebase.getCurrentUser().getIdToken(true)
+    apiClient.headers.Authorization = token
     if (user.additionalUserInfo.isNewUser) {
       let userSave = {
         uid: user.user.uid,

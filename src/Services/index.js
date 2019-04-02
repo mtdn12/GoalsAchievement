@@ -1,5 +1,6 @@
 import { create } from 'apisauce'
 import { Config } from 'src/Config'
+import { getToken } from '../Utils/token'
 
 export const apiClient = create({
   baseURL: Config.API_URL,
@@ -7,7 +8,7 @@ export const apiClient = create({
     Accept: 'application/json',
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
-    Authorization: '',
+    Authorization: getToken(),
   },
   timeout: 3000,
 })

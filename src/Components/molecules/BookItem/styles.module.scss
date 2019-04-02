@@ -1,10 +1,16 @@
 .itemWrap {
   padding: 1em;
-  margin: 1.5em 0;
+  margin: 2em 0;
   position: relative;
-  border: 1px dashed #686868;
+  border: 1px dashed #2c0c0c;
   transition: all .5s ease;
   cursor: pointer;
+  width: 47%;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   p {
     margin: 0;
     text-align: left;

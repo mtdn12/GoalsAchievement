@@ -40,11 +40,7 @@ const Book = ({
         {!isLoadingBooks && books && (
           <div className={styles.bookListWrap}>
             {books.size > 0 ? (
-              <div>
-                {books.map(book => (
-                  <BookItem key={book.get('_id')} item={book} />
-                ))}
-              </div>
+              books.map(book => <BookItem key={book.get('_id')} item={book} />)
             ) : (
               <p>No books exist</p>
             )}

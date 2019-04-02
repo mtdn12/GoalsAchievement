@@ -30,8 +30,8 @@ class Firebase {
       if (user) {
         token = await user.getIdToken()
       }
-      setToken(token)
       apiClient.headers.Authorization = token
+      setToken(token)
     })
 }
 

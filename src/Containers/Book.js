@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { is } from 'immutable'
+import {  func, object  } from 'prop-types'
 import '../Stores/Book/Sagas'
 import '../Stores/Book/Reducers'
 import { BookActions } from '../Stores/Book/Actions'
@@ -17,6 +18,12 @@ import {
 import Book from '../Components/pages/Book'
 
 class BookContainer extends Component {
+  static propTypes = {
+    filter: object.isRequired,
+    getListBook: func.isRequired,
+    clearListBook: func.isRequired,
+    openModal: func.isRequired,
+  }
   componentDidMount() {
     const { filter, getListBook } = this.props
     getListBook(filter.toJS())
