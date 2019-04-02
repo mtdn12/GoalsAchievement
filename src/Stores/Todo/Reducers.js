@@ -4,10 +4,10 @@
  * @see https://redux.js.org/basics/reducers
  */
 import { fromJS } from 'immutable'
-import { INITIAL_STATE } from './InitialState'
+import { INITIAL_STATE, MODULE_NAME } from './InitialState'
 import { createReducer } from 'reduxsauce'
 import { TodoTypes } from './Actions'
-
+import reducerRegistry from '../Reducers/ReducerRegistry'
 // Show and hide loading when request todo lít
 const showLoadingTodos = state => state.set('isLoadingTodos', true)
 const hideLoadingTodos = state => state.set('isLoadingTodos', false)
@@ -145,4 +145,4 @@ const reducer = createReducer(INITIAL_STATE, {
   [TodoTypes.SET_HISTORY_FILTER]: setHistoryFilter,
 })
 
-export default reducer
+reducerRegistry.register(MODULE_NAME, reducer)

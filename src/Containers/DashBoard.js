@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import withSaga from '../Utils/withSaga'
 import DashBoard from 'src/Components/pages/DashBoard'
-import goalSaga from '../Stores/Goal/Sagas'
+import '../Stores/Goal/Sagas'
+import '../Stores/Goal/Reducers'
 import { GoalActions } from '../Stores/Goal/Actions'
 import { ModalActions } from '../Stores/Modal/Actions'
 import { getGoals, getLoadingItems } from '../Stores/Goal/Selectors'
@@ -77,12 +77,4 @@ const withConnect = connect(
   mapDispatchToProps
 )
 
-const withGoalSaga = withSaga({
-  key: 'goal',
-  saga: goalSaga,
-})
-
-export default compose(
-  withGoalSaga,
-  withConnect
-)(DashBoardContainer)
+export default compose(withConnect)(DashBoardContainer)

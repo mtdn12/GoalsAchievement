@@ -1,12 +1,13 @@
+import { MODULE_NAME } from './InitialState'
 // Get list Word
-export const getWords = state => state.word.get('items')
+export const getWords = state => state[MODULE_NAME].get('items')
 // get loading list word
-export const getLoadingWords = state => state.word.get('isLoadingItems')
+export const getLoadingWords = state => state[MODULE_NAME].get('isLoadingItems')
 // Get filter
-export const getFilter = state => state.word.get('filter')
+export const getFilter = state => state[MODULE_NAME].get('filter')
 // Get loading check
-export const getLoadingCheck = state => state.word.get('isLoadingCheck')
+export const getLoadingCheck = state => state[MODULE_NAME].get('isLoadingCheck')
 // get Word detail
-export const getWord = state => state.word.get('item')
+export const getWord = state => state[MODULE_NAME].get('item')
 // Get loading word
-export const getLoadingWord = state => state.word.get('isLoadingItem')
+export const getLoadingWord = state => state[MODULE_NAME].get('isLoadingItem')

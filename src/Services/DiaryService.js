@@ -1,40 +1,16 @@
 import apiClient from './'
 
 // Get List diary
-export const getListDiary = (token, filter) =>
-  apiClient.get(
-    `/api/diaries/`,
-    { ...filter },
-    { headers: { Authorization: token } }
-  )
+export const getListDiary = filter => apiClient.get(`/api/diaries/`, filter)
 
 // Create new diary
-export const createDiary = (token, values) =>
-  apiClient.post(
-    '/api/diaries/',
-    { ...values },
-    { headers: { Authorization: token } }
-  )
+export const createDiary = values => apiClient.post('/api/diaries/', values)
 
 // edit exist diary
-export const editDiary = (token, id, values) =>
-  apiClient.put(
-    `/api/diaries/:${id}`,
-    { ...values },
-    { headers: { Authorization: token } }
-  )
+export const editDiary = (id, values) =>
+  apiClient.put(`/api/diaries/:${id}`, values)
 
 // delete diary
-export const deleteDiary = (token, id) =>
-  apiClient.delete(
-    `/api/diaries/:${id}`,
-    {},
-    { headers: { Authorization: token } }
-  )
+export const deleteDiary = id => apiClient.delete(`/api/diaries/:${id}`)
 // Get diary detail
-export const getDiaryDetail = (token, id) =>
-  apiClient.get(
-    `/api/diaries/:${id}`,
-    {},
-    { headers: { Authorization: token } }
-  )
+export const getDiaryDetail = id => apiClient.get(`/api/diaries/:${id}`)

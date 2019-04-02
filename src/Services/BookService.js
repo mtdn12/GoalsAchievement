@@ -1,47 +1,20 @@
 import apiClient from './'
 
 // get list books
-export const getListBook = (token, filter) =>
-  apiClient.get(
-    `/api/books/`,
-    { ...filter },
-    { headers: { Authorization: token } }
-  )
+export const getListBook = filter => apiClient.get(`/api/books/`, filter)
 // get book detail
-export const getBookDetail = (token, id) =>
-  apiClient.get(`/api/books/${id}`, {}, { headers: { Authorization: token } })
+export const getBookDetail = id => apiClient.get(`/api/books/${id}`)
 // Create new book
 export const createBook = (token, values) =>
-  apiClient.post(
-    `/api/books/`,
-    { ...values },
-    { headers: { Authorization: token } }
-  )
+  apiClient.post(`/api/books/`, values)
 // Edit  book
-export const editBook = (token, id, values) =>
-  apiClient.put(
-    `/api/books/${id}`,
-    { ...values },
-    { headers: { Authorization: token } }
-  )
+export const editBook = (id, values) =>
+  apiClient.put(`/api/books/${id}`, values)
 // Delete book
-export const deleteBook = (token, id) =>
-  apiClient.delete(
-    `/api/books/${id}`,
-    {},
-    { headers: { Authorization: token } }
-  )
+export const deleteBook = id => apiClient.delete(`/api/books/${id}`)
 // Change status book
-export const changeStatus = (token, id, status) =>
-  apiClient.put(
-    `/api/books/status/${id}`,
-    { status },
-    { headers: { Authorization: token } }
-  )
+export const changeStatus = (id, status) =>
+  apiClient.put(`/api/books/status/${id}`, { status })
 // Add review to book
-export const addReview = (token, id, values) =>
-  apiClient.put(
-    `/api/books/review/${id}`,
-    { ...values },
-    { headers: { Authorization: token } }
-  )
+export const addReview = (id, values) =>
+  apiClient.put(`/api/books/review/${id}`, values)

@@ -4,9 +4,10 @@
  * @see https://redux.js.org/basics/reducers
  */
 import { fromJS } from 'immutable'
-import { INITIAL_STATE } from './InitialState'
+import { INITIAL_STATE, MODULE_NAME } from './InitialState'
 import { createReducer } from 'reduxsauce'
 import { DiaryTypes } from './Actions'
+import reducerRegistry from '../Reducers/ReducerRegistry'
 
 // Show and hide loading when get list diary
 const showLoadingItems = state => state.set('isLoadingItems', true)
@@ -60,5 +61,4 @@ const reducer = createReducer(INITIAL_STATE, {
   [DiaryTypes.GET_ITEM_FAILURE]: hideLoadingItem,
   [DiaryTypes.CLEAR_ITEM]: clearItem,
 })
-
-export default reducer
+reducerRegistry.register(MODULE_NAME, reducer)

@@ -1,4 +1,5 @@
 import { createActions } from 'reduxsauce'
+import { MODULE_NAME } from './InitialState'
 
 const { Types, Creators } = createActions(
   {
@@ -36,7 +37,7 @@ const { Types, Creators } = createActions(
     setFilter: ['name', 'value'],
   },
   {
-    prefix: '@@book/',
+    prefix: `@@${MODULE_NAME}/`,
   }
 )
 

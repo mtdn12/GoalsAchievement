@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-// import { PropTypes } from 'prop-types'
 import { compose } from 'redux'
+import '../Stores/Notification/Reducers'
 import { NotificationActions } from 'src/Stores/Notification/Actions'
 
 import Notification from 'src/Components/organisms/Notification'

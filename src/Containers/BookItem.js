@@ -8,9 +8,6 @@ import { withRouter } from 'react-router-dom'
 import BookItem from '../Components/molecules/BookItem'
 
 class BookItemContainer extends Component {
-  componentDidMount() {}
-  componentWillUnmount() {}
-  componentDidUpdate(prevProps) {}
   openModalEditBook = e => {
     e.stopPropagation()
     const { item, openModal } = this.props

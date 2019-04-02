@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { is } from 'immutable'
-import withSaga from '../Utils/withSaga'
+import '../Stores/Book/Sagas'
+import '../Stores/Book/Reducers'
 import { BookActions } from '../Stores/Book/Actions'
 import { ModalActions } from '../Stores/Modal/Actions'
-import bookSaga from '../Stores/Book/Sagas'
 import {
   getBook,
   getFilter,
@@ -71,12 +71,4 @@ const withConnect = connect(
   mapDispatchToProps
 )
 
-const withBookSaga = withSaga({
-  key: 'book',
-  saga: bookSaga,
-})
-
-export default compose(
-  withConnect,
-  withBookSaga
-)(BookContainer)
+export default compose(withConnect)(BookContainer)

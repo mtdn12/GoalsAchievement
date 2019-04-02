@@ -1,18 +1,12 @@
-import React, { Component, useEffect } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import { is } from 'immutable'
-import withSaga from '../Utils/withSaga'
+import '../Stores/Book/Sagas'
+import '../Stores/Book/Reducers'
 import { BookActions } from '../Stores/Book/Actions'
 import { ModalActions } from '../Stores/Modal/Actions'
-import bookSaga from '../Stores/Book/Sagas'
-import {
-  getBook,
-  getFilter,
-  getBooks,
-  getLoadingBook,
-  getLoadingBooks,
-} from '../Stores/Book/Selectors'
+
+import { getBook, getLoadingBook } from '../Stores/Book/Selectors'
 
 import BookDetail from '../Components/pages/BookDetail'
 
@@ -84,12 +78,4 @@ const withConnect = connect(
   mapDispatchToProps
 )
 
-const withBookSaga = withSaga({
-  key: 'book',
-  saga: bookSaga,
-})
-
-export default compose(
-  withConnect,
-  withBookSaga
-)(BookDetailContainer)
+export default compose(withConnect)(BookDetailContainer)

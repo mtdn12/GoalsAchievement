@@ -12,3 +12,5 @@ export const INITIAL_STATE = fromJS({
     status: 'reading',
   },
 })
+
+export const MODULE_NAME = 'book'

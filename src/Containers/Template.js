@@ -1,22 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { func } from 'prop-types'
 import { compose } from 'redux'
-import { withFirebase, firebaseConnect } from 'react-redux-firebase'
 import { withRouter } from 'react-router-dom'
 import Template from 'src/Components/templates/Template'
+import { AuthActions } from '../Stores/Authentication/Actions'
 import { ModalActions } from '../Stores/Modal/Actions'
-import {
-  getAuthenticated,
-  getProfile,
-  getAuth,
-} from '../Stores/Authentication/Selectors'
-import { removeToken } from '../Utils/token'
+import { getAuth } from '../Stores/Authentication/Selectors'
+import firebase from '../Stores/Firebase/Firebase'
 
 class TemplateContainer extends Component {
+  static propTypes = {
+    clearAuth: func.isRequired,
+  }
   handleLogout = () => {
-    this.props.firebase.logout()
-    this.props.history.push('/')
-    removeToken()
+    firebase.doSignOut()
+    this.props.clearAuth()
   }
   render() {
     return <Template {...this.props} handleLogout={this.handleLogout} />
@@ -24,14 +23,18 @@ class TemplateContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  isAuthenticated: getAuthenticated(state),
-  profile: getProfile(state),
   auth: getAuth(state),
 })
+//   isAuthenticated: getAuthenticated(state),
+//   profile: getProfile(state),
+//   auth: getAuth(state),
+// })
 
 const mapDispatchToProps = dispatch => ({
   handleOpenModal: (type, props) =>
     dispatch(ModalActions.setModal(type, props)),
+  // Clear user data
+  clearAuth: () => dispatch(AuthActions.clearUser()),
 })
 
 const withConnect = connect(
@@ -41,7 +44,5 @@ const withConnect = connect(
 
 export default compose(
   withConnect,
-  withFirebase,
-  withRouter,
-  firebaseConnect()
+  withRouter
 )(TemplateContainer)

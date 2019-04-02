@@ -10,29 +10,6 @@ const App = () => (
   <ErrorBoundary>
     <Switch>
       <Redirect exact from="/" to="/book" />
-      <PrivateRoute path="/dashboard" exact component={routes.AsyncDashBoard} />
-      <PrivateRoute path="/dailytask" exact component={routes.AsyncDailyTask} />
-      <PrivateRoute path="/goal/:id" exact component={routes.AsyncGoalDetail} />
-      <PrivateRoute
-        path="/objective/:id"
-        exact
-        component={routes.AsyncObjectiveDetail}
-      />
-      <PrivateRoute
-        path="/strategy/:id"
-        exact
-        component={routes.AsyncStrategyDetail}
-      />
-      <PrivateRoute
-        path="/tatic/:id"
-        exact
-        component={routes.AsyncTaticDetail}
-      />
-      <PrivateRoute
-        path="/tatic/history/:taticId"
-        exact
-        component={routes.AsyncActionHistory}
-      />
       <PrivateRoute path="/book" exact component={routes.AsyncBook} />
       <PrivateRoute path="/book/:id" exact component={routes.AsyncBookDetail} />
       <PrivateRoute path="/word" exact component={routes.AsyncWord} />

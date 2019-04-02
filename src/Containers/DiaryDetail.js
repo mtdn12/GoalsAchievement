@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { func } from 'prop-types'
-import withSaga from '../Utils/withSaga'
-import diarySaga from '../Stores/Diary/Sagas'
+import '../Stores/Diary/Sagas'
+import '../Stores/Diary/Reducers'
 import { DiaryActions } from '../Stores/Diary/Actions'
 import { getLoadingItem, getDiary } from '../Stores/Diary/Selectors'
 import { ModalActions } from '../Stores/Modal/Actions'
@@ -47,12 +47,4 @@ const withConnect = connect(
   mapDispatchToProps
 )
 
-const withDiarySaga = withSaga({
-  key: 'diary',
-  saga: diarySaga,
-})
-
-export default compose(
-  withConnect,
-  withDiarySaga
-)(DiaryDetailContainer)
+export default compose(withConnect)(DiaryDetailContainer)

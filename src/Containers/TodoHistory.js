@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { is } from 'immutable'
-import withSaga from '../Utils/withSaga'
+
 import { TodoActions } from '../Stores/Todo/Actions'
 import { ModalActions } from '../Stores/Modal/Actions'
-import todoSaga from '../Stores/Todo/Sagas'
+import '../Stores/Todo/Sagas'
+import '../Stores/Todo/Reducers'
 import TodoHistory from '../Components/pages/TodoHistory'
 import {
   getHistories,
@@ -73,12 +74,4 @@ const withConnect = connect(
   mapDispatchToProps
 )
 
-const withTodoSaga = withSaga({
-  key: 'todo',
-  saga: todoSaga,
-})
-
-export default compose(
-  withConnect,
-  withTodoSaga
-)(TodoHistoryContainer)
+export default compose(withConnect)(TodoHistoryContainer)

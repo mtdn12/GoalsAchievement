@@ -1,4 +1,5 @@
 import { createActions } from 'reduxsauce'
+import { MODULE_NAME } from './InitialState'
 
 const { Types, Creators } = createActions(
   {
@@ -33,7 +34,7 @@ const { Types, Creators } = createActions(
     //
   },
   {
-    prefix: '@@Word/',
+    prefix: `@@${MODULE_NAME}/`,
   }
 )
 

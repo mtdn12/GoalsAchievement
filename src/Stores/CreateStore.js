@@ -4,20 +4,20 @@ import createSagaMiddleware from 'redux-saga'
 import { routerMiddleware } from 'connected-react-router/immutable'
 import { persistReducer, persistStore } from 'redux-persist'
 import immutableTransform from 'redux-persist-transform-immutable'
-import authSaga from 'src/Stores/Authentication/Sagas'
-import createRootReducer from './index'
-import { getFirebase, reactReduxFirebase } from 'react-redux-firebase'
-import firebase from 'src/Services/Firebase'
-/**
- * This import defaults to localStorage for web and AsyncStorage for react-native.
- *
- * Keep in mind this storage *is not secure*. Do not use it to store sensitive information
- * (like API tokens, private and sensitive data, etc.).
- *
- * If you need to store sensitive information, use redux-persist-sensitive-storage.
- * @see https://github.com/CodingZeal/redux-persist-sensitive-storage
- */
+import { connectRouter } from 'connected-react-router'
 import storage from 'redux-persist/lib/storage'
+import { combine, initialState } from './Reducers/index'
+
+// Import Saga and register saga to register static sagas
+import sagaRegistry from './Sagas/SagaRegistry'
+import authSaga from './Authentication/Sagas'
+// Import reducer to register static reducer
+import reducerRegistry from './Reducers/ReducerRegistry'
+import loadingReducer from './Loading/Reducers'
+import authReducer from './Authentication/Reducers'
+// Import module name
+import { MODULE_NAME as authName } from './Authentication/InitialState'
+import { MODULE_NAME as loadingName } from './Loading/InitialState'
 
 const persistConfig = {
   transforms: [
@@ -34,10 +34,6 @@ const persistConfig = {
    */
   blacklist: ['router', 'notification'],
 }
-const rrfConfig = {
-  userProfile: 'users',
-  attachAuthIsReady: true,
-}
 
 export default history => {
   const middleware = []
@@ -48,7 +44,6 @@ export default history => {
   middleware.push(sagaMiddleware)
   middleware.push(routerMiddleware(history))
   enhancers.push(applyMiddleware(...middleware))
-  enhancers.push(reactReduxFirebase(firebase, rrfConfig))
 
   let composeEnhancers = compose
 
@@ -60,17 +55,30 @@ export default history => {
   }
 
   // Redux persist
-  const rootReducer = createRootReducer(history)
+  const rootReducer = combine(reducerRegistry.getReducers())
   const persistedReducer = persistReducer(persistConfig, rootReducer)
-  const store = createStore(persistedReducer, composeEnhancers(...enhancers))
+  const store = createStore(
+    persistedReducer,
+    initialState,
+    composeEnhancers(...enhancers)
+  )
+  const persistor = persistStore(store)
+  // Persitor
+  store.persistor = persistor
 
   // Kick off the root saga
-  store.injectedSagas = []
-  store.runSaga = sagaMiddleware.run
-  store.injectedSagas.push('auth')
-  store.runSaga(authSaga, getFirebase)
-
-  const persistor = persistStore(store)
-
-  return { store, persistor }
+  // Run sagas
+  // Register saga change listener
+  sagaRegistry.setChangeListener(saga => {
+    sagaMiddleware.run(saga)
+  })
+  sagaRegistry.register(authName, authSaga)
+  // Register reducer change lítener
+  reducerRegistry.setChangeListener(reducers => {
+    store.replaceReducer(persistReducer(persistConfig, combine(reducers)))
+  })
+  reducerRegistry.register('router', connectRouter(history))
+  reducerRegistry.register(loadingName, loadingReducer)
+  reducerRegistry.register(authName, authReducer)
+  return store
 }

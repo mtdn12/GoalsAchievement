@@ -13,3 +13,5 @@ export const INITIAL_STATE = fromJS({
   isLoadingItem: false,
   isLoadingCheck: {},
 })
+
+export const MODULE_NAME = 'word'

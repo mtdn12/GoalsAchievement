@@ -14,3 +14,5 @@ export const INITIAL_STATE = fromJS({
   item: {},
   isLoadingItem: false,
 })
+
+export const MODULE_NAME = 'diary'

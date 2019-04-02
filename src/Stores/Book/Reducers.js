@@ -4,9 +4,10 @@
  * @see https://redux.js.org/basics/reducers
  */
 import { fromJS } from 'immutable'
-import { INITIAL_STATE } from './InitialState'
+import { INITIAL_STATE, MODULE_NAME } from './InitialState'
 import { createReducer } from 'reduxsauce'
 import { BookTypes } from './Actions'
+import reducerRegistry from '../Reducers/ReducerRegistry'
 
 // Show and hide loading when request book list
 const showLoadingItems = state => state.set('isLoadingItems', true)
@@ -44,5 +45,4 @@ const reducer = createReducer(INITIAL_STATE, {
   // Change filter
   [BookTypes.SET_FILTER]: setFilter,
 })
-
-export default reducer
+reducerRegistry.register(MODULE_NAME, reducer)

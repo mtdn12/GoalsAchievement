@@ -18,3 +18,5 @@ export const INITIAL_STATE = fromJS({
   },
   historyPages: 0,
 })
+
+export const MODULE_NAME = 'todo'

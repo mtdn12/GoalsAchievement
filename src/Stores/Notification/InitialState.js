@@ -9,3 +9,5 @@ export const INITIAL_STATE = Map({
   open: false,
   color: 'blue',
 })
+
+export const MODULE_NAME = 'notification'

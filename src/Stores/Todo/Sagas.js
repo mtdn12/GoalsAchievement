@@ -22,14 +22,15 @@ import {
   editDailyTodo,
   deleteDailyTodo,
 } from 'src/Services/TodoService.js'
-import { getToken } from '../Authentication/Selectors'
+
 import { getHistoryFilter } from './Selectors'
+import sagaRegistry from '../Sagas/SagaRegistry'
+import { MODULE_NAME } from './InitialState'
 
 // Get List todo worker
 function* getListTodoWorker({ filter }) {
   try {
-    const token = yield select(getToken)
-    const response = yield call(getListTodo, token, filter)
+    const response = yield call(getListTodo, filter)
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
@@ -47,8 +48,7 @@ function* getListTodoWorker({ filter }) {
 // Get List daily tod worker
 function* getListDailyTodoWorker({ filter }) {
   try {
-    const token = yield select(getToken)
-    const response = yield call(getListDailyTodo, token, filter)
+    const response = yield call(getListDailyTodo, filter)
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
@@ -66,9 +66,8 @@ function* getListDailyTodoWorker({ filter }) {
 // Get List todo's history worker
 function* getListTodoHistoryWorker() {
   try {
-    const token = yield select(getToken)
     const filter = yield select(getHistoryFilter)
-    const response = yield call(getListTodoHistory, token, filter.toJS())
+    const response = yield call(getListTodoHistory, filter.toJS())
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
@@ -87,9 +86,8 @@ function* getListTodoHistoryWorker() {
 // Create new todo worker
 function* createTodoWorker({ values, callback }) {
   try {
-    const token = yield select(getToken)
     const { id, ...data } = values
-    const response = yield call(createTodo, token, data)
+    const response = yield call(createTodo, data)
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
@@ -118,9 +116,8 @@ function* createTodoWorker({ values, callback }) {
 // Create new todo worker
 function* editTodoWorker({ values, callback }) {
   try {
-    const token = yield select(getToken)
     const { id, ...data } = values
-    const response = yield call(editTodo, token, id, data)
+    const response = yield call(editTodo, id, data)
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
@@ -150,9 +147,8 @@ function* editTodoWorker({ values, callback }) {
 // Delete todo worker
 function* deleteTodoWorker({ values }) {
   try {
-    const token = yield select(getToken)
     yield put(ModalActions.showLoadingAction())
-    const response = yield call(deleteTodo, token, values._id)
+    const response = yield call(deleteTodo, values._id)
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
@@ -187,8 +183,7 @@ function* deleteTodoWorker({ values }) {
 // Check todo worker
 function* checkTodoWorker({ id }) {
   try {
-    const token = yield select(getToken)
-    const response = yield call(checkTodo, token, id)
+    const response = yield call(checkTodo, id)
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
@@ -217,8 +212,7 @@ function* checkTodoWorker({ id }) {
 // Uncheck todo worker
 function* uncheckTodoWorker({ id }) {
   try {
-    const token = yield select(getToken)
-    const response = yield call(uncheckTodo, token, id)
+    const response = yield call(uncheckTodo, id)
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
@@ -246,9 +240,8 @@ function* uncheckTodoWorker({ id }) {
 // Create new todo worker
 function* createDailyTodoWorker({ values, callback }) {
   try {
-    const token = yield select(getToken)
     const { id, ...data } = values
-    const response = yield call(createDailyTodo, token, data)
+    const response = yield call(createDailyTodo, data)
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
@@ -277,9 +270,8 @@ function* createDailyTodoWorker({ values, callback }) {
 // Create new todo worker
 function* editDailyTodoWorker({ values, callback }) {
   try {
-    const token = yield select(getToken)
     const { id, ...data } = values
-    const response = yield call(editDailyTodo, token, id, data)
+    const response = yield call(editDailyTodo, id, data)
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
@@ -308,9 +300,8 @@ function* editDailyTodoWorker({ values, callback }) {
 // Delete todo worker
 function* deleteDailyTodoWorker({ values }) {
   try {
-    const token = yield select(getToken)
     yield put(ModalActions.showLoadingAction())
-    const response = yield call(deleteDailyTodo, token, values._id)
+    const response = yield call(deleteDailyTodo, values._id)
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
@@ -358,4 +349,5 @@ function* watcher() {
     takeLatest(TodoTypes.DELETE_DAILY_TODO_REQUEST, deleteDailyTodoWorker),
   ])
 }
-export default watcher
+
+sagaRegistry.register(MODULE_NAME, watcher)

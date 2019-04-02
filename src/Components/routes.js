@@ -8,51 +8,9 @@ export const AsyncNotFound = Loadable({
   loading: LoadingPage,
 })
 
-// DashBoad page
-export const AsyncDashBoard = Loadable({
-  loader: () => import('src/Containers/DashBoard'),
-  loading: LoadingPage,
-})
-
 // Welcome page
 export const AsyncWelcome = Loadable({
   loader: () => import('./pages/Welcome'),
-  loading: LoadingPage,
-})
-
-// Goal detail page
-export const AsyncGoalDetail = Loadable({
-  loader: () => import('src/Containers/GoalDetail'),
-  loading: LoadingPage,
-})
-
-// Objective detail page
-export const AsyncObjectiveDetail = Loadable({
-  loader: () => import('src/Containers/ObjectiveDetail'),
-  loading: LoadingPage,
-})
-
-// Strategy page detail
-export const AsyncStrategyDetail = Loadable({
-  loader: () => import('src/Containers/StrategyDetail'),
-  loading: LoadingPage,
-})
-
-// Tatic page detail
-export const AsyncTaticDetail = Loadable({
-  loader: () => import('src/Containers/TaticDetail'),
-  loading: LoadingPage,
-})
-
-// Daily task page
-export const AsyncDailyTask = Loadable({
-  loader: () => import('src/Containers/DailyTask'),
-  loading: LoadingPage,
-})
-
-// Action History page
-export const AsyncActionHistory = Loadable({
-  loader: () => import('src/Containers/ActionHistory'),
   loading: LoadingPage,
 })
 

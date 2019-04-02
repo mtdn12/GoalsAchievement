@@ -13,7 +13,7 @@ class RegisterModalContainer extends Component {
 const mapStateToProps = state => ({})
 
 const mapDisPatchToProps = dispatch => ({
-  handleRegister: values => dispatch(AuthActions.registerRequest(values))
+  handleRegister: values => dispatch(AuthActions.registerRequest(values)),
 })
 
 const withConnect = connect(

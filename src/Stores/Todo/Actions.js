@@ -1,4 +1,5 @@
 import { createActions } from 'reduxsauce'
+import { MODULE_NAME } from './InitialState'
 
 const { Types, Creators } = createActions(
   {
@@ -53,7 +54,7 @@ const { Types, Creators } = createActions(
     setHistoryFilter: ['name', 'value'],
   },
   {
-    prefix: '@@Todo/',
+    prefix: `@@${MODULE_NAME}/`,
   }
 )
 

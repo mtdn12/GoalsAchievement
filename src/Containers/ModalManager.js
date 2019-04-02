@@ -1,16 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-
 import { ModalActions } from 'src/Stores/Modal/Actions'
+import '../Stores/Modal/Reducers'
 import { getModal, getLoadingAction } from 'src/Stores/Modal/Selectors'
 import RegisterModal from './RegisterModal'
 import LoginModal from './LoginModal'
-import CreateEditGoalModal from './CreateEditGoalModal'
 import ConfirmationDialog from './ConfirmationDialog'
-import CreateEditObjectiveModal from './CreateEditObjectiveModal'
-import CreateEditStrategyModal from './CreateEditStrategyModal'
-import CreateEditTaticModal from './CreateEditTaticModal'
-import CreateEditActionModal from './CreateEditActionModal'
 import CreateEditBookModal from './CreateEditBookModal'
 import AddEditReviewModal from './AddEditReviewModal'
 import CreateEditWordModal from './CreateEditWordModal'
@@ -20,12 +15,7 @@ import CreateEditDiaryModal from './CreateEditDiaryModal'
 const modalLookup = {
   RegisterModal,
   LoginModal,
-  CreateEditGoalModal,
   ConfirmationDialog,
-  CreateEditObjectiveModal,
-  CreateEditStrategyModal,
-  CreateEditTaticModal,
-  CreateEditActionModal,
   CreateEditBookModal,
   AddEditReviewModal,
   CreateEditWordModal,

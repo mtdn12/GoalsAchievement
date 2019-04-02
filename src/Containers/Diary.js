@@ -2,11 +2,10 @@ import React, { Component, useEffect } from 'react'
 import { func, object } from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import { is } from 'immutable'
-import withSaga from '../Utils/withSaga'
 import { DiaryActions } from '../Stores/Diary/Actions'
 import { ModalActions } from '../Stores/Modal/Actions'
-import diarySaga from '../Stores/Diary/Sagas'
+import '../Stores/Diary/Sagas'
+import '../Stores/Diary/Reducers'
 import Diary from '../Components/pages/Diary'
 import {
   getDiaries,
@@ -58,11 +57,6 @@ const withConnect = connect(
   mapDispatchToProps
 )
 
-const withDiarySaga = withSaga({
-  key: 'diary',
-  saga: diarySaga,
-})
-
 DiaryContainer.propTypes = {
   getDiaries: func.isRequired,
   clearDiaries: func.isRequired,
@@ -70,7 +64,4 @@ DiaryContainer.propTypes = {
   filter: object.isRequired,
 }
 
-export default compose(
-  withConnect,
-  withDiarySaga
-)(DiaryContainer)
+export default compose(withConnect)(DiaryContainer)

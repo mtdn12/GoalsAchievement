@@ -18,14 +18,13 @@ import {
   changeStatus,
   getBookDetail,
 } from 'src/Services/BookService.js'
-import { getToken } from '../Authentication/Selectors'
 import { getFilter } from './Selectors'
-
+import sagaRegistry from '../Sagas/SagaRegistry'
+import { MODULE_NAME } from './InitialState'
 // Get List action worker
 function* getListBookWorker({ filter }) {
   try {
-    const token = yield select(getToken)
-    const response = yield call(getListBook, token, filter)
+    const response = yield call(getListBook, filter)
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
@@ -43,9 +42,8 @@ function* getListBookWorker({ filter }) {
 // Create book worker
 function* createBookWorker({ values }) {
   try {
-    const token = yield select(getToken)
     yield put(ModalActions.showLoadingAction())
-    const response = yield call(createBook, token, values)
+    const response = yield call(createBook, values)
     if (response.data.result === 'fail') {
       throw new Error(response.data.error)
     }
@@ -84,10 +82,9 @@ function* createBookWorker({ values }) {
 // Edit book worker
 function* editBookWorker({ values }) {
   try {
-    const token = yield select(getToken)
     yield put(ModalActions.showLoadingAction())
     const { id, ...data } = values
-    const response = yield call(editBook, token, id, data)
+    const response = yield call(editBook, id, data)
     if (response.data.result === 'fail') {
       throw new Error(response.data.error)
     }
@@ -124,9 +121,8 @@ function* editBookWorker({ values }) {
 // Delete book worker
 function* deleteBookWorker({ values }) {
   try {
-    const token = yield select(getToken)
     yield put(ModalActions.showLoadingAction())
-    const response = yield call(deleteBook, token, values._id)
+    const response = yield call(deleteBook, values._id)
     if (response.data.result === 'fail') {
       throw new Error(response.data.error)
     }
@@ -161,8 +157,7 @@ function* deleteBookWorker({ values }) {
 // Change status worker
 function* changeStatusWorker({ id, status }) {
   try {
-    const token = yield select(getToken)
-    const response = yield call(changeStatus, token, id, status)
+    const response = yield call(changeStatus, id, status)
     if (response.data.result === 'fail') {
       throw new Error(response.data.error)
     }
@@ -195,8 +190,7 @@ function* changeStatusWorker({ id, status }) {
 // Get book detail worker
 function* getBookDetailWorker({ id }) {
   try {
-    const token = yield select(getToken)
-    const response = yield call(getBookDetail, token, id)
+    const response = yield call(getBookDetail, id)
     console.log(response.data)
     if (response.data.result === 'fail') {
       throw new Error(response.data.error)
@@ -215,10 +209,9 @@ function* getBookDetailWorker({ id }) {
 // Add book review worker
 function* addReviewWorker({ values }) {
   try {
-    const token = yield select(getToken)
     yield put(ModalActions.showLoadingAction())
     const { id, ...data } = values
-    const response = yield call(addReview, token, id, data)
+    const response = yield call(addReview, id, data)
     if (response.data.result === 'fail') {
       throw new Error(response.data.error)
     }
@@ -262,5 +255,4 @@ function* watcher() {
     takeLatest(BookTypes.ADD_REVIEW_REQUEST, addReviewWorker),
   ])
 }
-
-export default watcher
+sagaRegistry.register(MODULE_NAME, watcher)

@@ -1,40 +1,15 @@
 import apiClient from './'
 
 // get list word
-export const getListWord = (token, filter) =>
-  apiClient.get(
-    `/api/words/`,
-    { ...filter },
-    { headers: { Authorization: token } }
-  )
+export const getListWord = filter => apiClient.get(`/api/words/`, filter)
 // Get word detail
-export const getWordDetail = (token, id) =>
-  apiClient.get(`/api/words/${id}`, {}, { headers: { Authorization: token } })
+export const getWordDetail = id => apiClient.get(`/api/words/${id}`)
 // Create new word
-export const createWord = (token, values) =>
-  apiClient.post(
-    `/api/words/`,
-    { ...values },
-    { headers: { Authorization: token } }
-  )
+export const createWord = values => apiClient.post(`/api/words/`, values)
 // Edit  word
-export const editWord = (token, id, values) =>
-  apiClient.put(
-    `/api/words/${id}`,
-    { ...values },
-    { headers: { Authorization: token } }
-  )
+export const editWord = (id, values) =>
+  apiClient.put(`/api/words/${id}`, values)
 // Delete word
-export const deleteWord = (token, id) =>
-  apiClient.delete(
-    `/api/words/${id}`,
-    {},
-    { headers: { Authorization: token } }
-  )
+export const deleteWord = id => apiClient.delete(`/api/words/${id}`)
 // Check done recall
-export const checkRecall = (token, id) =>
-  apiClient.post(
-    `/api/words/check/${id}`,
-    {},
-    { headers: { Authorization: token } }
-  )
+export const checkRecall = id => apiClient.post(`/api/words/check/${id}`)

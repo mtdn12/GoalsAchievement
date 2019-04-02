@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import withSaga from '../Utils/withSaga'
 import { DailyTaskActions } from '../Stores/DailyTask/Actions'
-import dailyTaskSaga from '../Stores/DailyTask/Sagas'
+import '../Stores/DailyTask/Sagas'
+import '../Stores/DailyTask/Reducers'
 import {
   getLoadingTasks,
   getTasks,
@@ -13,7 +13,6 @@ import DailyTask from '../Components/pages/DailyTask'
 
 class DailyTaskContainer extends Component {
   componentDidMount() {
-    console.log(this.props)
     this.props.handleGetTasks()
   }
   componentWillUnmount() {
@@ -48,12 +47,4 @@ const withConnect = connect(
   mapDispatchToProps
 )
 
-const withDailyTaskSaga = withSaga({
-  key: 'dailyTask',
-  saga: dailyTaskSaga,
-})
-
-export default compose(
-  withDailyTaskSaga,
-  withConnect
-)(DailyTaskContainer)
+export default compose(withConnect)(DailyTaskContainer)

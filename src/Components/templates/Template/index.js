@@ -8,8 +8,7 @@ import { Redirect } from 'react-router-dom'
 
 const Template = ({
   children,
-  isAuthenticated,
-  profile,
+  auth,
   handleLogout,
   handleOpenModal,
   match,
@@ -17,10 +16,9 @@ const Template = ({
 }) => {
   return (
     <div id={styles.pageWrap}>
-      {isAuthenticated &&
-        match.path === '/welcome' && <Redirect to="/dashboard" />}
-      {!isAuthenticated && <AppbarNonAuth handleOpenModal={handleOpenModal} />}
-      {isAuthenticated && <AppbarAuth handleLogout={handleLogout} />}
+      {auth && match.path === '/welcome' && <Redirect to="/book" />}
+      {!auth && <AppbarNonAuth handleOpenModal={handleOpenModal} />}
+      {auth && <AppbarAuth handleLogout={handleLogout} />}
       <main className={styles.mainContent}>{children}</main>
       <Modal />
     </div>
@@ -29,8 +27,7 @@ const Template = ({
 
 Template.propTypes = {
   children: node,
-  isAuthenticated: bool,
-  profile: object,
+  auth: object,
   handleLogout: func,
   handleOpenModal: func,
   match: object,

@@ -4,6 +4,7 @@ import { compose } from 'redux'
 import { TodoActions } from '../Stores/Todo/Actions'
 import { ModalActions } from '../Stores/Modal/Actions'
 import TodoItem from '../Components/molecules/TodoItem'
+import '../Stores/Todo/Reducers'
 import { getLoadingCheck } from '../Stores/Todo/Selectors'
 
 class TodoItemtainer extends Component {

@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { is } from 'immutable'
-import withSaga from '../Utils/withSaga'
 import { WordActions } from '../Stores/Word/Actions'
 import { ModalActions } from '../Stores/Modal/Actions'
-import wordSaga from '../Stores/Word/Sagas'
+import '../Stores/Word/Sagas'
+import '../Stores/Word/Reducers'
 import { getFilter, getWords, getLoadingWords } from '../Stores/Word/Selectors'
 
 import Word from '../Components/pages/Word'
@@ -63,12 +63,4 @@ const withConnect = connect(
   mapDispatchToProps
 )
 
-const withWordSaga = withSaga({
-  key: 'word',
-  saga: wordSaga,
-})
-
-export default compose(
-  withConnect,
-  withWordSaga
-)(WordContainer)
+export default compose(withConnect)(WordContainer)

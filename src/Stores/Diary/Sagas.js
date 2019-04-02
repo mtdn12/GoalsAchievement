@@ -16,14 +16,15 @@ import {
   deleteDiary,
   getDiaryDetail,
 } from 'src/Services/DiaryService.js'
-import { getToken } from '../Authentication/Selectors'
+
 import { getFilter } from './Selectors'
+import sagaRegistry from '../Sagas/SagaRegistry'
+import { MODULE_NAME } from './InitialState'
 
 function* getListDiaryWorker() {
   try {
-    const token = yield select(getToken)
     const filter = yield select(getFilter)
-    const response = yield call(getListDiary, token, filter.toJS())
+    const response = yield call(getListDiary, filter.toJS())
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
@@ -40,9 +41,8 @@ function* getListDiaryWorker() {
 
 function* createDiaryWorker({ values }) {
   try {
-    const token = yield select(getToken)
     yield put(ModalActions.showLoadingAction())
-    const response = yield call(createDiary, token, values)
+    const response = yield call(createDiary, values)
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
@@ -69,8 +69,7 @@ function* createDiaryWorker({ values }) {
 // Get Diary detail worker
 function* getDiaryDetailWorker({ id }) {
   try {
-    const token = yield select(getToken)
-    const response = yield call(getDiaryDetail, token, id)
+    const response = yield call(getDiaryDetail, id)
     if (response.data.result === 'fail') {
       throw new Error(response.error)
     }
@@ -87,4 +86,4 @@ function* watcher() {
     takeLatest(DiaryTypes.GET_ITEM_REQUEST, getDiaryDetailWorker),
   ])
 }
-export default watcher
+sagaRegistry.register(MODULE_NAME, watcher)

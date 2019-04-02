@@ -7,3 +7,5 @@ export const INITIAL_STATE = fromJS({
   modal: null,
   isLoadingAction: false,
 })
+
+export const MODULE_NAME = 'modal'

@@ -4,13 +4,11 @@ import { compose } from 'redux'
 import { WordActions } from '../Stores/Word/Actions'
 import { ModalActions } from '../Stores/Modal/Actions'
 import { withRouter } from 'react-router-dom'
+import '../Stores/Word/Reducers'
 import { getLoadingCheck } from '../Stores/Word/Selectors'
 import WordItem from '../Components/molecules/WordItem'
 
 class WordItemContainer extends Component {
-  componentDidMount() {}
-  componentWillUnmount() {}
-  componentDidUpdate(prevProps) {}
   openModalEditWord = e => {
     e.stopPropagation()
     const { item, openModal } = this.props

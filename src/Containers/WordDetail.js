@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import withSaga from '../Utils/withSaga'
 import { WordActions } from '../Stores/Word/Actions'
-import wordSaga from '../Stores/Word/Sagas'
+import '../Stores/Word/Sagas'
+import '../Stores/Word/Reducers'
 import { getWord, getLoadingWord } from '../Stores/Word/Selectors'
 
 import WordDetail from '../Components/pages/WordDetail'
@@ -44,12 +44,4 @@ const withConnect = connect(
   mapDispatchToProps
 )
 
-const withWordSaga = withSaga({
-  key: 'book',
-  saga: wordSaga,
-})
-
-export default compose(
-  withConnect,
-  withWordSaga
-)(WordDetailContainer)
+export default compose(withConnect)(WordDetailContainer)
