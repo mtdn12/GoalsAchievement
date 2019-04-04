@@ -1,11 +1,4 @@
-import {
-  put,
-  call,
-  all,
-  takeLatest,
-  select,
-  takeEvery,
-} from 'redux-saga/effects'
+import { put, call, all, takeLatest, select } from 'redux-saga/effects'
 import { BookTypes, BookActions } from './Actions'
 import { NotificationActions } from '../Notification/Actions'
 import { ModalActions } from '../Modal/Actions'

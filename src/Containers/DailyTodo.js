@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import { func, object } from 'prop-types'
 import { TodoActions } from '../Stores/Todo/Actions'
 import '../Stores/Todo/Sagas'
 import '../Stores/Todo/Reducers'
@@ -88,5 +89,13 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps
 )
+
+DailyTodoContainer.propTypes = {
+  createDailyTodo: func.isRequired,
+  editDailyTodo: func.isRequired,
+  history: object.isRequired,
+  getDailyTodos: func.isRequired,
+  clearDailyTodos: func.isRequired,
+}
 
 export default compose(withConnect)(DailyTodoContainer)

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import { object, func } from 'prop-types'
 import { WordActions } from '../Stores/Word/Actions'
 import { ModalActions } from '../Stores/Modal/Actions'
 import { withRouter } from 'react-router-dom'
@@ -71,6 +72,13 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps
 )
+
+WordItemContainer.propTypes = {
+  item: object.isRequired,
+  checkRecall: func.isRequired,
+  history: object.isRequired,
+  openModal: func.isRequired,
+}
 
 export default compose(
   withConnect,

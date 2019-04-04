@@ -1,10 +1,10 @@
 import React from 'react'
-import { object } from 'prop-types'
+
 import { Header, Button } from 'semantic-ui-react'
 
 import NonAuthTemplate from '../../templates/NonAuthTemplate'
 
-const NotFound = ({ classes }) => {
+const NotFound = () => {
   return (
     <NonAuthTemplate>
       <Header as="h2">Not Found</Header>
@@ -14,7 +14,5 @@ const NotFound = ({ classes }) => {
     </NonAuthTemplate>
   )
 }
-NotFound.propTypes = {
-  classes: object.isRequired,
-}
+NotFound.propTypes = {}
 export default NotFound

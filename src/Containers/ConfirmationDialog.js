@@ -1,21 +1,23 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import { object, string, func } from 'prop-types'
 import { BookActions } from '../Stores/Book/Actions'
 import { WordActions } from '../Stores/Word/Actions'
 import { TodoActions } from '../Stores/Todo/Actions'
+import { DiaryActions } from '../Stores/Diary/Actions'
 import ConfirmationDialog from '../Components/molecules/ConfirmationDialog'
 
 class ConfirmationDialogContainer extends Component {
   handleConfirm = () => {
     const {
       values,
-      match,
       type,
       deleteBook,
       deleteWord,
       deleteTodo,
       deleteDailyTodo,
+      deleteDiary,
     } = this.props
     switch (type) {
       case 'book':
@@ -29,6 +31,9 @@ class ConfirmationDialogContainer extends Component {
         break
       case 'dailyTodo':
         deleteDailyTodo(values)
+        break
+      case 'deleteDiary':
+        deleteDiary(values)
         break
       default:
     }
@@ -49,6 +54,8 @@ const mapDispatchToProps = dispatch => ({
   // Delete daily Todo
   deleteDailyTodo: values =>
     dispatch(TodoActions.deleteDailyTodoRequest(values)),
+  // Delete diary
+  deleteDiary: values => dispatch(DiaryActions.deleteItemRequest(values)),
 })
 
 const withConnect = connect(
@@ -56,4 +63,13 @@ const withConnect = connect(
   mapDispatchToProps
 )
 
+ConfirmationDialogContainer.propTypes = {
+  values: object,
+  type: string.isRequired,
+  deleteBook: func.isRequired,
+  deleteWord: func.isRequired,
+  deleteTodo: func.isRequired,
+  deleteDailyTodo: func.isRequired,
+  deleteDiary: func.isRequired,
+}
 export default compose(withConnect)(ConfirmationDialogContainer)

@@ -25,11 +25,6 @@ class TemplateContainer extends Component {
 const mapStateToProps = state => ({
   auth: getAuth(state),
 })
-//   isAuthenticated: getAuthenticated(state),
-//   profile: getProfile(state),
-//   auth: getAuth(state),
-// })
-
 const mapDispatchToProps = dispatch => ({
   handleOpenModal: (type, props) =>
     dispatch(ModalActions.setModal(type, props)),

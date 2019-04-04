@@ -1,5 +1,6 @@
 import React from 'react'
 import { Form, Label } from 'semantic-ui-react'
+import { string, any, func, bool, object } from 'prop-types'
 import styles from './styles.module.scss'
 
 const InputField = React.memo(
@@ -33,5 +34,16 @@ const InputField = React.memo(
     )
   }
 )
+
+InputField.propTypes = {
+  name: string,
+  value: any,
+  handleChange: func,
+  handleBlur: func,
+  error: bool,
+  label: string,
+  message: string,
+  inputProps: object,
+}
 
 export default InputField

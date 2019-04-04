@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { is } from 'immutable'
-
+import { func, object } from 'prop-types'
 import { TodoActions } from '../Stores/Todo/Actions'
 import { ModalActions } from '../Stores/Modal/Actions'
 import '../Stores/Todo/Sagas'
@@ -73,5 +73,12 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps
 )
+TodoHistoryContainer.propTypes = {
+  filter: object.isRequired,
+  getHistories: func.isRequired,
+  clearHistories: func.isRequired,
+  history: object.isRequired,
+  openModal: func.isRequired,
+}
 
 export default compose(withConnect)(TodoHistoryContainer)

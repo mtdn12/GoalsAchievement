@@ -6,8 +6,7 @@ import LazyLoad from 'react-lazyload'
 import DiaryItem from '../../molecules/DiaryItem'
 import styles from './styles.module.scss'
 
-const Diary = ({ items, openModalCreateDiary, isLoadingItems }) => {
-  console.log(items.toJS())
+const Diary = ({ items, openModalCreateDiary }) => {
   return (
     <Template>
       <div id={styles.diaryWrap}>

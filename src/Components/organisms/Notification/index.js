@@ -11,11 +11,6 @@ class Notification extends Component {
     animation: 'fade up',
     duration: 500,
   }
-  componentDidMount() {
-    /* setTimeout(() => {
-      this.props.onClose()
-    }, 1000) */
-  }
   render() {
     const { open, onClose, color, message, title } = this.props
     const { animation, duration } = this.state

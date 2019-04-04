@@ -48,6 +48,8 @@ const setItemCreate = (state, { item }) => {
   return state.set('items', newItems)
 }
 
+const setItemEdit = (state, { item }) => state.set('item', fromJS(item))
+
 const reducer = createReducer(INITIAL_STATE, {
   [DiaryTypes.GET_ITEMS_REQUEST]: showLoadingItems,
   [DiaryTypes.GET_ITEMS_SUCCESS]: setItems,
@@ -55,6 +57,8 @@ const reducer = createReducer(INITIAL_STATE, {
   [DiaryTypes.CLEAR_ITEMS]: clearItems,
   // Set item when create success
   [DiaryTypes.CREATE_ITEM_SUCCESS]: setItemCreate,
+  // Set item when edit success
+  [DiaryTypes.EDIT_ITEM_SUCCESS]: setItemEdit,
   // Get item detail  actions
   [DiaryTypes.GET_ITEM_REQUEST]: showLoadingItem,
   [DiaryTypes.GET_ITEM_SUCCESS]: setItem,

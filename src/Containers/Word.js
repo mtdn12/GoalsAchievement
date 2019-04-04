@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import { object, func } from 'prop-types'
 import { is } from 'immutable'
 import { WordActions } from '../Stores/Word/Actions'
 import { ModalActions } from '../Stores/Modal/Actions'
@@ -62,5 +63,12 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps
 )
+
+WordContainer.propTypes = {
+  filter: object.isRequired,
+  getListWord: func.isRequired,
+  clearListWord: func.isRequired,
+  openModal: func.isRequired,
+}
 
 export default compose(withConnect)(WordContainer)

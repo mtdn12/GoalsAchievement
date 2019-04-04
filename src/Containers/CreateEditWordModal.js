@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { WordActions } from '../Stores/Word/Actions'
+import { string, func } from 'prop-types'
 import CreateEditWordModal from '../Components/organisms/CreateEditWordModal'
 
 class CreateEditWordModalContainer extends Component {
@@ -45,5 +46,11 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps
 )
+
+CreateEditWordModalContainer.propTypes = {
+  action: string.isRequired,
+  editWord: func.isRequired,
+  createWord: func.isRequired,
+}
 
 export default compose(withConnect)(CreateEditWordModalContainer)

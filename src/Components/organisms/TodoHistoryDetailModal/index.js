@@ -1,6 +1,6 @@
 import React from 'react'
 import { Modal, Header } from 'semantic-ui-react'
-import { func, bool, array } from 'prop-types'
+import { func, array } from 'prop-types'
 import cx from 'classnames'
 import styles from './styles.module.scss'
 

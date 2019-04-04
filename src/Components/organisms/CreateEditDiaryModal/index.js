@@ -13,7 +13,9 @@ const CreateEditDiary = ({
   handleAction,
   action,
 }) => {
-  const [content, setContent] = useState(RichTextEditor.createEmptyValue())
+  const [content, setContent] = useState(
+    RichTextEditor.createValueFromString(item.content, 'html')
+  )
   const changeContent = value => {
     setContent(value)
   }

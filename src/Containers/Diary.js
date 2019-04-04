@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { func, object } from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'redux'

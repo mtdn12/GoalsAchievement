@@ -1,6 +1,6 @@
 import React from 'react'
 import { object, func, bool } from 'prop-types'
-import { Loader, Button, Label, Image } from 'semantic-ui-react'
+import { Loader } from 'semantic-ui-react'
 import styles from './styles.module.scss'
 import ModalPageTemplate from '../../templates/ModalPageTemplate'
 import InputTodo from '../../molecules/InputTodo'
@@ -20,27 +20,26 @@ const DailyTodo = ({
     <ModalPageTemplate title="Daily Todo" handleGoBack={handleGoBack}>
       <div id={styles.todoWrap}>
         {isLoadingDailyTodos && <Loader active inline="centered" size="big" />}
-        {!isLoadingDailyTodos &&
-          dailyTodos && (
-            <div className={styles.contentWrap}>
-              <InputTodo
-                item={formItem}
-                handleAction={handleAction}
-                isLoadingAction={isLoadingAction}
-                cancelEdit={handleResetFormItem}
-              />
-              <div>
-                {dailyTodos.map(todo => (
-                  <TodoItem
-                    type="dailyTodo"
-                    item={todo}
-                    key={todo.get('_id')}
-                    handleSetFormItem={handleSetFormItem}
-                  />
-                ))}
-              </div>
+        {!isLoadingDailyTodos && dailyTodos && (
+          <div className={styles.contentWrap}>
+            <InputTodo
+              item={formItem}
+              handleAction={handleAction}
+              isLoadingAction={isLoadingAction}
+              cancelEdit={handleResetFormItem}
+            />
+            <div>
+              {dailyTodos.map(todo => (
+                <TodoItem
+                  type="dailyTodo"
+                  item={todo}
+                  key={todo.get('_id')}
+                  handleSetFormItem={handleSetFormItem}
+                />
+              ))}
             </div>
-          )}
+          </div>
+        )}
       </div>
     </ModalPageTemplate>
   )

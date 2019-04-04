@@ -1,6 +1,7 @@
 import React from 'react'
-import { node, func, object, bool } from 'prop-types'
+import { node, func, object } from 'prop-types'
 import AppbarNonAuth from 'src/Components/organisms/AppbarNonAuth'
+import Notification from 'src/Containers/Notification'
 import AppbarAuth from '../../organisms/AppbarAuth'
 import styles from './styles.module.scss'
 import Modal from 'src/Containers/ModalManager'
@@ -21,6 +22,7 @@ const Template = ({
       {auth && <AppbarAuth handleLogout={handleLogout} />}
       <main className={styles.mainContent}>{children}</main>
       <Modal />
+      <Notification />
     </div>
   )
 }

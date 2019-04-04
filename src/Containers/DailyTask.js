@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import { func } from 'prop-types'
 import { DailyTaskActions } from '../Stores/DailyTask/Actions'
 import '../Stores/DailyTask/Sagas'
 import '../Stores/DailyTask/Reducers'
@@ -46,5 +47,10 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps
 )
+
+DailyTaskContainer.propTypes = {
+  handleGetTasks: func.isRequired,
+  handleClearTasks: func.isRequired,
+}
 
 export default compose(withConnect)(DailyTaskContainer)

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import { object, func } from 'prop-types'
 import '../Stores/Book/Sagas'
 import '../Stores/Book/Reducers'
 import { BookActions } from '../Stores/Book/Actions'
@@ -77,5 +78,14 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps
 )
+
+BookDetailContainer.propTypes = {
+  item: object.isRequired,
+  openModal: func.isRequired,
+  clearItem: func.isRequired,
+  match: object.isRequired,
+  history: object.isRequired,
+  getItemRequest: func.isRequired,
+}
 
 export default compose(withConnect)(BookDetailContainer)

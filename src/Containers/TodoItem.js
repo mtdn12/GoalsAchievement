@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import { object, func, string } from 'prop-types'
 import { TodoActions } from '../Stores/Todo/Actions'
 import { ModalActions } from '../Stores/Modal/Actions'
 import TodoItem from '../Components/molecules/TodoItem'
 import '../Stores/Todo/Reducers'
 import { getLoadingCheck } from '../Stores/Todo/Selectors'
 
-class TodoItemtainer extends Component {
+class TodoItemContainer extends Component {
   openModalDeleteTodo = e => {
     e.stopPropagation()
     const { item, openModal, type } = this.props
@@ -53,4 +54,13 @@ const withConnect = connect(
   mapDispatchToProps
 )
 
-export default compose(withConnect)(TodoItemtainer)
+TodoItemContainer.propTypes = {
+  item: object.isRequired,
+  openModal: func.isRequired,
+  type: string.isRequired,
+  checkTodo: func.isRequired,
+  uncheckTodo: func.isRequired,
+  isLoadingCheck: object.isRequired,
+}
+
+export default compose(withConnect)(TodoItemContainer)

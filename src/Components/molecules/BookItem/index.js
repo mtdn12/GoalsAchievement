@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Dropdown } from 'semantic-ui-react'
-import { object, func, bool } from 'prop-types'
+import { object, func } from 'prop-types'
 import { statusOption } from '../../../Utils/options'
 import styles from './styles.module.scss'
 

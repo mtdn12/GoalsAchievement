@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { ModalActions } from 'src/Stores/Modal/Actions'
+import { func, any, bool } from 'prop-types'
 import '../Stores/Modal/Reducers'
 import { getModal, getLoadingAction } from 'src/Stores/Modal/Selectors'
 import RegisterModal from './RegisterModal'
@@ -48,6 +49,11 @@ const mapDispatchToProps = dispatch => ({
   handleClose: () => dispatch(ModalActions.clearModal()),
 })
 
+Modal.propTypes = {
+  modal: any,
+  isLoadingAction: bool.isRequired,
+  handleClose: func.isRequired,
+}
 export default connect(
   mapStateToProps,
   mapDispatchToProps

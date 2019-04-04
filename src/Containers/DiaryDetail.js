@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { func } from 'prop-types'
+import { func, object } from 'prop-types'
 import '../Stores/Diary/Sagas'
 import '../Stores/Diary/Reducers'
 import { DiaryActions } from '../Stores/Diary/Actions'
@@ -22,11 +22,37 @@ const DiaryDetailContainer = ({
     return () => {
       clearDiaryDetail()
     }
-  }, [])
+  }, [getDiaryDetail, match.params.id])
   const handleGoBack = () => {
     history.push('/diary')
   }
-  return <DiaryDetail handleGoBack={handleGoBack} {...props} />
+  const handleEditItem = values => () => {
+    const item = {
+      content: values.get('content'),
+      id: values.get('_id'),
+    }
+    openModal('CreateEditDiaryModal', {
+      item,
+      action: 'edit',
+    })
+  }
+
+  const handleDeleteItem = item => () => {
+    openModal('ConfirmationDialog', {
+      content: 'Are you sure to delete this diary?',
+      title: 'Delete Diary',
+      values: item,
+      type: 'deleteDiary',
+    })
+  }
+  return (
+    <DiaryDetail
+      handleDeleteItem={handleDeleteItem}
+      handleEditItem={handleEditItem}
+      handleGoBack={handleGoBack}
+      {...props}
+    />
+  )
 }
 
 const mapStateToProps = state => ({
@@ -46,5 +72,12 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps
 )
+DiaryDetailContainer.propTypes = {
+  match: object.isRequired,
+  history: object.isRequired,
+  getDiaryDetail: func.isRequired,
+  clearDiaryDetail: func.isRequired,
+  openModal: func.isRequired,
+}
 
 export default compose(withConnect)(DiaryDetailContainer)

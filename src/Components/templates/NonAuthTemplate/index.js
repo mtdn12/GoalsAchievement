@@ -12,7 +12,7 @@ const styles = {
   padding: 20,
 }
 
-const NonAuthTemplate = ({ classes, children, ...props }) => {
+const NonAuthTemplate = ({ children, ...props }) => {
   return (
     <div {...props} style={styles}>
       {children}

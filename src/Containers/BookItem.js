@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import { func, object } from 'prop-types'
 import { BookActions } from '../Stores/Book/Actions'
 import { ModalActions } from '../Stores/Modal/Actions'
 import { withRouter } from 'react-router-dom'
@@ -70,6 +71,12 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps
 )
+BookItemContainer.propTypes = {
+  item: object.isRequired,
+  openModal: func.isRequired,
+  changeStatus: func.isRequired,
+  history: object.isRequired,
+}
 
 export default compose(
   withConnect,

@@ -11,42 +11,41 @@ const BookDetail = ({
   openModalAddReview,
   openModalEditReview,
 }) => {
-  console.log(item.get('review'))
+  // console.log(item.get('review'))
   return (
     <ModalPageTemplate title="Book Detail" handleGoBack={handleGoBack}>
       {isLoadingItem && <Loader active inline="centered" size="big" />}
-      {!isLoadingItem &&
-        item && (
-          <div className={styles.bookWrap}>
-            <div className={styles.infoWrap}>
-              <p className={styles.title}>{item.get('title')}</p>
-              <p className={styles.subTitle}>{item.get('author')}</p>
-            </div>
-            <div className={styles.reviewWrap}>
+      {!isLoadingItem && item && (
+        <div className={styles.bookWrap}>
+          <div className={styles.infoWrap}>
+            <p className={styles.title}>{item.get('title')}</p>
+            <p className={styles.subTitle}>{item.get('author')}</p>
+          </div>
+          <div className={styles.reviewWrap}>
+            {item.get('review') ? (
+              <Button primary fluid onClick={openModalEditReview}>
+                Change Review
+              </Button>
+            ) : (
+              <Button primary fluid onClick={openModalAddReview}>
+                Create Review
+              </Button>
+            )}
+            <div className={styles.review}>
               {item.get('review') ? (
-                <Button primary fluid onClick={openModalEditReview}>
-                  Change Review
-                </Button>
+                <div>
+                  <Label color="blue" ribbon>
+                    {item.get('rate')}
+                  </Label>
+                  <pre>{item.get('review')}</pre>
+                </div>
               ) : (
-                <Button primary fluid onClick={openModalAddReview}>
-                  Create Review
-                </Button>
+                <p>No review Yet</p>
               )}
-              <div className={styles.review}>
-                {item.get('review') ? (
-                  <div>
-                    <Label color="blue" ribbon>
-                      {item.get('rate')}
-                    </Label>
-                    <pre>{item.get('review')}</pre>
-                  </div>
-                ) : (
-                  <p>No review Yet</p>
-                )}
-              </div>
             </div>
           </div>
-        )}
+        </div>
+      )}
     </ModalPageTemplate>
   )
 }

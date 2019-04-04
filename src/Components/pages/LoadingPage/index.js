@@ -1,19 +1,27 @@
 import React from 'react'
 import { bool } from 'prop-types'
-// import LinearProgress from '@material-ui/core/LinearProgress'
-import { Loader } from 'semantic-ui-react'
-
-import AnnouncementTemplate from '../../templates/AnnouncementTemplate'
-
+import './styles.css'
 const LoadingPage = props => {
   if (props.error) {
-    console.log(props.error)
     throw new Error(`Couldn't load LoadingPage`)
   }
   return (
-    <AnnouncementTemplate>
-      <Loader active inline="centered" />
-    </AnnouncementTemplate>
+    <div className="loadingPage-wrap">
+      <div className="lds-spinner">
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+      </div>
+    </div>
   )
 }
 

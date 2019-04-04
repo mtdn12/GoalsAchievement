@@ -1,5 +1,6 @@
 import React from 'react'
 import { Form, Label } from 'semantic-ui-react'
+import { string, any, func, bool, object } from 'prop-types'
 import styles from './styles.module.scss'
 const TextareaField = ({
   label,
@@ -31,6 +32,18 @@ const TextareaField = ({
       )}
     </Form.Field>
   )
+}
+
+TextareaField.propTypes = {
+  label: string,
+  placeholder: string,
+  handleChange: func,
+  handleBlur: func,
+  value: any,
+  inputProps: object,
+  error: bool,
+  message: string,
+  name: string,
 }
 
 export default TextareaField

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Form, Label } from 'semantic-ui-react'
+import { string, any, func, array, bool, object } from 'prop-types'
 import styles from './styles.module.scss'
 
 const SelectField = React.memo(
@@ -35,5 +36,17 @@ const SelectField = React.memo(
     )
   }
 )
+
+SelectField.propTypes = {
+  name: string,
+  value: any,
+  handleChange: func,
+  handleBlur: func,
+  error: bool,
+  label: string,
+  message: string,
+  inputProps: object,
+  options: array,
+}
 
 export default SelectField

@@ -1,6 +1,6 @@
 import React from 'react'
 import { object, func, bool } from 'prop-types'
-import { Loader, Button, Header } from 'semantic-ui-react'
+import { Loader, Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import styles from './styles.module.scss'
 import Template from 'src/Containers/Template'
@@ -26,27 +26,26 @@ const Todo = ({
           See History
         </Button>
         {isLoadingTodos && <Loader active inline="centered" size="big" />}
-        {!isLoadingTodos &&
-          todos && (
-            <div className={styles.contentWrap}>
-              <InputTodo
-                item={formItem}
-                handleAction={handleAction}
-                isLoadingAction={isLoadingAction}
-                cancelEdit={handleResetFormItem}
-              />
-              <div>
-                {todos.map(todo => (
-                  <TodoItem
-                    type="todo"
-                    item={todo}
-                    key={todo.get('_id')}
-                    handleSetFormItem={handleSetFormItem}
-                  />
-                ))}
-              </div>
+        {!isLoadingTodos && todos && (
+          <div className={styles.contentWrap}>
+            <InputTodo
+              item={formItem}
+              handleAction={handleAction}
+              isLoadingAction={isLoadingAction}
+              cancelEdit={handleResetFormItem}
+            />
+            <div>
+              {todos.map(todo => (
+                <TodoItem
+                  type="todo"
+                  item={todo}
+                  key={todo.get('_id')}
+                  handleSetFormItem={handleSetFormItem}
+                />
+              ))}
             </div>
-          )}
+          </div>
+        )}
       </div>
     </Template>
   )

@@ -36,20 +36,19 @@ const Book = ({
             </div>
           </div>
         )}
-        {!isLoadingWords &&
-          words && (
-            <div className={styles.bookListWrap}>
-              {words.size > 0 ? (
-                <div>
-                  {words.map(book => (
-                    <WordItem key={book.get('_id')} item={book} />
-                  ))}
-                </div>
-              ) : (
-                <p>No word exist</p>
-              )}
-            </div>
-          )}
+        {!isLoadingWords && words && (
+          <div className={styles.bookListWrap}>
+            {words.size > 0 ? (
+              <div>
+                {words.map(book => (
+                  <WordItem key={book.get('_id')} item={book} />
+                ))}
+              </div>
+            ) : (
+              <p>No word exist</p>
+            )}
+          </div>
+        )}
         <div className={styles.btnWrap}>
           <Button
             icon="add"

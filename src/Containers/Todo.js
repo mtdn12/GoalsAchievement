@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-
+import { func } from 'prop-types'
 import { TodoActions } from '../Stores/Todo/Actions'
 import '../Stores/Todo/Sagas'
 import '../Stores/Todo/Reducers'
@@ -84,5 +84,12 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps
 )
+
+TodoContainer.propTypes = {
+  createTodo: func.isRequired,
+  editTodo: func.isRequired,
+  getTodos: func.isRequired,
+  clearTodos: func.isRequired,
+}
 
 export default compose(withConnect)(TodoContainer)

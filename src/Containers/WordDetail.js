@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import { object, func } from 'prop-types'
 import { WordActions } from '../Stores/Word/Actions'
 import '../Stores/Word/Sagas'
 import '../Stores/Word/Reducers'
@@ -43,5 +44,12 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps
 )
+
+WordDetailContainer.propTypes = {
+  match: object.isRequired,
+  getItemRequest: func.isRequired,
+  clearItem: func.isRequired,
+  history: object.isRequired,
+}
 
 export default compose(withConnect)(WordDetailContainer)

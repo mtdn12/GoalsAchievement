@@ -1,7 +1,7 @@
 import React from 'react'
 import { func } from 'prop-types'
 import { Menu } from 'semantic-ui-react'
-import { NavLink } from 'react-router-dom'
+// import { NavLink } from 'react-router-dom'
 import styles from './styles.module.scss'
 
 const AppbarNonAuth = ({ handleOpenModal }) => {

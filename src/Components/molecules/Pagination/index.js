@@ -2,11 +2,7 @@ import React, { PureComponent } from 'react'
 import { number, func, array } from 'prop-types'
 import styles from './styles.module.scss'
 
-import {
-  Pagination as PaginationSemantic,
-  Segment,
-  Form,
-} from 'semantic-ui-react'
+import { Pagination as PaginationSemantic, Form } from 'semantic-ui-react'
 
 class Pagination extends PureComponent {
   state = {

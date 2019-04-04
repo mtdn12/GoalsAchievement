@@ -28,13 +28,13 @@ const AppbarAuth = ({ handleLogout }) => {
         activeClassName={styles.activeItem}>
         Todo
       </Menu.Item>
-      {/* <Menu.Item
+      <Menu.Item
         as={NavLink}
         to="/diary"
         className={styles.menuItem}
         activeClassName={styles.activeItem}>
         Diary
-      </Menu.Item> */}
+      </Menu.Item>
       <Menu.Menu position="right">
         <Menu.Item className={styles.menuItem} onClick={handleLogout}>
           Log Out
